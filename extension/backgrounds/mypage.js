@@ -28,7 +28,6 @@ function main(e) {
         if (document.querySelector('#div-mypage-tab > table:nth-child(3) > thead') != null) {
             clearInterval(jsInitCheckTimer);
             //要素を取得する処理
-            console.log('要素が取得されました');
             const thread = document.querySelector('#div-mypage-tab > table:nth-child(3) > thead');
             // insert th in thead first child
             thread.children[0].insertCell(5).outerHTML = '<th class="size8" rowspan="2">サボタージュ</th>';
