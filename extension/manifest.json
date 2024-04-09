@@ -1,0 +1,30 @@
+{
+  "manifest_version": 3,
+  "name": "Tree_Ivy 欠席計算 β",
+  "version": "0.0",
+  "description": "スタログ用サボタージュ可能時間計算アドオン",
+  "permissions": [
+    "activeTab",
+    "scripting"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://portal.iwasaki.ac.jp/portal/lmsinc/sMyPage.php*"
+      ],
+      "js": [
+        "backgrounds/contentScript.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": true
+    }
+  ],
+  "icons": {
+    "16": "images/16x16.png",
+    "48": "images/48x48.png",
+    "128": "images/128x128.png"
+  }
+}
