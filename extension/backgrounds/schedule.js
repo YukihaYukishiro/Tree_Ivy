@@ -1,6 +1,11 @@
 window.addEventListener("load", get_sabotage, false);
+const button  = document.querySelector("body > div.v2-container > div > div.main.sp-margin-bottom-md > div > div.panel.panel-default.sp-margin-bottom-none.sp-border-bottom-none.sp-border-top-none > div.table-responsive.sp-margin-bottom-none.sp-padding-sm > div > div.margin-bottom")
+for (let i = 0; i < button.children.length-1; i++) {
+    const child = button.children[i];
 
-
+        child.addEventListener("click", get_sabotage, false);
+    
+}
 
 function get_sabotage(e) {
     const jsInitCheckTimer = setInterval(jsLoaded, 1000);
