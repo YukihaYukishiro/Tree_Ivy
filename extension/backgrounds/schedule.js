@@ -1,11 +1,14 @@
-window.addEventListener("load", get_sabotage, false);
-const button  = document.querySelector("body > div.v2-container > div > div.main.sp-margin-bottom-md > div > div.panel.panel-default.sp-margin-bottom-none.sp-border-bottom-none.sp-border-top-none > div.table-responsive.sp-margin-bottom-none.sp-padding-sm > div > div.margin-bottom")
-for (let i = 0; i < button.children.length-1; i++) {
-    const child = button.children[i];
-
-        child.addEventListener("click", get_sabotage, false);
+window.addEventListener("load", function(){
+    const button  = document.querySelector("body > div.v2-container > div > div.main.sp-margin-bottom-md > div > div.panel.panel-default.sp-margin-bottom-none.sp-border-bottom-none.sp-border-top-none > div.table-responsive.sp-margin-bottom-none.sp-padding-sm > div > div.margin-bottom")
+    button.appendChild(document.createElement("button")).innerHTML = "欠席表示";
+    const child = button.lastChild;
     
-}
+    child.addEventListener("click", get_sabotage, false);
+        
+    
+
+}, false);
+
 
 function get_sabotage(e) {
     const jsInitCheckTimer = setInterval(jsLoaded, 1000);
@@ -70,8 +73,11 @@ function get_sabotage(e) {
                                             }else{ 
                                                 temp = "欠席可能";
                                             }
-                                            a.innerHTML = a.innerHTML + `<br><div style="color:${sabotage[href][2]}">${temp}</div>(<i style="color:${sabotage[href][2]}">${sabotage[href][0]}/${sabotage[href][1]}</i>)`;
-                                            
+                                            const t = document.createElement("div");
+                                            t.innerHTML =  `<div style="color:${sabotage[href][2]}">${temp}</div>(<i style="color:${sabotage[href][2]}">${sabotage[href][0]}/${sabotage[href][1]}</i>)`;
+                                            a.appendChild(t);
+                                            if(a.children.length > 2)
+                                            a.children[1].remove();
                                         }
                                     }
                                 }
