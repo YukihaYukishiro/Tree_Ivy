@@ -1,5 +1,14 @@
 window.addEventListener("load", get_sabotage, false);
-
+window.addEventListener("load", function () { 
+    const jsInitCheckTimer = setInterval(jsLoaded, 1000);
+    async function jsLoaded() {
+    if(document.querySelector("body > div.v2-container > div > div.main.sp-margin-bottom-md > div > div.panel.panel-default.sp-margin-bottom-none.sp-border-bottom-none.sp-border-top-none > div.table-responsive.sp-margin-bottom-none.sp-padding-sm > div > div.margin-bottom") != null){
+    const button = document.querySelector("body > div.v2-container > div > div.main.sp-margin-bottom-md > div > div.panel.panel-default.sp-margin-bottom-none.sp-border-bottom-none.sp-border-top-none > div.table-responsive.sp-margin-bottom-none.sp-padding-sm > div > div.margin-bottom");
+    for(let i = 0; i < 4; i++){
+        button.children[i].addEventListener("click", get_sabotage, false);
+    }
+}
+}}, false);
 
 function get_sabotage(e) {
     const jsInitCheckTimer = setInterval(jsLoaded, 1000);
