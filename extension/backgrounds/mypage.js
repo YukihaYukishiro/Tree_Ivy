@@ -9,6 +9,8 @@ function addlsn_a(e) {
             document.querySelector("#div-mypage > div > div.col-sm-9.padding-left-none.sp-padding-none > div > ul > li.li-tabs.active > a").addEventListener("click", main, false);
             document.querySelector("#div-mypage-tab > table:nth-child(3) > caption > button").addEventListener("click", main, false);
             document.querySelector("#div-mypage > div > div.col-sm-9.padding-left-none.sp-padding-none > div > ul > li.li-tabs.active > a").addEventListener("click", addlsn_b, false);
+
+            document.querySelector("#div-mypage > div > div.col-sm-9.padding-left-none.sp-padding-none > div > ul > li:nth-child(2) > a").addEventListener("click", kadai, false);
         }
     }
 }
@@ -58,3 +60,8 @@ function main(e) {
         }
     }
 };
+
+
+function kadai(){
+
+}
