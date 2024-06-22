@@ -31,7 +31,7 @@ function main(e) {
             //要素を取得する処理
             const thread = document.querySelector('#div-mypage-tab > table:nth-child(3) > thead');
             // insert th in thead first child
-            thread.children[0].insertCell(5).outerHTML = '<th class="size8" rowspan="2">サボタージュ</th>';
+            thread.children[0].insertCell(5).outerHTML = '<th class="size8" rowspan="2">欠席/落単</th>';
             
             // get tbody
             const tbody = document.querySelector('#div-mypage-tab > table:nth-child(3) > tbody');
@@ -40,20 +40,24 @@ function main(e) {
                 const tr = tbody.children[i];
                 //insert td
                 class_sum = parseInt(tr.children[3].textContent);
-                max_sabotage = Math.ceil(class_sum * 0.25);
-                sabotaged = parseInt(tr.children[5].textContent);
-                sabotag_left = max_sabotage - sabotaged;
+                max_absence = Math.ceil(class_sum * 0.25);
+                absenced = parseInt(tr.children[5].textContent);
+                absence_left = max_absence - absenced;
                 let color;
-                if (sabotag_left/max_sabotage > 0.5 ){
-                    color = '#00ff00';
-                }else if (sabotag_left/max_sabotage > 0){
-                    color = '#e000dd';
-                }else if (sabotag_left/max_sabotage == 0){
-                    color = '#ff8c00';
-                }else{
-                    color = '#ff0000';
+                if (absence_left / max_absence > 0.5) {
+                    //green
+                    color = '#e0ffc1';
+                } else if (absence_left / max_absence > 0.25) {
+                    //yellow
+                    color = '#ffffbc';
+                } else if (absence_left / max_absence > 0) {
+                    //orange
+                    color = '#ffe0c1';
+                } else {
+                    //red
+                    color = '#ff7f7f';
                 }
-                tr.insertCell(7).outerHTML = `<td class="text-center" style="color: ${color};">${sabotag_left}/${max_sabotage}</td>`;
+                tr.insertCell(7).outerHTML = `<td class="text-center" style="color: ${color};">${absenced}/${max_absence}</td>`;
                 
             }
         }
