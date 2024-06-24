@@ -86,19 +86,19 @@ function get_sabotage(e) {
     flex-direction: row;
     padding: 3px;
     font-size: 1em;    
-    border-top-left-radius: 3px;
-    border-top-right-radius: 3px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
     ">    
                                      <div style="width : 40% ;color: #000;
     text-align: center;
-    border: 1px solid #000;">出:全</div>   
+    ">出:全</div>   
                                  <div style="width : 40% ;color: #000;
     text-align: center;
-    border: 1px solid #000;">欠:落</div>
+    ">欠:落</div>
                                 
                                  <div style="width : 20% ;color: #000;
     text-align: center;
-    border: 1px solid #000; ">公</div>
+    ">公</div>
                                 
                                 </div>
 
@@ -110,19 +110,19 @@ function get_sabotage(e) {
     flex-direction: row;
     padding: 3px;
     font-size: 1em;
-    border-bottom-left-radius: 3px;
-    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
     ">    
                                      <div style="width : 40% ;color: #000;
     text-align: center;
-    border: 1px solid #000;">${sabotage[href][1]}:${sabotage[href][0]}</div>   
+    ">${sabotage[href][1]}:${sabotage[href][0]}</div>   
                                  <div style="width : 40% ;color: #000;
     text-align: center;
-    border: 1px solid #000;">${sabotage[href][2]}:${sabotage[href][3]}</div>
+    ">${sabotage[href][2]}:${sabotage[href][3]}</div>
                                 
                                  <div style="width : 20% ;color: #000;
     text-align: center;
-    border: 1px solid #000; ">${sabotage[href][4]}</div>
+    ">${sabotage[href][4]}</div>
                                 
                                 </div>
 

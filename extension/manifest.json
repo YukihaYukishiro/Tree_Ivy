@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
-  "name": "Tree_Ivy_Openβ",
-  "version": "0.1",
+  "name": "Tree_Ivy_Openβ_dev",
+  "version": "0.2",
   "description": "スタログ用出欠管理拡張システム",
   "content_scripts": [
     {
