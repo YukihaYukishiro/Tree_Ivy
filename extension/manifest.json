@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
-  "name": "Tree_Ivy_Openβ_dev",
-  "version": "0.2",
+  "name": "Tree_Ivy_Openβ",
+  "version": "0.3",
   "description": "スタログ用出欠管理拡張システム",
   "content_scripts": [
     {
@@ -23,6 +23,14 @@
       ],
       "run_at": "document_end",
       "all_frames": true
+    },
+    {
+      "matches": [
+        "*://portal.iwasaki.ac.jp/lms/"
+      ],
+      "css": [
+        "css/style.css"
+      ]
     }
   ],
   "icons": {

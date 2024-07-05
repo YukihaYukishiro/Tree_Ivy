@@ -40,23 +40,23 @@ function get_sabotage(e) {
                 const absenced = parseInt(tr_content.children[5].textContent);
                 const official_absence = parseInt(tr_content.children[6].textContent);
                 const absence_left = max_absence - absenced;
-                let color;
+                let css_class;
                 if (absence_left / max_absence > 0.5) {
                     //green
-                    color = '#e0ffc1';
+                    css_class = 'safe';
                 } else if (absence_left / max_absence > 0.25) {
                     //yellow
-                    color = '#ffffbc';
+                    css_class = 'warning';
                 } else if (absence_left / max_absence > 0) {
                     //orange
-                    color = '#ffe0c1';
+                    css_class = 'danger';
                 } else {
                     //red
-                    color = '#ff7f7f';
+                    css_class = 'dead';
                 }
 
 
-                sabotage[tr_content.children[1].children[0].href.split("/")[5]] = [class_sum,join_sum,absenced,max_absence, official_absence,color];
+                sabotage[tr_content.children[1].children[0].href.split("/")[5]] = [join_sum,class_sum,absenced,absence_left,max_absence, official_absence,css_class];
             }
 
 
@@ -77,59 +77,56 @@ function get_sabotage(e) {
                             // check if a tag has href attribute
                             if (a.hasAttribute('href')) {
                                 const href = `https://portal.iwasaki.ac.jp${a.getAttribute('href')}`.split("/")[5];
-                                const t = document.createElement("div");
-                                t.classList.add("T_I")
-                                t.innerHTML = `
-                                <div style="    width: 100%;
-    background-color: ${sabotage[href][5]};
-    display: flex;
-    flex-direction: row;
-    padding: 3px;
-    font-size: 1em;    
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-    ">    
-                                     <div style="width : 40% ;color: #000;
-    text-align: center;
-    ">出:全</div>   
-                                 <div style="width : 40% ;color: #000;
-    text-align: center;
-    ">欠:落</div>
-                                
-                                 <div style="width : 20% ;color: #000;
-    text-align: center;
-    ">公</div>
-                                
-                                </div>
+                                const ivy = document.createElement("div");
+                                ivy.classList.add("T_I")
+                                ivy.classList.add(sabotage[href][6]);
 
+                                const table = document.createElement("table");
+                                ivy.appendChild(table);
+                                table.classList.add("ivy_table");
+                                // insert header row
+                                const header = table.createTHead();
+                                header.classList.add("ivy_header");
+                                const header_row = header.insertRow(0);
+                                header_row.classList.add("ivy_header_row");
+                                const header_cell = header_row.insertCell(0);
+                                header_cell.classList.add("ivy_header_cell");
+                                header_cell.classList.add("ivy_cell_2data");
+                                header_cell.classList.add("ivy_header_cell_joinclass")
+                                header_cell.textContent = "出/全";
+                                const header_cell2 = header_row.insertCell(1);
+                                header_cell2.classList.add("ivy_header_cell");
+                                header_cell2.classList.add("ivy_cell_2data")
+                                header_cell2.classList.add("ivy_header_cell_absence")
+                                header_cell2.textContent = "欠/落";
+                                const header_cell3 = header_row.insertCell(2);
+                                header_cell3.classList.add("ivy_header_cell");
+                                header_cell3.classList.add("ivy_cell_1data");
+                                header_cell3.classList.add("ivy_header_cell_officialabsence")
+                                header_cell3.textContent = "公";
+                                // insert data row
+                                const data = table.createTBody();
+                                data.classList.add("ivy_data");
+                                const data_row = data.insertRow(0);
+                                data_row.classList.add("ivy_data_row");
+                                const data_cell = data_row.insertCell(0);
+                                data_cell.classList.add("ivy_data_cell");
+                                data_cell.classList.add("ivy_cell_2data")
+                                data_cell.classList.add("ivy_data_cell_joinclass")
+                                data_cell.textContent = sabotage[href][0] + "/" + sabotage[href][1];
+                                const data_cell2 = data_row.insertCell(1);
+                                data_cell2.classList.add("ivy_data_cell");
+                                data_cell2.classList.add("ivy_cell_2data")
+                                data_cell2.classList.add("ivy_data_cell_absence")
+                                data_cell2.textContent = sabotage[href][2] + "/" + sabotage[href][4];
+                                const data_cell3 = data_row.insertCell(2);
+                                data_cell3.classList.add("ivy_data_cell");
+                                data_cell3.classList.add("ivy_cell_1data");
+                                data_cell3.classList.add("ivy_data_cell_officialabsence")
+                                data_cell3.textContent = sabotage[href][5];
 
-
-                                <div style="    width: 100%;
-    background-color: ${sabotage[href][5]};
-    display: flex;
-    flex-direction: row;
-    padding: 3px;
-    font-size: 1em;
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
-    ">    
-                                     <div style="width : 40% ;color: #000;
-    text-align: center;
-    ">${sabotage[href][1]}:${sabotage[href][0]}</div>   
-                                 <div style="width : 40% ;color: #000;
-    text-align: center;
-    ">${sabotage[href][2]}:${sabotage[href][3]}</div>
-                                
-                                 <div style="width : 20% ;color: #000;
-    text-align: center;
-    ">${sabotage[href][4]}</div>
-                                
-                                </div>
-
-
-                                `;
                                 if(section.getElementsByClassName("T_I").length == 0){
-                                    section.appendChild(t);
+                                    section.appendChild(ivy);
                                 }
                                
                             }
