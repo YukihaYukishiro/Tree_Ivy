@@ -1,0 +1,44 @@
+.T_I{
+    width: 100%;
+    border-radius: 10px;
+    padding: 4px;
+    font-size: 0.95em;
+}
+
+.safe{
+    background-color: #e0ffc1;
+}
+
+.warning{
+    background-color: #ffffbc;
+}
+
+.danger{
+    background-color: #ffe0c1;
+}
+
+.dead{
+    background-color: #ff7f7f;
+}
+
+.ivy_table{
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: auto;
+
+}
+
+.ivy_header{
+    width: 100%;
+}
+
+.ivy_header_row, .ivy_data_row{
+    text-align: center;
+}
+
+.ivy_cell_2data{
+    width: 40% !important;
+}
+.ivy_cell_1data{
+    width: 20% !important;
+}
