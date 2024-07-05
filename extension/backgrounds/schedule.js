@@ -98,7 +98,16 @@ function get_sabotage(e) {
                                 header_cell2.classList.add("ivy_header_cell");
                                 header_cell2.classList.add("ivy_cell_2data")
                                 header_cell2.classList.add("ivy_header_cell_absence")
-                                header_cell2.textContent = "欠/落";
+                                
+                                chrome.storage.local.get(['countdown'], function(result) {
+                                    if(result.countdown == true){
+                                        header_cell2.textContent = "残/落";
+                                    }else{
+                                        header_cell2.textContent = "欠/落";
+                                    }
+                                });
+
+
                                 const header_cell3 = header_row.insertCell(2);
                                 header_cell3.classList.add("ivy_header_cell");
                                 header_cell3.classList.add("ivy_cell_1data");
@@ -118,7 +127,17 @@ function get_sabotage(e) {
                                 data_cell2.classList.add("ivy_data_cell");
                                 data_cell2.classList.add("ivy_cell_2data")
                                 data_cell2.classList.add("ivy_data_cell_absence")
-                                data_cell2.textContent = sabotage[href][2] + "/" + sabotage[href][4];
+
+                                chrome.storage.local.get(['countdown'], function(result) {
+
+                                    if(result.countdown == true){
+                                        data_cell2.textContent = sabotage[href][3] + "/" + sabotage[href][4];
+                                    }else{
+                                        data_cell2.textContent = sabotage[href][2] + "/" + sabotage[href][4];
+                                    }
+                                });
+                                
+                                
                                 const data_cell3 = data_row.insertCell(2);
                                 data_cell3.classList.add("ivy_data_cell");
                                 data_cell3.classList.add("ivy_cell_1data");
