@@ -39,14 +39,27 @@ body{
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	width: 36px;
+    min-width: 36px;
+	width: auto;
 	height: 36px;
 	background: #aaa;
 	color: #fff;
-	border-radius:50%;
+    border:none;
+	border-radius:18px;
 	font-size: 1.0rem;
 	cursor: pointer;
 }
+input[type="button"] {
+    background-color: var(--enable-color);
+}
+input[type="button"]:hover {
+    background-color: var(--enable-hover-color);
+}
+input[type="button"]:active {
+    background-color: var(--enable-color);
+}
+
+
 .btn:before {
 	content: 'OFF';
 }
