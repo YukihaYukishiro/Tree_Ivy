@@ -19,7 +19,7 @@ body{
 
 .setting{
     display: flex;
-    justify-content:left;
+    justify-content: space-between;
     vertical-align: middle;
 }
 

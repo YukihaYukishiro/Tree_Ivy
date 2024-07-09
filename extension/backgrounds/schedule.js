@@ -1,14 +1,65 @@
+// let mypage;
+
 window.addEventListener("load", get_sabotage, false);
 window.addEventListener("load", function () { 
-    const jsInitCheckTimer = setInterval(jsLoaded, 1000);
+    const Timer = setInterval(jsLoaded, 1000);
     async function jsLoaded() {
     if(document.querySelector("body > div.v2-container > div > div.main.sp-margin-bottom-md > div > div.panel.panel-default.sp-margin-bottom-none.sp-border-bottom-none.sp-border-top-none > div.table-responsive.sp-margin-bottom-none.sp-padding-sm > div > div.margin-bottom") != null){
-    const button = document.querySelector("body > div.v2-container > div > div.main.sp-margin-bottom-md > div > div.panel.panel-default.sp-margin-bottom-none.sp-border-bottom-none.sp-border-top-none > div.table-responsive.sp-margin-bottom-none.sp-padding-sm > div > div.margin-bottom");
-    for(let i = 0; i < 5; i++){
-        button.children[i].addEventListener("click", get_sabotage, false);
+        const button = document.querySelector("body > div.v2-container > div > div.main.sp-margin-bottom-md > div > div.panel.panel-default.sp-margin-bottom-none.sp-border-bottom-none.sp-border-top-none > div.table-responsive.sp-margin-bottom-none.sp-padding-sm > div > div.margin-bottom");
+        for(let i = 0; i < 5; i++){
+            button.children[i].addEventListener("click", get_sabotage, false);
+        }
     }
-}
+
+    chrome.storage.local.get(['monday'], function(result) {
+        if(result.monday == true){
+            // calculate the date of the monday in the week
+            const today = new Date();
+            const day = today.getDay();
+            const diff = today.getDate() - day + (day == 0 ? -6:1);
+            const monday = new Date(today.setDate(diff));
+            const year = monday.getFullYear();
+            const month = monday.getMonth() + 1;
+            const date = monday.getDate();
+            const monday_date = `${year}-${month < 10 ? '0' + month : month}-${date < 10 ? '0' + date : date}`;
+
+            fetch(`https://portal.iwasaki.ac.jp/portal/lmsinc/getScheduleCalendar.php?startDate=${monday_date}`, {
+                credentials: 'include',
+            })
+                .then(res => res.text())
+                .then(text => new DOMParser().parseFromString(text, "text/html"))
+                .then(doc => {
+                    const content = doc.getElementsByTagName("table");
+                    document.getElementById("div-top-timetable2").innerHTML = content[0].outerHTML;
+
+                });
+
+                const new_tbody = document.createElement("tbody");
+                const new_record = new_tbody.insertRow(0);
+                for(let i = 0; i < 7; i++){
+                    let new_cell = new_record.insertCell(i);
+                    new_cell.classList.add("week-data");
+                    // 7/9（火）のような形式で曜日と日付を表示
+                    let the_date = new Date(year, month - 1, date + i);
+                    new_cell.textContent = `${the_date.getMonth() + 1}/${the_date.getDate()}（${["日", "月", "火", "水", "木", "金", "土"][the_date.getDay()]}）`;
+                    let new_a = document.createElement("a");
+                    new_a.href = `/lms/schedule/form/0/${the_date.getFullYear()}-${the_date.getMonth() + 1}-${the_date.getDate()}`
+                    new_a.innerHTML = `<i class="fas fa-edit">`
+                    new_cell.appendChild(new_a);
+                }
+
+
+                //make table header start from monday
+                const tbody = document.querySelector("body > div.v2-container > div > div.main.sp-margin-bottom-md > div > div.panel.panel-default.sp-margin-bottom-none.sp-border-bottom-none.sp-border-top-none > div.table-responsive.sp-margin-bottom-none.sp-padding-sm > div > div.table-responsive.other-class.other-class-student-view > table.table.table-bordered.top-timetable-table > tbody");
+                tbody.outerHTML = new_tbody.outerHTML;
+                
+                get_sabotage();
+            }});
+    clearInterval(Timer);
 }}, false);
+
+
+
 
 function get_sabotage(e) {
     const jsInitCheckTimer = setInterval(jsLoaded, 1000);
@@ -58,7 +109,7 @@ function get_sabotage(e) {
 
                 sabotage[tr_content.children[1].children[0].href.split("/")[5]] = [join_sum,class_sum,absenced,absence_left,max_absence, official_absence,css_class];
             }
-
+            // mypage = sabotage;
 
             const tbody = document.querySelector("#div-top-timetable2 > table > tbody");
             // iterate tr in tbody
