@@ -22,8 +22,10 @@ body{
 /* category ---------- */
 
 .category{
-    border-top: 2px solid var(--dark-color);
     border-bottom: 2px solid var(--dark-color);
+}
+.category:first-child{
+    border-top: 2px solid var(--dark-color);
 }
 .category-title{
     color: var(--dark-color);
@@ -48,32 +50,6 @@ body{
 .option-title{
     color: var(--dark-color);
     font-size: smaller;
-}
-
-/* btn ---------- */
-
-.btn {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-    min-width: 36px;
-	width: auto;
-	height: 36px;
-	background: #aaa;
-	color: #fff;
-    border:none;
-	border-radius:18px;
-	font-size: 1.0rem;
-	cursor: pointer;
-}
-.btn {
-    background-color: var(--enable-color);
-}
-.btn:hover {
-    background-color: var(--enable-hover-color);
-}
-.btn:active {
-    background-color: var(--enable-color);
 }
 
 /* switch ---------- */
@@ -136,4 +112,29 @@ body{
 }
 .toggle > input:checked + label::before {
     left: calc(100% - 1.5em + 0.05em);
+}
+
+/* choice */
+
+.choice{
+    display: flex;
+    justify-content:space-evenly;
+    align-items: center;
+
+    border: var(--enable-color) solid 2px;
+    border-radius: 5px;
+}
+.choice input{
+    display: none;
+}
+.choice label{
+    padding: 0.5em;
+    width: 100%;
+    text-align: center;
+    color: var(--enable-color)
+}
+.choice .highlight{
+    background-color: var(--enable-color);
+    color:white;
+    font-weight: bold;
 }

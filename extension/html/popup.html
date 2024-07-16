@@ -39,12 +39,39 @@
 
                     <div class="description">時間割の表示設定</div>
 
-                    <div class="option flex">
-                        <span class="option-title">インジケータの位置を揃える</span>
-                        <div class="toggle">
-                            <input type="checkbox" id="alignIndicator">
-                            <label for="alignIndicator"></label>
+                    <div class="option">
+                        <span class="option-title">左端の曜日</span>
+                        <div class="choice">
+                            <label>当日<input type="radio" name="startDay" value=0></label>
+                            <label>月曜<input type="radio" name="startDay" value=1></label>
+                            <label>日曜<input type="radio" name="startDay" value=2></label>
                         </div>
+                    </div>
+                </details>
+
+                <details class="category" id="experimental">
+                    <summary class="category-title">
+                        <span>実験的機能</span>
+                    </summary>
+
+                    <div class="description">実験的な機能の設定</div>
+
+                    <div class="option">
+                        <span class="option-title">時間割の表示</span>
+                        <label class="switch">
+                            <span>詳細表示</span>
+                            <input type="checkbox" id="detailcalender">
+                            <span>簡易表示</span>
+                        </label>
+                    </div>
+
+                    <div class="option">
+                        <span class="option-title">単位認定試験の日時(不正確)</span>
+                        <label class="switch">
+                            <span>表示</span>
+                            <input type="checkbox" id="show_examdate">
+                            <span>非表示</span>
+                        </label>
                     </div>
                 </details>
 
