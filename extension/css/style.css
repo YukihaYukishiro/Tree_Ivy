@@ -42,3 +42,21 @@
 .ivy_cell_1data{
     width: 20% !important;
 }
+
+
+
+.hover-element {
+    display: none;
+    position: absolute;
+    top: 1;
+    right: 0;
+    background-color:#edf;
+    color: #a00;
+    padding: 1px;
+    border: 1px dashed #666;
+    border-radius: 5px;
+
+
+    z-index: 100;
+    font-size: 0.95em;
+  }
