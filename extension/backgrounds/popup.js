@@ -1,10 +1,22 @@
-toggle_countdown = function() {
-    chrome.storage.local.set({countdown: document.getElementById('countdown').checked});
-    console.log('countdown:', document.getElementById('countdown').checked);
-}
+document.addEventListener('DOMContentLoaded', function() {
+    const switchInput = document.querySelector('.switch input[type="checkbox"]');
+    const labelSwitch = switchInput.parentNode;
 
-chrome.storage.local.get(['countdown'], function(result) {
-    if(result.countdown == true){
-        document.getElementById('countdown').checked = true;
-    }});
-document.getElementById('countdown').addEventListener('change', toggle_countdown);
+    // テキストノードをspanで囲む
+    const nodes = Array.from(labelSwitch.childNodes).filter(node => node.nodeType === Node.TEXT_NODE);
+    nodes.forEach(node => {
+        const span = document.createElement('span');
+        span.textContent = node.nodeValue.trim();
+        labelSwitch.insertBefore(span, node);
+        labelSwitch.removeChild(node);
+    });
+
+    const spans = labelSwitch.querySelectorAll('span');
+
+    // 初期状態の設定
+    spans[switchInput.checked ? 1 : 0].classList.add('highlight');
+
+    switchInput.addEventListener('change', function() {
+        spans.forEach(span => span.classList.toggle('highlight'));
+    });
+});

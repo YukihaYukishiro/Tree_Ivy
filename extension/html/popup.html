@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" type="text/css" href="popup.css">
-    <link rel="stylesheet" type="text/css" href="popup_template.css">
+    <link rel="stylesheet" type="text/css" href="../css/popup/popup.css">
+    <link rel="stylesheet" type="text/css" href="../css/popup/popup_template.css">
     <meta charset="utf-8">
 </head>
 
@@ -13,13 +13,14 @@
                 <span id="popup-title">settings</span>
             </div>
             <div id="popup-body">
-                <div class="setting">
-                    <span class="settings_text">カウントダウン</span>
-                    <span class="settings_button">
-                        <!-- toggle button -->
-                        <input type="checkbox" id="countdown" class="checkbox">
-                        <label for="countdown" class="btn" ></label>
-                    </span>
+
+                <div class="option">
+                    <span class="option-title">欠席状況表示</span>
+                    <label class="switch">
+                        欠席数
+                        <input type="checkbox" id="countdown">
+                        カウントダウン
+                    </label>
                 </div>
                 
             </div>
@@ -30,5 +31,5 @@
     </div>
     
     
-    <script src="popup.js"></script>
+    <script src="../backgrounds/popup.js"></script>
 </html>
