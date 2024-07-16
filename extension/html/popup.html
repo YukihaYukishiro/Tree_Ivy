@@ -10,26 +10,51 @@
     <div id="popup">
         <div id="popup-content">
             <div id="popup-header" class="round">
-                <span id="popup-title">settings</span>
+                <span id="popup-title">Tree-Ivy</span>
             </div>
             <div id="popup-body">
 
-                <div class="option">
-                    <span class="option-title">欠席状況表示</span>
-                    <label class="switch">
-                        欠席数
-                        <input type="checkbox" id="countdown">
-                        カウントダウン
-                    </label>
-                </div>
-                
+                <details class="category" id="indicator" open>
+                    <summary class="category-title">
+                        <span>Tree-Ivy インジケータ</span>
+                    </summary>
+                    
+                    <div class="description">時間割およびマイページに表示される<br>インジケータの設定</div>
+
+                    <div class="option">
+                        <span class="option-title">欠席状況表示</span>
+                        <label class="switch">
+                            <span>欠席数</span>
+                            <input type="checkbox" id="countdown">
+                            <span>カウントダウン</span>
+                        </label>
+                    </div>
+
+                </details>
+
+                <details class="category" id="schedule" open>
+                    <summary class="category-title">
+                        <span>時間割</span>
+                    </summary>
+
+                    <div class="description">時間割の表示設定</div>
+
+                    <div class="option flex">
+                        <span class="option-title">インジケータの位置を揃える</span>
+                        <div class="toggle">
+                            <input type="checkbox" id="alignIndicator">
+                            <label for="alignIndicator"></label>
+                        </div>
+                    </div>
+                </details>
+
             </div>
             <div id="popup-footer">
-                <input type="button" class="btn full-width" id="reload_page" value="再読み込み">
+                
             </div>
         </div>
     </div>
     
-    
-    <script src="../backgrounds/popup.js"></script>
+    <script src="../backgrounds/popup/load.js"></script>
+    <script src="../backgrounds/popup/set_event.js"></script>
 </html>
