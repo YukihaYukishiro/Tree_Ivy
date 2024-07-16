@@ -1,8 +1,11 @@
 {
   "manifest_version": 3,
   "name": "Tree_Ivy_Openβ",
-  "version": "0.3",
+  "version": "0.5",
   "description": "スタログ用出欠管理拡張システム",
+  "permissions": [
+    "storage"
+  ],
   "content_scripts": [
     {
       "matches": [
@@ -33,6 +36,10 @@
       ]
     }
   ],
+  "action": {
+    "default_popup": "html/popup.html"
+  },
+
   "icons": {
     "16": "images/16x16.png",
     "48": "images/48x48.png",

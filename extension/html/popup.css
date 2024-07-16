@@ -1,0 +1,62 @@
+body{
+    width: 300px;
+    background-color: rgb(195, 249, 198);
+}
+#popup-header{
+    background-color: rgb(0, 128, 0);
+    color: white;
+    padding: 10px;
+    text-align: center;
+    font-size: x-large;
+    font-weight: bold;
+}
+
+#popup-body{
+    padding: 10px;
+    text-align: left;
+    font-size: large;
+}
+
+.setting{
+    display: flex;
+    justify-content: space-between;
+    vertical-align: middle;
+}
+
+.settings_text{
+    margin-top: 15px;
+    margin-left: 10px;
+    font-size: large;
+}
+
+.settings_button{
+    margin-top: 10px;
+    margin-left: 10px;
+    font-size: large;
+}
+
+.btn {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 36px;
+	height: 36px;
+	background: #aaa;
+	color: #fff;
+	border-radius:50%;
+	font-size: 1.0rem;
+	cursor: pointer;
+}
+.btn:before {
+	content: 'OFF';
+}
+.checkbox {
+	display: none;
+}
+/*以下を追記*/
+.checkbox:checked+.btn {
+	background: #1ad33a;
+}
+.checkbox:checked+.btn:before {
+	content: 'ON';
+}
