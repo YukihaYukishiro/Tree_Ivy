@@ -8,13 +8,15 @@ window.addEventListener("load", function () {
             const button = document.querySelector("body > div.v2-container > div > div.main.sp-margin-bottom-md > div > div.panel.panel-default.sp-margin-bottom-none.sp-border-bottom-none.sp-border-top-none > div.table-responsive.sp-margin-bottom-none.sp-padding-sm > div > div.margin-bottom");
             for (let i = 0; i < 5; i++) {
 
-                if(i == 2){
+                if (i == 2) {
                     button.children[i].addEventListener("click", function () {
-                        setTimeout(function(){
+                        setTimeout(function () {
                             const jsInitCheckTimer = setInterval(jsLoaded, 100);
                             async function jsLoaded() {
                                 if (document.querySelector(".div-class-name") != null) {
                                     clearInterval(jsInitCheckTimer);
+
+                                    //月曜始まりに固定する設定が有効な場合
                                     chrome.storage.local.get(['monday'], function (result) {
                                         if (result.monday == true) {
                                             // calculate the date of the monday in the week
@@ -26,7 +28,7 @@ window.addEventListener("load", function () {
                                             const month = monday.getMonth() + 1;
                                             const date = monday.getDate();
                                             const monday_date = `${year}-${month < 10 ? '0' + month : month}-${date < 10 ? '0' + date : date}`;
-                                
+
                                             fetch(`https://portal.iwasaki.ac.jp/portal/lmsinc/getScheduleCalendar.php?startDate=${monday_date}`, {
                                                 credentials: 'include',
                                             })
@@ -48,35 +50,36 @@ window.addEventListener("load", function () {
                                                         new_a.innerHTML = `<i class="fas fa-edit">`
                                                         new_cell.appendChild(new_a);
                                                     }
-                                
-                                
+
+
                                                     //make table header start from monday
                                                     const tbody = document.querySelector("body > div.v2-container > div > div.main.sp-margin-bottom-md > div > div.panel.panel-default.sp-margin-bottom-none.sp-border-bottom-none.sp-border-top-none > div.table-responsive.sp-margin-bottom-none.sp-padding-sm > div > div.table-responsive.other-class.other-class-student-view > table.table.table-bordered.top-timetable-table > tbody");
                                                     tbody.outerHTML = new_tbody.outerHTML;
                                                     override_content();
                                                 });
-                                
-                                
-                                
+
+
+
                                         }
-                                    });                                    
+                                    });
+                                    // ここまで                            
                                     override_content();
                                 }
                             }
                         }, 100);
                     }, false);
                     continue;
-                }   
+                }
 
 
                 button.children[i].addEventListener("click", function () {
-                    setTimeout(function(){
+                    setTimeout(function () {
                         const jsInitCheckTimer = setInterval(jsLoaded, 100);
                         async function jsLoaded() {
                             if (document.querySelector(".div-class-name") != null) {
                                 clearInterval(jsInitCheckTimer);
-                                
-                                
+
+
 
                                 override_content();
                             }
@@ -91,6 +94,8 @@ window.addEventListener("load", function () {
 
 
 window.addEventListener("pageshow", function () {
+
+    // 月曜始まりに固定する設定が有効な場合
     chrome.storage.local.get(['monday'], function (result) {
         if (result.monday == true) {
             // calculate the date of the monday in the week
@@ -136,6 +141,8 @@ window.addEventListener("pageshow", function () {
 
         }
     });
+    // ここまで
+
     override_content();
 }, false);
 
@@ -215,10 +222,12 @@ function override_content() {
                             const a = section.children[0];
                             // check if a tag has href attribute
                             if (a.hasAttribute('href')) {
-                                const href = `https://portal.iwasaki.ac.jp${a.getAttribute('href')}`.split("/")[5];
+                                a.classList.add("T_I_link_target");
+                                const href = `${a.getAttribute('href')}`.split("/")[3];
                                 const ivy = document.createElement("div");
                                 ivy.classList.add("T_I")
                                 ivy.classList.add(mypage[href][6]);
+                                ivy.setAttribute("classid", href);
 
                                 const table = document.createElement("table");
                                 ivy.appendChild(table);
@@ -293,6 +302,136 @@ function override_content() {
                 }
             }
 
+
+            chrome.storage.local.get(['experimental_exam'], function (result) {
+                if (result.experimental_exam == true) {
+                    addEventListener_to_overrided_content();
+                }
+            });
+
         }
+    }
+}
+
+
+function addEventListener_to_overrided_content() {
+
+    // get all elements with class T_I
+    const elements = document.getElementsByClassName("T_I_link_target");
+    // iterate all elements
+    for (let i = 0; i < elements.length; i++) {
+        const element = elements[i];
+        const classid = element.getAttribute("href").split("/")[3];
+
+        const hover_element = document.createElement("div");
+        hover_element.classList.add("hover-element");
+        hover_element.textContent = "単位認定試験:";
+
+        const url = `https://portal.iwasaki.ac.jp/portal/lmsinc/getLessonList.php?classId=${classid}`;
+
+        fetch(url, {
+            credentials: 'include',
+        })
+            .then(res => res.text())
+            .then(text => new DOMParser().parseFromString(text, "text/html"))
+            .then(doc => {
+                const tbody = doc.querySelector(".table-default").children[1];
+                // fix data
+                for (let i = 0; i < tbody.children.length; i++) {
+                    let tr = tbody.children[i];
+                    if (tr.children.length == 0) {
+                        tr.remove();
+                    }
+                }
+                // get data from table
+                const pattern = /\d{2}\/\d{2}\(.\)/;
+                let has_exam = false;
+                let last_subject = tbody.children[tbody.children.length - 1].children[0].textContent.match(pattern)[0];
+                for (let i = tbody.children.length - 1; i >= 0; i--) {
+                    let tr = tbody.children[i];
+                    let date = tr.children[0].textContent;
+                    // get only date
+                    date = date.match(pattern)[0];
+                    let subject = tr.children[1].textContent;
+                    if (subject.includes("単位認定") && !subject.includes("対策")) {
+                        has_exam = true;
+                        hover_element.textContent += date;
+                    }
+                }
+                // if there is no exam make last subject as exam
+                if (!has_exam) {
+                    hover_element.textContent += last_subject;
+                }
+            });
+
+
+        element.appendChild(hover_element);
+
+        // add event listener to each element
+
+        element.addEventListener("mouseenter", function () {
+            hover_element.style.display = "block";
+        });
+
+        element.addEventListener("mouseleave", function () {
+            hover_element.style.display = "none";
+        });
+
+
+
+
+
+        // // add event listener to each element
+        // element.addEventListener("click", function () {
+
+        //     let classid = element.getAttribute("classid");
+        //     let url = `https://portal.iwasaki.ac.jp/portal/lmsinc/getLessonList.php?classId=${classid}`;
+
+        //     fetch(url, {
+        //         credentials: 'include',
+        //     })
+        //         .then(res => res.text())
+        //         .then(text => new DOMParser().parseFromString(text, "text/html"))
+        //         .then(doc => {
+        // const tbody = doc.querySelector(".table-default").children[1];
+        // // fix data
+        // for (let i = 0; i < tbody.children.length; i++) {
+        //     let tr = tbody.children[i];
+        //     if (tr.children.length == 0) {
+        //         tr.remove();
+        //     }
+        // }
+        // // get data from table
+        // const pattern = /\d{2}\/\d{2}\(.\)/;
+        // let has_exam = false;
+        // let last_subject = tbody.children[tbody.children.length - 1].children[0].textContent.match(pattern)[0];
+        // for (let i = tbody.children.length - 1; i >= 0; i--) {
+        //     let tr = tbody.children[i];
+        //     let date = tr.children[0].textContent;
+        //     // get only date
+        //     date = date.match(pattern)[0];
+        //     let subject = tr.children[1].textContent;
+        //     if (subject.includes("単位認定") && !subject.includes("対策")) {
+        //         has_exam = true;
+
+        //         // alert the exam date
+        //         console.log(tr);
+        //         alert(date);
+
+        //     }
+        // }
+        // // if there is no exam make last subject as exam
+        // if (!has_exam) {
+        //     console.log("no exam found");
+        //     alert(last_subject);
+        // }
+
+
+
+        //         }, false);
+        // });
+
+
+
     }
 }
