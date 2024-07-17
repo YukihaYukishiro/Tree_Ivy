@@ -1,0 +1,140 @@
+body{
+    width: 300px;
+    background-color: rgb(205, 251, 207);
+    user-select: none;
+}
+
+#popup-header{
+    background-color: var(--dark-color);
+    color: white;
+    padding: 10px;
+    text-align: center;
+    font-size: x-large;
+    font-weight: bold;
+}
+
+#popup-body{
+    padding: 0.5em;
+    text-align: left;
+    font-size: medium;
+}
+
+/* category ---------- */
+
+.category{
+    border-bottom: 2px solid var(--dark-color);
+}
+.category:first-child{
+    border-top: 2px solid var(--dark-color);
+}
+.category-title{
+    color: var(--dark-color);
+    font-size: larger;
+    font-weight: bold;
+    margin: 0;
+    padding: 0.25em 0.5em;
+}
+.category-title:hover{
+    background-color: var(--enable-hover-color);
+}
+
+.description{
+    font-size: small;
+    padding: 0.5em;
+}
+.option{
+    justify-content: left;
+    vertical-align: middle;
+    padding: 0.5em;
+}
+.option-title{
+    color: var(--dark-color);
+    font-size: smaller;
+}
+
+/* switch ---------- */
+
+.switch input {
+    display: none;
+}
+.switch {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+    border: var(--enable-color) solid 2px;
+    border-radius: 5px;
+}
+.switch span {
+    width: 50%;
+    padding: 5px 0.5em;
+    text-align: center;
+    color:var(--enable-color);
+}
+.switch .highlight{
+    background-color: var(--enable-color);
+    color:white;
+    font-weight: bold;
+}
+
+/* toggle */ 
+
+.toggle{
+    display: table;
+    font-size: 1em;
+}
+.toggle>input{
+    display: none;
+}
+.toggle>label {
+    content: '';
+    display: block;
+    position: relative;
+    width: 3em;
+    height:1.5em;
+    background-color: #333333;
+    border-radius: 1.5em;
+    cursor: pointer;
+}
+.toggle > input:checked + label {
+    background-color: var(--enable-color);
+}
+.toggle > label::before {
+    position: absolute;
+    top: 0.1em;
+    left: 0.1em;
+    width: calc(1.5em - 0.2em);
+    height: calc(1.5em - 0.2em);
+    border-radius: calc(1em - 0.1em);
+    background-color: #fff;
+    transition: 0.1s;
+    content: "";
+}
+.toggle > input:checked + label::before {
+    left: calc(100% - 1.5em + 0.05em);
+}
+
+/* choice */
+
+.choice{
+    display: flex;
+    justify-content:space-evenly;
+    align-items: center;
+
+    border: var(--enable-color) solid 2px;
+    border-radius: 5px;
+}
+.choice input{
+    display: none;
+}
+.choice label{
+    padding: 0.5em;
+    width: 100%;
+    text-align: center;
+    color: var(--enable-color)
+}
+.choice .highlight{
+    background-color: var(--enable-color);
+    color:white;
+    font-weight: bold;
+}
