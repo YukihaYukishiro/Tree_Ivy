@@ -34,3 +34,20 @@ chrome.storage.local.get(['startDay'], function(result) {
     });
 document.querySelectorAll('input[name="startDay"]').forEach(
     input => { input.addEventListener('change', update_startDay); });
+
+
+
+
+
+
+// experiment
+
+    toggle_show_examdate = function() {
+        chrome.storage.local.set({show_examdate: document.getElementById('show_examdate').checked});
+        console.log('show_examdate:', document.getElementById('show_examdate').checked);
+    }
+    chrome.storage.local.get(['show_examdate'], function(result) {
+        if(result.show_examdate == true){
+            document.getElementById('show_examdate').checked = true;
+        }});
+    document.getElementById('show_examdate').addEventListener('change', toggle_show_examdate);

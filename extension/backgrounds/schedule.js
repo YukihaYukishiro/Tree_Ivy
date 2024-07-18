@@ -1,150 +1,55 @@
 let mypage;
 
+
+// to do
+// イベント欄のずれの対応
+
+
 window.addEventListener("load", get_sabotage, false);
 window.addEventListener("load", function () {
-    const Timer = setInterval(jsLoaded, 100);
-    async function jsLoaded() {
-        if (document.querySelector("body > div.v2-container > div > div.main.sp-margin-bottom-md > div > div.panel.panel-default.sp-margin-bottom-none.sp-border-bottom-none.sp-border-top-none > div.table-responsive.sp-margin-bottom-none.sp-padding-sm > div > div.margin-bottom") != null) {
-            const button = document.querySelector("body > div.v2-container > div > div.main.sp-margin-bottom-md > div > div.panel.panel-default.sp-margin-bottom-none.sp-border-bottom-none.sp-border-top-none > div.table-responsive.sp-margin-bottom-none.sp-padding-sm > div > div.margin-bottom");
-            for (let i = 0; i < 5; i++) {
 
-                if (i == 2) {
-                    button.children[i].addEventListener("click", function () {
-                        setTimeout(function () {
-                            const jsInitCheckTimer = setInterval(jsLoaded, 100);
-                            async function jsLoaded() {
-                                if (document.querySelector(".div-class-name") != null) {
-                                    clearInterval(jsInitCheckTimer);
+    const origin_table = document.querySelector(".other-class-student-view");
+    document.getElementById("div-top-timetable2").remove();
 
-                                    //月曜始まりに固定する設定が有効な場合
-                                    chrome.storage.local.get(['monday'], function (result) {
-                                        if (result.monday == true) {
-                                            // calculate the date of the monday in the week
-                                            const today = new Date();
-                                            const day = today.getDay();
-                                            const diff = today.getDate() - day + (day == 0 ? -6 : 1);
-                                            const monday = new Date(today.setDate(diff));
-                                            const year = monday.getFullYear();
-                                            const month = monday.getMonth() + 1;
-                                            const date = monday.getDate();
-                                            const monday_date = `${year}-${month < 10 ? '0' + month : month}-${date < 10 ? '0' + date : date}`;
+    const overrided_table = document.createElement("div");
+    origin_table.insertBefore(overrided_table, origin_table.children[1]);
 
-                                            fetch(`https://portal.iwasaki.ac.jp/portal/lmsinc/getScheduleCalendar.php?startDate=${monday_date}`, {
-                                                credentials: 'include',
-                                            })
-                                                .then(res => res.text())
-                                                .then(text => new DOMParser().parseFromString(text, "text/html"))
-                                                .then(doc => {
-                                                    const content = doc.getElementsByTagName("table");
-                                                    document.getElementById("div-top-timetable2").innerHTML = content[0].outerHTML;
-                                                    const new_tbody = document.createElement("tbody");
-                                                    const new_record = new_tbody.insertRow(0);
-                                                    for (let i = 0; i < 7; i++) {
-                                                        let new_cell = new_record.insertCell(i);
-                                                        new_cell.classList.add("week-data");
-                                                        // 7/9（火）のような形式で曜日と日付を表示
-                                                        let the_date = new Date(year, month - 1, date + i);
-                                                        new_cell.textContent = `${the_date.getMonth() + 1}/${the_date.getDate()}（${["日", "月", "火", "水", "木", "金", "土"][the_date.getDay()]}）`;
-                                                        let new_a = document.createElement("a");
-                                                        new_a.href = `/lms/schedule/form/0/${the_date.getFullYear()}-${the_date.getMonth() + 1}-${the_date.getDate()}`
-                                                        new_a.innerHTML = `<i class="fas fa-edit">`
-                                                        new_cell.appendChild(new_a);
-                                                    }
+    overrided_table.id = "tree_ivy_overrided_table";
+    const loading = document.createElement("div");
+    loading.classList.add("loading");
+    loading.innerText = "Loading...";
+    overrided_table.appendChild(loading);
+    
 
 
-                                                    //make table header start from monday
-                                                    const tbody = document.querySelector("body > div.v2-container > div > div.main.sp-margin-bottom-md > div > div.panel.panel-default.sp-margin-bottom-none.sp-border-bottom-none.sp-border-top-none > div.table-responsive.sp-margin-bottom-none.sp-padding-sm > div > div.table-responsive.other-class.other-class-student-view > table.table.table-bordered.top-timetable-table > tbody");
-                                                    tbody.outerHTML = new_tbody.outerHTML;
-                                                    override_content();
-                                                });
-
-
-
-                                        }
-                                    });
-                                    // ここまで                            
-                                    override_content();
-                                }
-                            }
-                        }, 100);
-                    }, false);
-                    continue;
-                }
-
-
-                button.children[i].addEventListener("click", function () {
-                    setTimeout(function () {
-                        const jsInitCheckTimer = setInterval(jsLoaded, 100);
-                        async function jsLoaded() {
-                            if (document.querySelector(".div-class-name") != null) {
-                                clearInterval(jsInitCheckTimer);
-
-
-
-                                override_content();
-                            }
-                        }
-                    }, 100);
-                }, false);
-            }
+    chrome.storage.local.get(['startDay'], function (result) {
+        window.localStorage.setItem("date_now", new Date());
+        window.localStorage.setItem("startday", new Date());
+    
+        if (result.startDay == 1) {
+            var monday = new Date();
+            var day = monday.getDay();
+            var diff = monday.getDate() - day + (day == 0 ? -6 : 1);
+            monday = new Date(monday.setDate(diff));
+            window.localStorage.setItem("date_now", monday);
+            window.localStorage.setItem("startday", monday);
+        } else if (result.startDay == 2) {
+            var sunday = new Date();
+            var day = sunday.getDay();
+            var diff = sunday.getDate() - day;
+            sunday = new Date(sunday.setDate(diff));
+            window.localStorage.setItem("date_now", sunday);
+            window.localStorage.setItem("startday", sunday);
         }
-        clearInterval(Timer);
-    }
-}, false);
-
-
-window.addEventListener("pageshow", function () {
-
-    // 月曜始まりに固定する設定が有効な場合
-    chrome.storage.local.get(['monday'], function (result) {
-        if (result.monday == true) {
-            // calculate the date of the monday in the week
-            const today = new Date();
-            const day = today.getDay();
-            const diff = today.getDate() - day + (day == 0 ? -6 : 1);
-            const monday = new Date(today.setDate(diff));
-            const year = monday.getFullYear();
-            const month = monday.getMonth() + 1;
-            const date = monday.getDate();
-            const monday_date = `${year}-${month < 10 ? '0' + month : month}-${date < 10 ? '0' + date : date}`;
-
-            fetch(`https://portal.iwasaki.ac.jp/portal/lmsinc/getScheduleCalendar.php?startDate=${monday_date}`, {
-                credentials: 'include',
-            })
-                .then(res => res.text())
-                .then(text => new DOMParser().parseFromString(text, "text/html"))
-                .then(doc => {
-                    const content = doc.getElementsByTagName("table");
-                    document.getElementById("div-top-timetable2").innerHTML = content[0].outerHTML;
-                    const new_tbody = document.createElement("tbody");
-                    const new_record = new_tbody.insertRow(0);
-                    for (let i = 0; i < 7; i++) {
-                        let new_cell = new_record.insertCell(i);
-                        new_cell.classList.add("week-data");
-                        // 7/9（火）のような形式で曜日と日付を表示
-                        let the_date = new Date(year, month - 1, date + i);
-                        new_cell.textContent = `${the_date.getMonth() + 1}/${the_date.getDate()}（${["日", "月", "火", "水", "木", "金", "土"][the_date.getDay()]}）`;
-                        let new_a = document.createElement("a");
-                        new_a.href = `/lms/schedule/form/0/${the_date.getFullYear()}-${the_date.getMonth() + 1}-${the_date.getDate()}`
-                        new_a.innerHTML = `<i class="fas fa-edit">`
-                        new_cell.appendChild(new_a);
-                    }
-
-
-                    //make table header start from monday
-                    const tbody = document.querySelector("body > div.v2-container > div > div.main.sp-margin-bottom-md > div > div.panel.panel-default.sp-margin-bottom-none.sp-border-bottom-none.sp-border-top-none > div.table-responsive.sp-margin-bottom-none.sp-padding-sm > div > div.table-responsive.other-class.other-class-student-view > table.table.table-bordered.top-timetable-table > tbody");
-                    tbody.outerHTML = new_tbody.outerHTML;
-                    override_content();
-                });
-
-
-
-        }
+        update_shedule_header(new Date(window.localStorage.getItem("date_now")));
+    
     });
-    // ここまで
+    startDay_init();
+    override_buttons();
 
-    override_content();
 }, false);
+
+
 
 
 
@@ -194,10 +99,32 @@ function get_sabotage(e) {
             mypage = sabotage;
 
         });
+}
 
-
-
-
+function update_shedule_header(startdate) {
+    const new_tbody = document.createElement("tbody");
+    const new_record = new_tbody.insertRow(0);
+    for (let i = 0; i < 7; i++) {
+        let new_cell = new_record.insertCell(i);
+        new_cell.classList.add("week-data");
+        // 7/9（火）のような形式で曜日と日付を表示
+        let the_date = startdate;
+        new_cell.textContent = `${the_date.getMonth() + 1}/${the_date.getDate()}（${["日", "月", "火", "水", "木", "金", "土"][the_date.getDay()]}）`;
+        // add sat and sun class to cell
+        if (the_date.getDay() == 0) {
+            new_cell.classList.add("week-data-sun");
+        } else if (the_date.getDay() == 6) {
+            new_cell.classList.add("week-data-sat");
+        }
+        let new_a = document.createElement("a");
+        new_a.href = `/lms/schedule/form/0/${the_date.getFullYear()}-${the_date.getMonth() + 1}-${the_date.getDate()}`
+        new_a.innerHTML = `<i class="fas fa-edit">`
+        new_cell.appendChild(new_a);
+        the_date.setDate(startdate.getDate() + 1);
+    }
+    //make table header start from sunday
+    const tbody = document.querySelector("body > div.v2-container > div > div.main.sp-margin-bottom-md > div > div.panel.panel-default.sp-margin-bottom-none.sp-border-bottom-none.sp-border-top-none > div.table-responsive.sp-margin-bottom-none.sp-padding-sm > div > div.table-responsive.other-class.other-class-student-view > table.table.table-bordered.top-timetable-table > tbody");
+    tbody.outerHTML = new_tbody.outerHTML;
 }
 
 function override_content() {
@@ -206,7 +133,7 @@ function override_content() {
     async function jsLoaded() {
         if (document.querySelector(".div-class-name") != null && mypage != null) {
             clearInterval(jsInitCheckTimer);
-            const tbody = document.querySelector("#div-top-timetable2 > table > tbody");
+            const tbody = document.querySelector("#tree_ivy_overrided_table > table > tbody");
             // iterate tr in tbody
             for (let i = 0; i < tbody.children.length; i++) {
                 const tr = tbody.children[i];
@@ -303,9 +230,9 @@ function override_content() {
             }
 
 
-            chrome.storage.local.get(['experimental_exam'], function (result) {
-                if (result.experimental_exam == true) {
-                    addEventListener_to_overrided_content();
+            chrome.storage.local.get(['show_examdate'], function (result) {
+                if (result.show_examdate == true) {
+                    addEventListener_to_link_for_exam();
                 }
             });
 
@@ -314,7 +241,7 @@ function override_content() {
 }
 
 
-function addEventListener_to_overrided_content() {
+function addEventListener_to_link_for_exam() {
 
     // get all elements with class T_I
     const elements = document.getElementsByClassName("T_I_link_target");
@@ -377,61 +304,157 @@ function addEventListener_to_overrided_content() {
             hover_element.style.display = "none";
         });
 
-
-
-
-
-        // // add event listener to each element
-        // element.addEventListener("click", function () {
-
-        //     let classid = element.getAttribute("classid");
-        //     let url = `https://portal.iwasaki.ac.jp/portal/lmsinc/getLessonList.php?classId=${classid}`;
-
-        //     fetch(url, {
-        //         credentials: 'include',
-        //     })
-        //         .then(res => res.text())
-        //         .then(text => new DOMParser().parseFromString(text, "text/html"))
-        //         .then(doc => {
-        // const tbody = doc.querySelector(".table-default").children[1];
-        // // fix data
-        // for (let i = 0; i < tbody.children.length; i++) {
-        //     let tr = tbody.children[i];
-        //     if (tr.children.length == 0) {
-        //         tr.remove();
-        //     }
-        // }
-        // // get data from table
-        // const pattern = /\d{2}\/\d{2}\(.\)/;
-        // let has_exam = false;
-        // let last_subject = tbody.children[tbody.children.length - 1].children[0].textContent.match(pattern)[0];
-        // for (let i = tbody.children.length - 1; i >= 0; i--) {
-        //     let tr = tbody.children[i];
-        //     let date = tr.children[0].textContent;
-        //     // get only date
-        //     date = date.match(pattern)[0];
-        //     let subject = tr.children[1].textContent;
-        //     if (subject.includes("単位認定") && !subject.includes("対策")) {
-        //         has_exam = true;
-
-        //         // alert the exam date
-        //         console.log(tr);
-        //         alert(date);
-
-        //     }
-        // }
-        // // if there is no exam make last subject as exam
-        // if (!has_exam) {
-        //     console.log("no exam found");
-        //     alert(last_subject);
-        // }
-
-
-
-        //         }, false);
-        // });
-
-
-
     }
+}
+
+
+function startDay_init() {
+
+    function start_from_monday() {//月曜始まり＝１の場合
+        // calculate the date of the monday in the week
+        const today = new Date();
+        const day = today.getDay();
+        const diff = today.getDate() - day + (day == 0 ? -6 : 1);
+        const monday = new Date(today.setDate(diff));
+        const year = monday.getFullYear();
+        const month = monday.getMonth() + 1;
+        const date = monday.getDate();
+        const monday_date = `${year}-${month < 10 ? '0' + month : month}-${date < 10 ? '0' + date : date}`;
+
+        fetch(`https://portal.iwasaki.ac.jp/portal/lmsinc/getScheduleCalendar.php?startDate=${monday_date}`, {
+            credentials: 'include',
+        })
+            .then(res => res.text())
+            .then(text => new DOMParser().parseFromString(text, "text/html"))
+            .then(doc => {
+                const content = doc.getElementsByTagName("table");
+                document.getElementById("tree_ivy_overrided_table").innerHTML = content[0].outerHTML;
+
+                override_content();
+
+            });
+    }
+
+    function start_from_sunday() {//日曜始まり＝０の場合
+        // calculate the date of the sunday in the week
+        const today = new Date();
+        const day = today.getDay();
+        const diff = today.getDate() - day;
+        const sunday = new Date(today.setDate(diff));
+        const year = sunday.getFullYear();
+        const month = sunday.getMonth() + 1;
+        const date = sunday.getDate();
+        const sunday_date = `${year}-${month < 10 ? '0' + month : month}-${date < 10 ? '0' + date : date}`;
+
+        fetch(`https://portal.iwasaki.ac.jp/portal/lmsinc/getScheduleCalendar.php?startDate=${sunday_date}`, {
+            credentials: 'include',
+        })
+            .then(res => res.text())
+            .then(text => new DOMParser().parseFromString(text, "text/html"))
+            .then(doc => {
+                const content = doc.getElementsByTagName("table");
+                document.getElementById("tree_ivy_overrided_table").innerHTML = content[0].outerHTML;
+
+
+                override_content();
+            });
+    }
+
+    function start_from_today() {//今日始まり＝0の場合
+        const today = new Date();
+        const year = today.getFullYear();
+        const month = today.getMonth() + 1;
+        const date = today.getDate();
+        const today_date = `${year}-${month < 10 ? '0' + month : month}-${date < 10 ? '0' + date : date}`;
+        fetch(`https://portal.iwasaki.ac.jp/portal/lmsinc/getScheduleCalendar.php?startDate=${today_date}`, {
+            credentials: 'include',
+        })
+            .then(res => res.text())
+            .then(text => new DOMParser().parseFromString(text, "text/html"))
+            .then(doc => {
+                const content = doc.getElementsByTagName("table");
+                document.getElementById("tree_ivy_overrided_table").innerHTML = content[0].outerHTML;
+
+                override_content();
+            });
+    }
+
+    chrome.storage.local.get(['startDay'], function (result) {
+        switch (result.startDay) {
+            case "0":
+                start_from_today();
+                break;
+            case "1":
+                start_from_monday();
+                break;
+            case "2":
+                start_from_sunday();
+                break;
+
+            default:
+                override_content();
+
+                break;
+        }
+    });
+}
+
+function override_buttons() {
+    function removeEventListeners(element, event) {
+        var newElement = element.cloneNode(true);
+        element.parentNode.replaceChild(newElement, element);
+        return newElement;
+    }
+
+    function shift_date(days) {
+        const schedule_now = new Date(window.localStorage.getItem("date_now"));
+        schedule_now.setDate(schedule_now.getDate() + days);
+        window.localStorage.setItem("date_now", schedule_now);
+        const year = schedule_now.getFullYear();
+        const month = schedule_now.getMonth() + 1;
+        const date = schedule_now.getDate();
+        const new_date = `${year}-${month < 10 ? '0' + month : month}-${date < 10 ? '0' + date : date}`;
+        fetch(`https://portal.iwasaki.ac.jp/portal/lmsinc/getScheduleCalendar.php?startDate=${new_date}`, {
+            credentials: 'include',
+        })
+            .then(res => res.text())
+            .then(text => new DOMParser().parseFromString(text, "text/html"))
+            .then(doc => {
+                const content = doc.getElementsByTagName("table");
+                document.getElementById("tree_ivy_overrided_table").innerHTML = content[0].outerHTML;
+
+                update_shedule_header(schedule_now);
+
+                override_content();
+            });
+    }
+
+    let before_seven_day_btn = removeEventListeners(document.querySelector(".before-seven-day-btn"), "click");
+    let before_one_day_btn = removeEventListeners(document.querySelector(".before-one-day-btn"), "click");
+    let after_one_day_btn = removeEventListeners(document.querySelector(".after-one-day-btn"), "click");
+    let after_seven_day_btn = removeEventListeners(document.querySelector(".after-seven-day-btn"), "click");
+    let today_btn = removeEventListeners(document.querySelector(".today-btn"), "click");
+
+
+    before_seven_day_btn.addEventListener("click", function () {
+        shift_date(-7);
+    });
+
+    before_one_day_btn.addEventListener("click", function () {
+        shift_date(-1);
+    });
+
+    after_one_day_btn.addEventListener("click", function () {
+        shift_date(1);
+    });
+
+    after_seven_day_btn.addEventListener("click", function () {
+        shift_date(7);
+    });
+
+    today_btn.addEventListener("click", function () {
+        window.localStorage.setItem("date_now", window.localStorage.getItem("startday"));
+        shift_date(0);
+    });
+
 }

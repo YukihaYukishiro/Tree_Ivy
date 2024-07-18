@@ -3,6 +3,10 @@
     min-height: 1.5em;
 }
 
+#viewport{
+    display: none !important;
+}
+
 .T_I{
     width: 100%;
     border-radius: 10px;
