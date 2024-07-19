@@ -7,6 +7,10 @@
     display: none !important;
 }
 
+.week-data-today{
+    font-weight:bold;
+}
+
 .T_I{
     width: 100%;
     border-radius: 10px;

@@ -116,6 +116,10 @@ function update_shedule_header(startdate) {
         } else if (the_date.getDay() == 6) {
             new_cell.classList.add("week-data-sat");
         }
+        // bold today
+        if (the_date.toDateString() == new Date().toDateString()) {
+            new_cell.classList.add("week-data-today");
+        }
         let new_a = document.createElement("a");
         new_a.href = `/lms/schedule/form/0/${the_date.getFullYear()}-${the_date.getMonth() + 1}-${the_date.getDate()}`
         new_a.innerHTML = `<i class="fas fa-edit">`
