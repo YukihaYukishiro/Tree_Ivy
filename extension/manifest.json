@@ -14,7 +14,7 @@
       "js": [
         "backgrounds/schedule.js",
         "backgrounds/textholder.js",
-        "backgrounds/schedule/simpleAttendanceView.js"
+        "backgrounds/schedule/cellLayout.js"
       ],
       "run_at": "document_end",
       "all_frames": true
