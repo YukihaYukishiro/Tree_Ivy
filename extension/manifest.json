@@ -13,7 +13,8 @@
       ],
       "js": [
         "backgrounds/schedule.js",
-        "backgrounds/textholder.js"
+        "backgrounds/textholder.js",
+        "backgrounds/schedule/simpleAttendanceView.js"
       ],
       "run_at": "document_end",
       "all_frames": true

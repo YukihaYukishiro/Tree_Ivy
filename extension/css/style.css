@@ -1,6 +1,6 @@
 .div-class-name>section>a:first-child {
     display: block;
-    min-height: 1.5em;
+    height: 1.5em;
 }
 
 #viewport{
@@ -69,3 +69,15 @@
     z-index: 100;
     font-size: 0.95em;
   }
+
+  
+.attendance-hidden {
+    content: "";
+    position: absolute;
+    color:transparent;
+    transform: translate(-0.7em, 0);
+    pointer-events: none;
+    height: 100%;
+    top:0;
+    width: 0.4em;
+}

@@ -36,8 +36,17 @@ document.querySelectorAll('input[name="startDay"]').forEach(
     input => { input.addEventListener('change', update_startDay); });
 
 
-
-
+// simpleAttendanceView
+toggle_simpleAttendanceView = function() {
+    let simpleAttendanceView = document.getElementById('simpleAttendanceView').checked;
+    chrome.storage.local.set({simpleAttendanceView: simpleAttendanceView});
+    console.log('simpleAttendanceView:', simpleAttendanceView);
+}
+chrome.storage.local.get(['simpleAttendanceView'], function(result) {
+    if(result.simpleAttendanceView == true){
+        document.getElementById('simpleAttendanceView').checked = true;
+    }});
+document.getElementById('simpleAttendanceView').addEventListener('change', toggle_simpleAttendanceView);
 
 
 // experiment
