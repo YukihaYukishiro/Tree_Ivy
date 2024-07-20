@@ -1,0 +1,33 @@
+:root {
+    --dark-color: #008000;
+    --enable-color: #00ca22;
+    --enable-hover-color: #72eb86;
+    --disable-color: #aaa;
+    --disable-hover-color: #c7c7c7;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.round {
+    border-radius: 5px;
+}
+
+.flex {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+}
+
+@keyframes fade-heartbeat {
+    0% {
+        background-color: var(--enable-color);
+    }
+    20% {
+        background-color: var(--enable-hover-color);
+    }
+    60%, 100%{
+        background-color: var(--enable-color);
+    }
+}
