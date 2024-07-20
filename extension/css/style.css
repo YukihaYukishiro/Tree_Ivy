@@ -1,3 +1,16 @@
+.div-class-name>section>a:first-child {
+    display: block;
+    min-height: 1.5em;
+}
+
+#viewport{
+    display: none !important;
+}
+
+.week-data-today{
+    font-weight:bold;
+}
+
 .T_I{
     width: 100%;
     border-radius: 10px;
@@ -42,3 +55,21 @@
 .ivy_cell_1data{
     width: 20% !important;
 }
+
+
+
+.hover-element {
+    display: none;
+    position: absolute;
+    top: 1;
+    right: 0;
+    background-color:#edf;
+    color: #a00;
+    padding: 1px;
+    border: 1px dashed #666;
+    border-radius: 5px;
+
+
+    z-index: 100;
+    font-size: 0.95em;
+  }

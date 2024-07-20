@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Tree_Ivy_Openβ",
-  "version": "0.4",
+  "version": "0.5",
   "description": "スタログ用出欠管理拡張システム",
   "permissions": [
     "storage"
@@ -9,20 +9,11 @@
   "content_scripts": [
     {
       "matches": [
-        "*://portal.iwasaki.ac.jp/portal/lmsinc/sMyPage.php*"
-      ],
-      "js": [
-        "backgrounds/mypage.js"
-      ],
-      "run_at": "document_end",
-      "all_frames": true
-    },
-    {
-      "matches": [
         "*://portal.iwasaki.ac.jp/lms/"
       ],
       "js": [
-        "backgrounds/schedule.js"
+        "backgrounds/schedule.js",
+        "backgrounds/textholder.js"
       ],
       "run_at": "document_end",
       "all_frames": true
