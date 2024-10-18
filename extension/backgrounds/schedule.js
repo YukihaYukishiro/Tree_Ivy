@@ -19,13 +19,13 @@ window.addEventListener("load", function () {
     loading.classList.add("loading");
     loading.innerText = "Loading...";
     overrided_table.appendChild(loading);
-    
+
 
 
     chrome.storage.local.get(['startDay'], function (result) {
         window.localStorage.setItem("date_now", new Date());
         window.localStorage.setItem("startday", new Date());
-    
+
         if (result.startDay == 1) {
             var monday = new Date();
             var day = monday.getDay();
@@ -42,7 +42,7 @@ window.addEventListener("load", function () {
             window.localStorage.setItem("startday", sunday);
         }
         update_shedule_header(new Date(window.localStorage.getItem("date_now")));
-    
+
     });
     startDay_init();
     override_buttons();
@@ -129,6 +129,9 @@ function update_shedule_header(startdate) {
     //make table header start from sunday
     const tbody = document.querySelector("body > div.v2-container > div > div.main.sp-margin-bottom-md > div > div.panel.panel-default.sp-margin-bottom-none.sp-border-bottom-none.sp-border-top-none > div.table-responsive.sp-margin-bottom-none.sp-padding-sm > div > div.table-responsive.other-class.other-class-student-view > table.table.table-bordered.top-timetable-table > tbody");
     tbody.outerHTML = new_tbody.outerHTML;
+
+
+
 }
 
 function override_content() {
@@ -232,6 +235,7 @@ function override_content() {
                     }
                 }
             }
+
 
 
             chrome.storage.local.get(['show_examdate'], function (result) {
