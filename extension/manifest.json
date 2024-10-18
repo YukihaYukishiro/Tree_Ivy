@@ -13,8 +13,7 @@
       ],
       "js": [
         "backgrounds/schedule.js",
-        "backgrounds/textholder.js",
-        "backgrounds/announce.js"
+        "backgrounds/textholder.js"
       ],
       "run_at": "document_end",
       "all_frames": true
