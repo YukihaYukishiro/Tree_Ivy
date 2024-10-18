@@ -82,15 +82,9 @@ function zoomDivDown(){
                 if (link.textContent.includes('Zoom')) {
 
                     // simplify text
-                    // div.querySelector('a').innerText = 'Zoom';
+                    div.querySelector('a').innerText = 'Zoom';
 
-                    // fix position
-                    const nextSibling = div.nextElementSibling;
-                    if (nextSibling && !div.classList.contains('zoom')) {
-                        const parent = div.parentElement;
-                        parent.insertBefore(nextSibling, div);
-                        div.classList.add('zoom');
-                    }
+                    div.classList.add('zoom');
                 }
             });
         });

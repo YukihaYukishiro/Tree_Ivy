@@ -6,6 +6,14 @@
     padding: 7px 0 0 0 !important;
 }
 
+.zoom {
+    position:absolute;
+    top: 4em;
+}
+.zoom > a {
+    padding: 2px 5px;
+}
+
 #viewport{
     display: none !important;
 }
