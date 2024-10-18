@@ -4,13 +4,21 @@ body{
     user-select: none;
 }
 
-#popup-header{
+#popup-header {
     background-color: var(--dark-color);
     color: white;
     padding: 10px;
-    text-align: center;
     font-size: x-large;
     font-weight: bold;
+    display: flex;
+    justify-content: center; /* タイトルを中央に */
+    align-items: center;
+    position: relative;
+}
+
+#popup-title {
+    flex-grow: 1;
+    text-align: center; /* タイトルテキスト自体を中央揃えに */
 }
 
 #popup-body{
@@ -138,3 +146,24 @@ body{
     color:white;
     font-weight: bold;
 }
+
+
+/* 公式ディスコード関係 */
+
+#Discord_icon{
+    position: absolute;
+    right: 10px; /* アイコンを右端に */
+    top: 10px; /* アイコンを上端に */
+}
+
+#Discord_icon img{
+
+    width: 1.5em;
+    height: 1.5em;
+    transition: transform 0.3s ease; /* アニメーションを追加 */
+}
+
+#Discord_icon:hover {
+    transform: scale(1.2); /* ホバー時に少し大きくする */
+}
+
