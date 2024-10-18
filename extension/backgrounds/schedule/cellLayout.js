@@ -1,14 +1,22 @@
 window.addEventListener("load", loadConfig, false);
+shift_date_buttons = document.querySelectorAll('.shift-date-button');
 function loadConfig() {
     chrome.storage.local.get(['simpleAttendanceView'], function(result) {
         if(result.simpleAttendanceView == true){
             resetAttendanceView();
+            shift_date_buttons.forEach(function(button){
+                button.addEventListener("click", resetAttendanceView);
+            });
         }
     });
     
-    shift_date_buttons = document.querySelectorAll('.shift-date-button');
-    shift_date_buttons.forEach(function(button){
-        button.addEventListener("click", resetAttendanceView);
+    chrome.storage.local.get(['compactSchedule'], function(result) {
+        if(result.compactSchedule == true){
+            resetCompactSchedule();
+            shift_date_buttons.forEach(function(button){
+                button.addEventListener("click", resetCompactSchedule);
+            });
+        }
     });
 }
 
@@ -17,6 +25,12 @@ function resetAttendanceView() {
     async function loaded() {
         addAttendanceHiddenClass();
         setbackground();
+    }
+}
+
+function resetCompactSchedule() {
+    setInterval(loaded, 100);
+    async function loaded() {
         smallizeClassroom();
         zoomDivDown();
     }
@@ -84,7 +98,7 @@ function zoomDivDown(){
                     // simplify text
                     div.querySelector('a').innerText = 'Zoom';
 
-                    div.classList.add('zoom');
+                    div.classList.add('smallzoom');
                 }
             });
         });

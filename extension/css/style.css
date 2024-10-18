@@ -6,11 +6,11 @@
     padding: 7px 0 0 0 !important;
 }
 
-.zoom {
+.smallzoom {
     position:absolute;
-    top: 4em;
+    top: 4.6em;
 }
-.zoom > a {
+.smallzoom > a {
     padding: 2px 5px;
 }
 

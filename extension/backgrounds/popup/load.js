@@ -7,7 +7,8 @@ toggle_countdown = function() {
 chrome.storage.local.get(['countdown'], function(result) {
     if(result.countdown == true){
         document.getElementById('countdown').checked = true;
-    }});
+    }}
+);
 document.getElementById('countdown').addEventListener('change', toggle_countdown);
 
 
@@ -31,7 +32,7 @@ chrome.storage.local.get(['startDay'], function(result) {
     }else{
         document.querySelector('input[name="startDay"][value="0"]').checked = true;
     }
-    });
+});
 document.querySelectorAll('input[name="startDay"]').forEach(
     input => { input.addEventListener('change', update_startDay); });
 
@@ -45,18 +46,32 @@ toggle_simpleAttendanceView = function() {
 chrome.storage.local.get(['simpleAttendanceView'], function(result) {
     if(result.simpleAttendanceView == true){
         document.getElementById('simpleAttendanceView').checked = true;
-    }});
+    }
+});
 document.getElementById('simpleAttendanceView').addEventListener('change', toggle_simpleAttendanceView);
 
+// compactSchedule
+toggle_compactSchedule = function() {
+    let compactSchedule = document.getElementById('compactSchedule').checked;
+    chrome.storage.local.set({compactSchedule: compactSchedule});
+    console.log('compactSchedule:', compactSchedule);
+}
+chrome.storage.local.get(['compactSchedule'], function(result) {
+    if(result.compactSchedule == true){
+        document.getElementById('compactSchedule').checked = true;
+    }
+});
+document.getElementById('compactSchedule').addEventListener('change', toggle_compactSchedule);
 
 // experiment
 
-    toggle_show_examdate = function() {
-        chrome.storage.local.set({show_examdate: document.getElementById('show_examdate').checked});
-        console.log('show_examdate:', document.getElementById('show_examdate').checked);
+toggle_show_examdate = function() {
+    chrome.storage.local.set({show_examdate: document.getElementById('show_examdate').checked});
+    console.log('show_examdate:', document.getElementById('show_examdate').checked);
+}
+chrome.storage.local.get(['show_examdate'], function(result) {
+    if(result.show_examdate == true){
+        document.getElementById('show_examdate').checked = true;
     }
-    chrome.storage.local.get(['show_examdate'], function(result) {
-        if(result.show_examdate == true){
-            document.getElementById('show_examdate').checked = true;
-        }});
-    document.getElementById('show_examdate').addEventListener('change', toggle_show_examdate);
+});
+document.getElementById('show_examdate').addEventListener('change', toggle_show_examdate);
