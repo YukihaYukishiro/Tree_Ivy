@@ -400,7 +400,7 @@ function startDay_init() {
                 break;
 
             default:
-                override_content();
+                start_from_today();
 
                 break;
         }
