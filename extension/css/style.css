@@ -1,6 +1,17 @@
 .div-class-name>section>a:first-child {
     display: block;
-    min-height: 1.5em;
+    height: 1.5em;
+}
+.div-class-name>section {
+    padding: 7px 0 0 0 !important;
+}
+
+.smallzoom {
+    position:absolute;
+    top: 4.6em;
+}
+.smallzoom > a {
+    padding: 2px 5px;
 }
 
 #viewport{
@@ -14,6 +25,7 @@
 .T_I{
     width: 100%;
     border-radius: 10px;
+    margin: 4px;
     padding: 4px;
     font-size: 0.95em;
 }
@@ -72,9 +84,19 @@
 
     z-index: 100;
     font-size: 0.95em;
-  }
-
-
+}
+  
+.attendance-hidden {
+    content: "";
+    position: absolute;
+    color:transparent;
+    transform: translate(-0.7em, 0);
+    pointer-events: none;
+    height: 100%;
+    top:0;
+    width: 0.4em;
+    user-select: none;
+}
 
 .ttmodeanchor{
     /* 非表示 判定もなくす*/

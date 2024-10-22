@@ -16,7 +16,8 @@
       ],
       "js": [
         "backgrounds/schedule.js",
-        "backgrounds/attendFromTop.js"
+        "backgrounds/attendFromTop.js",
+        "backgrounds/schedule/cellLayout.js"
       ],
       "run_at": "document_end",
       "all_frames": true

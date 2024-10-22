@@ -449,6 +449,12 @@ function override_buttons() {
             });
     }
 
+    document.querySelector(".before-seven-day-btn").classList.add("shift-date-btn");
+    document.querySelector(".before-one-day-btn")  .classList.add("shift-date-btn");
+    document.querySelector(".after-one-day-btn")   .classList.add("shift-date-btn");
+    document.querySelector(".after-seven-day-btn") .classList.add("shift-date-btn");
+    document.querySelector(".today-btn")           .classList.add("shift-date-btn");
+
     let before_seven_day_btn = removeEventListeners(document.querySelector(".before-seven-day-btn"), "click");
     let before_one_day_btn = removeEventListeners(document.querySelector(".before-one-day-btn"), "click");
     let after_one_day_btn = removeEventListeners(document.querySelector(".after-one-day-btn"), "click");
