@@ -37,6 +37,16 @@ document.querySelectorAll('input[name="startDay"]').forEach(
 
 
 
+//attend_calendar
+toggle_attend_calendar = function() {
+    chrome.storage.local.set({attend_calendar: document.getElementById('attend_calendar').checked});
+    console.log('attend_calendar:', document.getElementById('attend_calendar').checked);
+}
+chrome.storage.local.get(['attend_calendar'], function(result) {
+    if(result.attend_calendar == true){
+        document.getElementById('attend_calendar').checked = true;
+    }});
+document.getElementById('attend_calendar').addEventListener('change', toggle_attend_calendar);
 
 
 
