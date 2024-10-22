@@ -1,11 +1,14 @@
 {
   "manifest_version": 3,
   "name": "Tree_Ivy_Openβ",
-  "version": "0.7",
+  "version": "0.8",
   "description": "スタログ用出欠管理拡張システム",
   "permissions": [
     "storage"
   ],
+  "background" : {
+    "service_worker" : "backgrounds/onupdate.js"
+  },
   "content_scripts": [
     {
       "matches": [
@@ -13,7 +16,7 @@
       ],
       "js": [
         "backgrounds/schedule.js",
-        "backgrounds/textholder.js",
+        "backgrounds/attendFromTop.js",
         "backgrounds/schedule/cellLayout.js"
       ],
       "run_at": "document_end",
@@ -28,10 +31,15 @@
       ]
     }
   ],
+  "web_accessible_resources": [
+    {
+      "resources": [ "html/dialog.html" ,"images/attend.jpg"],
+      "matches": [ "*://portal.iwasaki.ac.jp/*" ]
+    }
+  ],
   "action": {
     "default_popup": "html/popup.html"
   },
-
   "icons": {
     "16": "images/16x16.png",
     "48": "images/48x48.png",

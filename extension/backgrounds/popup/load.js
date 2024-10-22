@@ -37,6 +37,18 @@ document.querySelectorAll('input[name="startDay"]').forEach(
     input => { input.addEventListener('change', update_startDay); });
 
 
+
+//attend_calendar
+toggle_attend_calendar = function() {
+    chrome.storage.local.set({attend_calendar: document.getElementById('attend_calendar').checked});
+    console.log('attend_calendar:', document.getElementById('attend_calendar').checked);
+}
+chrome.storage.local.get(['attend_calendar'], function(result) {
+    if(result.attend_calendar == true){
+        document.getElementById('attend_calendar').checked = true;
+    }});
+document.getElementById('attend_calendar').addEventListener('change', toggle_attend_calendar);
+
 // simpleAttendanceView
 toggle_simpleAttendanceView = function() {
     let simpleAttendanceView = document.getElementById('simpleAttendanceView').checked;
@@ -62,6 +74,7 @@ chrome.storage.local.get(['compactSchedule'], function(result) {
     }
 });
 document.getElementById('compactSchedule').addEventListener('change', toggle_compactSchedule);
+
 
 // experiment
 

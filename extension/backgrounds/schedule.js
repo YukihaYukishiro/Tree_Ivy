@@ -153,11 +153,15 @@ function override_content() {
                         const section = div.children[0];
                         // check if section has a tag as a child
                         if (section.getElementsByTagName('a').length > 0) {
+                            section.classList.add("T_I_section");
+
                             const a = section.children[0];
                             // check if a tag has href attribute
                             if (a.hasAttribute('href')) {
                                 a.classList.add("T_I_link_target");
                                 const href = `${a.getAttribute('href')}`.split("/")[3];
+                                section.setAttribute("classid", href);
+
                                 const ivy = document.createElement("div");
                                 ivy.classList.add("T_I")
                                 ivy.classList.add(mypage[href][6]);
@@ -230,11 +234,19 @@ function override_content() {
                                     section.appendChild(ivy);
                                 }
 
+
                             }
                         }
                     }
                 }
             }
+
+            //to do オプション化する
+            chrome.storage.local.get(['attend_calendar'], function (result) {
+                if (result.attend_calendar == true) {
+                    addAttendFromTop();
+                }
+            });
 
 
 
@@ -400,7 +412,7 @@ function startDay_init() {
                 break;
 
             default:
-                override_content();
+                start_from_today();
 
                 break;
         }
