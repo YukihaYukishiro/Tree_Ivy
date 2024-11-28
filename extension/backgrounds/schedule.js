@@ -241,7 +241,7 @@ function override_content() {
                 }
             }
 
-            //to do オプション化する
+            //to do オプション化する ☑
             chrome.storage.local.get(['attend_calendar'], function (result) {
                 if (result.attend_calendar == true) {
                     addAttendFromTop();

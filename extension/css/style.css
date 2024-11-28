@@ -104,3 +104,7 @@
 
 
 }
+div.v2-container > div > div.main.sp-margin-bottom-md > div >
+div:first-of-type:not(.panel){
+    display: none;
+}
