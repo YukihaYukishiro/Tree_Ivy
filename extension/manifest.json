@@ -7,7 +7,7 @@
     "storage"
   ],
   "background" : {
-    "service_worker" : "backgrounds/onupdate.js"
+    "service_worker" : "backgrounds/serviceWorker.js"
   },
   "content_scripts": [
     {
@@ -17,7 +17,8 @@
       "js": [
         "backgrounds/schedule.js",
         "backgrounds/attendFromTop.js",
-        "backgrounds/schedule/cellLayout.js"
+        "backgrounds/schedule/cellLayout.js",
+        "backgrounds/autologin.js"
       ],
       "run_at": "document_end",
       "all_frames": true
