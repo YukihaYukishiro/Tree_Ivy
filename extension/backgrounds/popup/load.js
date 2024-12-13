@@ -78,6 +78,18 @@
     document.getElementById('compactSchedule').addEventListener('change', toggle_compactSchedule);
 
 
+    //enable_splitview
+    toggle_enable_splitview = function () {
+        let enable_splitview = document.getElementById('enable_splitview').checked;
+        chrome.storage.local.set({ enable_splitview: enable_splitview });
+        console.log('enable_splitview:', enable_splitview);
+    }
+    chrome.storage.local.get(['enable_splitview'], function (result) {
+        if (result.enable_splitview == true) {
+            document.getElementById('enable_splitview').checked = true;
+        }
+    });
+    document.getElementById('enable_splitview').addEventListener('change', toggle_enable_splitview);
 
 
 
