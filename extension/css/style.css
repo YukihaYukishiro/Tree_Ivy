@@ -200,7 +200,7 @@ div.v2-container>div>div.main.sp-margin-bottom-md>div>div:first-of-type:not(.pan
     }
 
     body>div.v2-container.split {
-        max-width: calc(100% - 55%);
+        max-width: calc(100% - 50%);
     }
 
 
@@ -216,7 +216,7 @@ div.v2-container>div>div.main.sp-margin-bottom-md>div>div:first-of-type:not(.pan
         position: fixed;
         right: 0;
         top: 0;
-        width: 55%;
+        width: 50%;
         height: 100%;
         background-color: white;
         transition: all 0.5s;
