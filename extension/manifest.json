@@ -18,7 +18,8 @@
         "backgrounds/schedule.js",
         "backgrounds/attendFromTop.js",
         "backgrounds/schedule/cellLayout.js",
-        "backgrounds/autologin.js"
+        "backgrounds/autologin.js",
+        "backgrounds/splitview.js"
       ],
       "run_at": "document_end",
       "all_frames": true
