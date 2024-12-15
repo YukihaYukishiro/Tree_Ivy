@@ -40,6 +40,7 @@ window.addEventListener('load', (event) => {
         // Create the contents
         const splitView_contents = document.createElement('div');
         splitView_contents.id = 'splitView-body';
+        splitView_contents.appendChild(document.createElement('iframe'));
 
 
 
@@ -70,25 +71,84 @@ window.addEventListener('load', (event) => {
             if (clicked.tagName !== 'A') return;
             //if .T_I_link_target is not clicked return
             if (!clicked.classList.contains('T_I_link_target')) return;
-        
+
             // get html from the page and open the split view
             const url = clicked.href;
             console.log(url);
             const iframe = document.createElement('iframe');
+            iframe.title = 'splitView';
             iframe.src = url;
             iframe.style.width = '100%';
             iframe.style.height = '100%';
-        
-        
-            const contents = iframe.outerHTML;
-        
-            openSplitView(contents);
-        
-        
-        
+
+            iframe.addEventListener('load', (event) => {
+                // console.log('iframe loaded');
+                //五秒間#page_controller > div > div > a.a-quiz-finish-buttonを探す
+                const rewriteButton = setInterval(() => {
+                    const button = iframe.contentWindow.document.querySelector("a.a-quiz-finish");
+                    if (!button) return;
+                    if (!button.getAttribute('modified')) {
+                        //get class_id and directory_id from session storage
+                        const class_id = sessionStorage.getItem('class_id');
+                        const directory_id = sessionStorage.getItem('directory_id');
+                        button.href = `https://portal.iwasaki.ac.jp/lms/class/${class_id}/${directory_id}/`;
+                        button.setAttribute('onclick', ' ');
+                        button.setAttribute('modified', 'true');
+                        const clone = button.cloneNode(true);
+                        button.replaceWith(clone);
+                        clearInterval(rewriteButton);
+                    }
+                    
+                }, 100);
+                setTimeout(() => { clearInterval(rewriteButton); }, 5000);
+
+                iframe.contentWindow.addEventListener('click', (event) => {
+                    // console.log("iframeがクリックされました");
+                    // console.log(event.target);
+
+                    // a タグ、あるいは a タグの子孫要素でなければスキップ
+                    if (!event.target.closest('a')) return;
+                    // console.log("aタグがクリックされました");
+                    // a タグの場合
+                    const link = event.target.closest('a');
+                    // href属性がない場合はスキップ
+                    if (!link.href) {
+                        return;
+                    }
+                    // console.log("href属性があります");
+                    // リンクに#が含まれている場合はスキップ
+                    if (link.href.includes('#')) {
+                        return;
+                    }
+                    // console.log("href属性に#が含まれていません");
+                    // 別ウィンドウ、別タブで開くリンクの場合はスキップ
+                    if (link.target === '_blank') {
+                        return;
+                    }
+                    // console.log("別ウィンドウ、別タブで開くリンクではありません");
+                    // すでにclickイベントリスナーが設定されている場合はスキップ
+                    if (link.onclick) {
+                        return;
+                    }
+                    // console.log("clickイベントリスナーが設定されていません");
+
+                    // console.log(link.href);
+
+                    event.preventDefault();
+                    iframe.src = link.href;
+
+
+
+                });
+            });
+
+            openSplitView(iframe);
+
+
+
             // prevent the default behavior
             event.preventDefault();
-        
+
         });
 
     });
@@ -99,10 +159,9 @@ window.addEventListener('load', (event) => {
 async function openSplitView(contents) {
     // get the splitView-body
     const splitView_body = document.querySelector('#splitView-body');
-    // clear the contents
-    splitView_body.innerHTML = '';
     // add the contents
-    splitView_body.innerHTML = contents;
+    splitView_body.children[0].remove();
+    splitView_body.appendChild(contents);
     // open the split view
     const splitViewContainer = document.querySelector('#splitViewContainer');
     splitViewContainer.classList.remove('splitView-hidden');
