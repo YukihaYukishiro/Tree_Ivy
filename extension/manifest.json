@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Tree_Ivy",
-  "version": "1.0",
+  "version": "1.1",
   "description": "スタログ用出欠管理拡張システム",
   "permissions": [
     "storage"
