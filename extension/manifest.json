@@ -31,6 +31,14 @@
       "css": [
         "css/style.css"
       ]
+    },
+    {
+      "matches":[
+        "*://portal.iwasaki.ac.jp/portal/lmsinc/sMyPage.php"
+      ],
+      "js":[
+        "backgrounds/mypage/sMyPage.js"
+      ]
     }
   ],
   "web_accessible_resources": [

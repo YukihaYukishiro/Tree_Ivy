@@ -91,7 +91,18 @@
     });
     document.getElementById('enable_splitview').addEventListener('change', toggle_enable_splitview);
 
-
+    //mypage_newtab
+    toggle_mypage_newtab = function () {
+        let mypage_newtab = document.getElementById('mypage_newtab').checked;
+        chrome.storage.local.set({ mypage_newtab: mypage_newtab });
+        console.log('mypage_newtab:', mypage_newtab);
+    }
+    chrome.storage.local.get(['mypage_newtab'], function (result) {
+        if (result.mypage_newtab == true) {
+            document.getElementById('mypage_newtab').checked = true;
+        }
+    });
+    document.getElementById('mypage_newtab').addEventListener('change', toggle_mypage_newtab);
 
 
 
