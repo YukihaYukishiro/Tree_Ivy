@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Tree_Ivy",
-  "version": "1.1",
+  "version": "1.2",
   "description": "スタログ用出欠管理拡張システム",
   "permissions": [
     "storage"
@@ -30,6 +30,14 @@
       ],
       "css": [
         "css/style.css"
+      ]
+    },
+    {
+      "matches":[
+        "*://portal.iwasaki.ac.jp/portal/lmsinc/sMyPage.php"
+      ],
+      "js":[
+        "backgrounds/mypage/sMyPage.js"
       ]
     }
   ],

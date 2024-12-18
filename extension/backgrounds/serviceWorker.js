@@ -7,7 +7,7 @@ chrome.runtime.onInstalled.addListener((details) => {
     }
 
 
-    if (!(details.reason === "update" && details.previousVersion === "1.0")) {
+    if (!(details.reason === "update")) {
 
         return;
     }
