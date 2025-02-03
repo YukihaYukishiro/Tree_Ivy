@@ -9,6 +9,7 @@ window.addEventListener('load', (event) => {
         splitViewContainer.id = 'splitViewContainer';
         splitViewContainer.classList.add('splitView-closed');
         splitViewContainer.classList.add('splitView-hidden');
+        splitViewContainer.setAttribute('history', '[]');
 
         // Create the header
         const splitView_header = document.createElement('div');
@@ -29,11 +30,44 @@ window.addEventListener('load', (event) => {
             //     splitView_header_toggle.innerHTML = '<b>☰</b>'; // 3本線のアイコン
             // }
         });
+        const splitView_header_close = document.createElement('button');
+        splitView_header_close.id = 'splitView-header-close';
+        splitView_header_close.innerHTML = '<b>✕</b>';
+        splitView_header_close.addEventListener('click', (event) => {
+            splitViewContainer.classList.add('splitView-hidden');
+            splitViewContainer.classList.remove('splitView-open');
+            splitViewContainer.classList.add('splitView-closed');
+            document.querySelector('body>div.v2-container ').classList.remove('split', 'splitView-exist');
+
+            splitViewContainer.setAttribute('history', '[]');
+        });
+        const splitView_header_back = document.createElement('button');
+        splitView_header_back.id = 'splitView-header-back';
+        splitView_header_back.innerHTML = '<b>←</b>';
+        splitView_header_back.addEventListener('click', (event) => {
+            const history = JSON.parse(splitViewContainer.getAttribute('history'));
+            if (history.length === 0) return;
+            const url = history.pop();
+            splitViewContainer.setAttribute('history', JSON.stringify(history));
+            const iframe = splitViewContainer.querySelector('iframe');
+            iframe.src = url;
+
+        });
+
+
+        const splitView_header_filler = document.createElement('div');
+        splitView_header_filler.id = 'splitView-header-filler';
+
+
+
 
 
 
         // add elements to the header
         splitView_header.appendChild(splitView_header_toggle);
+        splitView_header.appendChild(splitView_header_filler);
+        splitView_header.appendChild(splitView_header_back);
+        splitView_header.appendChild(splitView_header_close);
 
 
 
@@ -70,11 +104,11 @@ window.addEventListener('load', (event) => {
             if (clicked === null) return;
             if (clicked.tagName !== 'A') return;
             //if .T_I_link_target is not clicked return
-            if (!clicked.classList.contains('T_I_link_target')) return;
+            if (!clicked.classList.contains('T_I_link_target') && !clicked.id.includes('toportal')) return;
 
             // get html from the page and open the split view
             const url = clicked.href;
-            console.log(url);
+            // console.log(url);
             const iframe = document.createElement('iframe');
             iframe.title = 'splitView';
             iframe.src = url;
@@ -86,8 +120,20 @@ window.addEventListener('load', (event) => {
                 //五秒間#page_controller > div > div > a.a-quiz-finish-buttonを探す
                 const rewriteButton = setInterval(() => {
                     const button = iframe.contentWindow.document.querySelector("a.a-quiz-finish");
+                    const button2 = iframe.contentWindow.document.querySelector("body > div > div > div > div > div.col-sm-8 > button");
+                    if (button2) {
+                        //get class_id and directory_id from session storage
+                        const class_id = sessionStorage.getItem('class_id');
+                        const directory_id = sessionStorage.getItem('directory_id');;
+                        button2.outerHTML = `<a href="https://portal.iwasaki.ac.jp/lms/class/${class_id}/${directory_id}/" modified="true">${button2.outerHTML}</a>`;
+                        const clone = button2.cloneNode(true);
+                        button2.replaceWith(clone);
+                        clearInterval(rewriteButton);
+                    }
+                    
+                    
                     if (!button) return;
-                    if (!button.getAttribute('modified')) {
+                    if (!button.getAttribute('modified')) { 
                         //get class_id and directory_id from session storage
                         const class_id = sessionStorage.getItem('class_id');
                         const directory_id = sessionStorage.getItem('directory_id');
@@ -98,7 +144,7 @@ window.addEventListener('load', (event) => {
                         button.replaceWith(clone);
                         clearInterval(rewriteButton);
                     }
-                    
+
                 }, 100);
                 setTimeout(() => { clearInterval(rewriteButton); }, 5000);
 
@@ -135,6 +181,16 @@ window.addEventListener('load', (event) => {
                     // console.log(link.href);
 
                     event.preventDefault();
+
+                    var history = JSON.parse(splitViewContainer.getAttribute('history'));
+                    history.push(iframe.src);
+                    splitViewContainer.setAttribute('history', JSON.stringify(history));
+                    // keep the history length to 10
+                    if (history.length > 10) {
+                        history.shift();
+                    }
+
+
                     iframe.src = link.href;
 
 
@@ -144,6 +200,7 @@ window.addEventListener('load', (event) => {
 
             openSplitView(iframe);
 
+            splitViewContainer.setAttribute('history', '[]');
 
 
             // prevent the default behavior
