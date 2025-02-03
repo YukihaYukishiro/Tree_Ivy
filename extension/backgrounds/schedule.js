@@ -450,10 +450,10 @@ function override_buttons() {
     }
 
     document.querySelector(".before-seven-day-btn").classList.add("shift-date-btn");
-    document.querySelector(".before-one-day-btn")  .classList.add("shift-date-btn");
-    document.querySelector(".after-one-day-btn")   .classList.add("shift-date-btn");
-    document.querySelector(".after-seven-day-btn") .classList.add("shift-date-btn");
-    document.querySelector(".today-btn")           .classList.add("shift-date-btn");
+    document.querySelector(".before-one-day-btn").classList.add("shift-date-btn");
+    document.querySelector(".after-one-day-btn").classList.add("shift-date-btn");
+    document.querySelector(".after-seven-day-btn").classList.add("shift-date-btn");
+    document.querySelector(".today-btn").classList.add("shift-date-btn");
 
     let before_seven_day_btn = removeEventListeners(document.querySelector(".before-seven-day-btn"), "click");
     let before_one_day_btn = removeEventListeners(document.querySelector(".before-one-day-btn"), "click");
@@ -484,3 +484,41 @@ function override_buttons() {
     });
 
 }
+
+window.addEventListener("load", async function () {
+    console.log("loadeeeeeeeeeeeeeeeeed");
+    const es1 = await new Promise((resolve) => {
+        const observer = new MutationObserver((mutations) => {
+            const target = document.querySelector("body > div.v2-container > div > header > nav.navbar.navbar-inverse.nav2 > div > div > ul > li.mode.active > a");
+            if (target) {
+                resolve(target);
+                observer.disconnect();
+            }
+        });
+        observer.observe(document.body, { childList: true, subtree: true });
+    });
+    console.log(es1);
+    es1.addEventListener("click", function (event) {
+        if (event.target.getAttribute("tiegg1")) {
+            event.target.setAttribute("tiegg1", parseInt(event.target.getAttribute("tiegg1")) + 1);
+            if (parseInt(event.target.getAttribute("tiegg1")) == 12) {
+                var degree = 0;
+                const spin_interval = setInterval(function () {
+                    const body = document.querySelector("body");
+                    body.style.transform = `rotate(${degree}deg)`;
+                    degree += 1;
+                    if (degree >= 360) {
+                        degree = 0;
+                        body.style.transform = `rotate(${degree}deg)`;
+                        clearInterval(spin_interval);
+                    }
+                }, 1);
+                event.target.removeAttribute("tiegg1");
+            }
+        }
+        else {
+            event.target.setAttribute("tiegg1", 1);
+        }
+
+    });
+});
