@@ -485,40 +485,40 @@ function override_buttons() {
 
 }
 
-window.addEventListener("load", async function () {
-    console.log("loadeeeeeeeeeeeeeeeeed");
-    const es1 = await new Promise((resolve) => {
-        const observer = new MutationObserver((mutations) => {
-            const target = document.querySelector("body > div.v2-container > div > header > nav.navbar.navbar-inverse.nav2 > div > div > ul > li.mode.active > a");
-            if (target) {
-                resolve(target);
-                observer.disconnect();
-            }
-        });
-        observer.observe(document.body, { childList: true, subtree: true });
-    });
-    console.log(es1);
-    es1.addEventListener("click", function (event) {
-        if (event.target.getAttribute("tiegg1")) {
-            event.target.setAttribute("tiegg1", parseInt(event.target.getAttribute("tiegg1")) + 1);
-            if (parseInt(event.target.getAttribute("tiegg1")) == 12) {
-                var degree = 0;
-                const spin_interval = setInterval(function () {
-                    const body = document.querySelector("body");
-                    body.style.transform = `rotate(${degree}deg)`;
-                    degree += 1;
-                    if (degree >= 360) {
-                        degree = 0;
-                        body.style.transform = `rotate(${degree}deg)`;
-                        clearInterval(spin_interval);
-                    }
-                }, 1);
-                event.target.removeAttribute("tiegg1");
-            }
-        }
-        else {
-            event.target.setAttribute("tiegg1", 1);
-        }
+// window.addEventListener("load", async function () {
+//     console.log("loadeeeeeeeeeeeeeeeeed");
+//     const es1 = await new Promise((resolve) => {
+//         const observer = new MutationObserver((mutations) => {
+//             const target = document.querySelector("body > div.v2-container > div > header > nav.navbar.navbar-inverse.nav2 > div > div > ul > li.mode.active > a");
+//             if (target) {
+//                 resolve(target);
+//                 observer.disconnect();
+//             }
+//         });
+//         observer.observe(document.body, { childList: true, subtree: true });
+//     });
+//     console.log(es1);
+//     es1.addEventListener("click", function (event) {
+//         if (event.target.getAttribute("tiegg1")) {
+//             event.target.setAttribute("tiegg1", parseInt(event.target.getAttribute("tiegg1")) + 1);
+//             if (parseInt(event.target.getAttribute("tiegg1")) == 12) {
+//                 var degree = 0;
+//                 const spin_interval = setInterval(function () {
+//                     const body = document.querySelector("body");
+//                     body.style.transform = `rotate(${degree}deg)`;
+//                     degree += 1;
+//                     if (degree >= 360) {
+//                         degree = 0;
+//                         body.style.transform = `rotate(${degree}deg)`;
+//                         clearInterval(spin_interval);
+//                     }
+//                 }, 1);
+//                 event.target.removeAttribute("tiegg1");
+//             }
+//         }
+//         else {
+//             event.target.setAttribute("tiegg1", 1);
+//         }
 
-    });
-});
+//     });
+// });
