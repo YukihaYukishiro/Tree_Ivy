@@ -144,7 +144,7 @@ div.v2-container>div>div.main.sp-margin-bottom-md>div>div:first-of-type:not(.pan
     
     .splitView-hidden {
         transform: translateY(100%);
-        display: none;
+        opacity: 0;
     }
     
     #splitView-body {
@@ -257,7 +257,7 @@ div.v2-container>div>div.main.sp-margin-bottom-md>div>div:first-of-type:not(.pan
 
     .splitView-hidden {
         transform: translateX(100%);
-        display: none;
+        opacity: 0;
     }
 
     #splitView-body {
