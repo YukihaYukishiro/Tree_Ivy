@@ -99,7 +99,7 @@ window.addEventListener('load', (event) => {
             } else {
                 clicked = event.target;
             }
-            console.log(clicked);
+            // console.log(clicked);
             //if clicked is not a link or null return
             if (clicked === null) return;
             if (clicked.tagName !== 'A') return;
