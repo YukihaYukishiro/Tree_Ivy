@@ -178,9 +178,15 @@ window.addEventListener('load', (event) => {
                     }
                     // console.log("clickイベントリスナーが設定されていません");
 
-                    // console.log(link.href);
+                    //  console.log(link.href);
 
                     event.preventDefault();
+
+                    // https://portal.iwasaki.ac.jp/career/とhttps://portal.iwasaki.ac.jp/lmsは別タブで開く
+                    if (link.href.startsWith('https://portal.iwasaki.ac.jp/career/') || link.href.startsWith('https://portal.iwasaki.ac.jp/lms')) {
+                        window.open(link.href, '_blank');
+                        return;
+                    }
 
                     var history = JSON.parse(splitViewContainer.getAttribute('history'));
                     history.push(iframe.src);
