@@ -30,7 +30,8 @@
       ],
       "css": [
         "css/style.css"
-      ]
+      ],
+      "all_frames": true
     },
     {
       "matches":[

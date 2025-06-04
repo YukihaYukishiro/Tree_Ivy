@@ -14,21 +14,65 @@ window.addEventListener('load', (event) => {
         // Create the header
         const splitView_header = document.createElement('div');
         splitView_header.id = 'splitView-header';
+
+        const dragbar = splitView_header;
+        const sidebar = splitViewContainer;
+        const container = document.querySelector("body>div.v2-container");
+
+        let isDragging = false;
+
+        dragbar.addEventListener("mousedown", function (e) {
+            if (e.target !== dragbar) return;
+            isDragging = true;
+            document.body.style.cursor = "ew-resize";
+            document.body.style.pointerEvents = "none"; 
+            document.body.style.userSelect = "none"; 
+        });
+
+        document.addEventListener("mousemove", function (e) {
+            if (!isDragging) return;
+
+            // 現在のマウスの位置から画面の右はしまでの距離を取得
+            const x = e.clientX;
+            const windowWidth = window.innerWidth;
+            const newwidth = 100 - (x / windowWidth * 100);
+
+            // sidebarの幅を変更(最小値は50%)
+            if (newwidth < 50) return;
+            sidebar.style.maxWidth = newwidth + "%";
+
+
+
+        });
+
+        document.addEventListener("mouseup", function (e) {
+            if (isDragging) {
+                isDragging = false;
+                document.body.style.cursor = "default";
+                document.body.style.pointerEvents = "auto";
+                document.body.style.userSelect = "auto";
+            }
+        });
+
+
+
         // close button
         const splitView_header_toggle = document.createElement('button');
         splitView_header_toggle.id = 'splitView-header-toggle';
         splitView_header_toggle.innerHTML = '<b></b>'
+
+
+
+
         splitView_header_toggle.addEventListener('click', (event) => {
+
+
+
             splitViewContainer.classList.toggle('splitView-open');
             splitViewContainer.classList.toggle('splitView-closed');
             document.querySelector('body>div.v2-container ').classList.toggle('split');
 
-            // // ボタンの中身を変更
-            // if (splitViewContainer.classList.contains('splitView-open')) {
-            //     splitView_header_toggle.innerHTML = '<b>✕</b>';
-            // } else {
-            //     splitView_header_toggle.innerHTML = '<b>☰</b>'; // 3本線のアイコン
-            // }
+
         });
         const splitView_header_close = document.createElement('button');
         splitView_header_close.id = 'splitView-header-close';
@@ -130,10 +174,10 @@ window.addEventListener('load', (event) => {
                         button2.replaceWith(clone);
                         clearInterval(rewriteButton);
                     }
-                    
-                    
+
+
                     if (!button) return;
-                    if (!button.getAttribute('modified')) { 
+                    if (!button.getAttribute('modified')) {
                         //get class_id and directory_id from session storage
                         const class_id = sessionStorage.getItem('class_id');
                         const directory_id = sessionStorage.getItem('directory_id');
@@ -183,7 +227,7 @@ window.addEventListener('load', (event) => {
                     event.preventDefault();
 
                     // https://portal.iwasaki.ac.jp/career/とhttps://portal.iwasaki.ac.jp/lmsは別タブで開く
-                    if (link.href.startsWith('https://portal.iwasaki.ac.jp/career/') || link.href.startsWith('https://portal.iwasaki.ac.jp/lms')) {
+                    if (link.href.startsWith('https://portal.iwasaki.ac.jp/career/')) {
                         window.open(link.href, '_blank');
                         return;
                     }
