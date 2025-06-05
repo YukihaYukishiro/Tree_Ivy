@@ -21,6 +21,7 @@
         "overrider/core/js/addlink.js",
         "overrider/core/js/simpleAttendanceView.js",
         "overrider/core/js/compactSchedule.js",
+        "overrider/core/js/splitView.js",
         "overrider/main.js"
       ],
       "run_at": "document_end",
@@ -39,7 +40,7 @@
   ],
   "web_accessible_resources": [
     {
-      "resources": [ "settings/settings.html" , "settings/js/settings.js" ],
+      "resources": [ "settings/settings.html" , "settings/js/settings.js","settings/css/settings.css"],
       "matches": [ "*://portal.iwasaki.ac.jp/*" ]
     }
   ],
