@@ -109,6 +109,13 @@ async function open_splitView(url) {
     iframe.addEventListener("load", () => {
         const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
 
+        // nav1 と nav2 を削除
+        const nav1 = iframeDoc.querySelector(".nav1");
+        const nav2 = iframeDoc.querySelector(".nav2");
+        if (nav1) nav1.remove();
+        if (nav2) nav2.remove();
+
+
         title.textContent = iframeDoc.title || "ページタイトル";
         urlDisplay.textContent = iframe.contentWindow.location.href;
         try {
