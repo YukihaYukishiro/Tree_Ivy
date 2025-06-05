@@ -4,9 +4,9 @@ async function apply_compactSchedule() {
 
     const parents = document.querySelectorAll('.div-class-name');
     parents.forEach(function (parent) {
-        parent.querySelectorAll('br').forEach(function (br) {
-            br.remove(); // remove all <br> elements
-        });
+        // parent.querySelectorAll('br').forEach(function (br) {
+        //     br.remove(); // remove all <br> elements
+        // });
         parent.querySelectorAll('div').forEach(function (div) {
             // get div which starts with '教室：'
             if (div.textContent.startsWith('教室：')) {

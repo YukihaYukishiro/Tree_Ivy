@@ -33,6 +33,9 @@ chrome.runtime.onInstalled.addListener((details) => {
         if (config.simpleAttendanceView === undefined) {
             config.simpleAttendanceView = true;
         }
+        if (config.enable_betternotification === undefined) {
+            config.enable_betternotification = true;
+        }
         chrome.storage.sync.set(config);
     });
 
