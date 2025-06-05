@@ -6,8 +6,8 @@
   "permissions": [
     "storage"
   ],
-  "background": {
-    "service_worker": "update_handler/serviceWorker.js"
+  "background" : {
+    "service_worker" : "update_handler/serviceWorker.js"
   },
   "content_scripts": [
     {
@@ -15,9 +15,6 @@
         "*://portal.iwasaki.ac.jp/lms/"
       ],
       "js": [
-        "overrider/coreJS/util.js",
-        "overrider/coreJS/attendancebar.js",
-        "overrider/apicall/iportalapi.js",
         "overrider/main.js"
       ],
       "run_at": "document_end",
@@ -28,10 +25,15 @@
         "*://portal.iwasaki.ac.jp/lms/"
       ],
       "css": [
-        "overrider/coreCSS/attendancebar.css",
-        "overrider/coreCSS/schedule_layout.css"
+        "css/style.css"
       ],
       "all_frames": true
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [ "html/dialog.html" ,"images/attend.jpg"],
+      "matches": [ "*://portal.iwasaki.ac.jp/*" ]
     }
   ],
   "action": {
