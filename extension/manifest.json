@@ -33,7 +33,8 @@
       ],
       "css": [
         "overrider/core/css/attendancebar.css",
-        "overrider/core/css/schedule_layout.css"
+        "overrider/core/css/schedule_layout.css",
+        "overrider/core/css/splitview.css"
       ],
       "all_frames": true
     }
@@ -44,6 +45,7 @@
       "matches": [ "*://portal.iwasaki.ac.jp/*" ]
     }
   ],
+  "options_page": "settings/settings.html",
   "icons": {
     "16": "images/16x16.png",
     "48": "images/48x48.png",

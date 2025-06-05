@@ -1,65 +1,74 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <title>設定画面</title>
     <script src="js/settings.js" defer></script>
- <link rel="stylesheet" href="css/settings.css">
+    <link rel="stylesheet" href="css/settings.css">
 </head>
+
 <body>
 
-<div id="settings-container">
-    <div id="header">
-        <span id="popup-title">Tree-Ivy</span>
-        <a id="Discord_icon" href="https://discord.gg/KXFbwAFaA7" target="_blank">
-            <img src="../images/discord_icon_130958.webp" alt="Discord">
-        </a>
+    <div id="settings-container">
+        <div id="header">
+            <span id="popup-title">Tree-Ivy</span>
+            <a id="Discord_icon" href="https://discord.gg/KXFbwAFaA7" target="_blank">
+                <img src="../images/discord_icon_130958.webp" alt="Discord">
+            </a>
+        </div>
+
+        <div id="settings-body">
+
+            <h2 class="category-title">時間割</h2>
+            <div class="description">時間割の表示設定</div>
+            <div class="option">
+                <span class="option-title">スタイリッシュな出欠状況表示</span>
+                <label class="switch">
+                    <input type="checkbox" id="simpleAttendanceView">
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <div class="option">
+                <span class="option-title">コンパクトな時間割</span>
+                <label class="switch">
+                    <input type="checkbox" id="compactSchedule">
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <h2 class="category-title">その他の機能</h2>
+            <div class="description">その他の機能の設定</div>
+            <div class="option">
+                <span class="option-title">カレンダーからの出席ボタンの有効化</span>
+                <label class="switch">
+                    <input type="checkbox" id="attend_calendar">
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <div class="option">
+                <span class="option-title">スプリットビュー</span>
+                <label class="switch">
+                    <input type="checkbox" id="enable_splitview">
+                    <span class="slider"></span>
+                </label>
+                <div class="suboptions">
+                    <h3 class="suboption-title">スプリットビューのリンク設定</h3>
+                    <div class="description">リンクのパターンを追加・削除できます</div>
+                    <div id="list-url-pattern"  class="suboption-list"></div>
+                    <button id="add-url-pattern" class="add-btn">＋ パターンを追加</button>
+                </div>
+            </div>
+            <div class="option">
+                <span class="option-title">マイページで課題を別タブで開く</span>
+                <label class="switch">
+                    <input type="checkbox" id="mypage_newtab">
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </div>
     </div>
-
-    <div id="settings-body">
-
-        <h2 class="category-title">時間割</h2>
-        <div class="description">時間割の表示設定</div>
-        <div class="option">
-            <span class="option-title">スタイリッシュな出欠状況表示</span>
-            <label class="switch">
-                <input type="checkbox" id="simpleAttendanceView">
-                <span class="slider"></span>
-            </label>
-        </div>
-        <div class="option">
-            <span class="option-title">コンパクトな時間割</span>
-            <label class="switch">
-                <input type="checkbox" id="compactSchedule">
-                <span class="slider"></span>
-            </label>
-        </div>
-
-        <h2 class="category-title">その他の機能</h2>
-        <div class="description">その他の機能の設定</div>
-        <div class="option">
-            <span class="option-title">カレンダーからの出席ボタンの有効化</span>
-            <label class="switch">
-                <input type="checkbox" id="attend_calendar">
-                <span class="slider"></span>
-            </label>
-        </div>
-        <div class="option">
-            <span class="option-title">スプリットビュー</span>
-            <label class="switch">
-                <input type="checkbox" id="enable_splitview">
-                <span class="slider"></span>
-            </label>
-        </div>
-        <div class="option">
-            <span class="option-title">マイページで課題を別タブで開く</span>
-            <label class="switch">
-                <input type="checkbox" id="mypage_newtab">
-                <span class="slider"></span>
-            </label>
-        </div>
-    </div>
-</div>
 
 </body>
+
 </html>

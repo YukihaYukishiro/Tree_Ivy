@@ -1,0 +1,95 @@
+.split-view-container {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 40%;
+    height: 100%;
+    background: #fffdfc;
+    z-index: 900;
+    box-shadow: -4px 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease-in-out;
+    border-left: 2px solid #f3c4fb;
+}
+
+/* ヘッダー：横並び＆パステル色 */
+.split-view-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 10px 14px;
+    background: #ffe4f0; /* やさしいピンク */
+    border-bottom: 1px solid #f1b9e3;
+    font-size: 13px;
+    color: #333;
+    flex-shrink: 0;
+}
+
+/* タイトルとURLをまとめるラッパー */
+.split-view-header .info-wrap {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    overflow: hidden;
+}
+
+/* タイトル・URL */
+.split-view-title,
+.split-view-url {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    mask-image: linear-gradient(to right, black 80%, transparent);
+    -webkit-mask-image: linear-gradient(to right, black 80%, transparent);
+    max-width: 100%;
+}
+
+/* タイトル */
+.split-view-title {
+    font-weight: bold;
+    color: #a35cb4;
+}
+
+/* URL */
+.split-view-url {
+    font-size: 11px;
+    color: #555;
+    cursor: pointer;
+}
+
+/*  操作ボタンたち */
+.split-view-buttons {
+    display: flex;
+    gap: 6px;
+    flex-shrink: 0;
+}
+
+.split-view-buttons button {
+    background: #d4f1f9; /* さわやかパステルブルー */
+    border: 1px solid #aee1f9;
+    padding: 5px 8px;
+    cursor: pointer;
+    border-radius: 6px;
+    font-size: 13px;
+    color: #333;
+    transition: background 0.2s;
+}
+.split-view-buttons button:hover {
+    background: #c3eaf7;
+}
+
+/* iframe */
+.split-view-iframe {
+    width: 100%;
+    height: 100%;
+    flex-grow: 1;
+    border: none;
+}
+
+/* 左のメイン画面を縮める */
+.v2-container.shrink-left {
+    width: 60%;
+    transition: width 0.3s ease-in-out;
+}

@@ -3,7 +3,6 @@ async function apply_compactSchedule() {
     const tbody = await waitForElement("#div-top-timetable2 > table > tbody");
 
     const parents = document.querySelectorAll('.div-class-name');
-    console.log(parents);
     parents.forEach(function (parent) {
         parent.querySelectorAll('br').forEach(function (br) {
             br.remove(); // remove all <br> elements

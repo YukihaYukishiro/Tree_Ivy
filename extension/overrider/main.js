@@ -7,6 +7,7 @@ window.addEventListener("load", async () => {
     const config = await get_config();
     intialize_schedule(stats, config);
     add_settings_link();
+    apply_splitView();
 
     buttons = await waitForElement("div.v2-container > div > div.main.sp-margin-bottom-md > div > div.panel.panel-default.sp-margin-bottom-none.sp-border-bottom-none.sp-border-top-none > div.table-responsive.sp-margin-bottom-none.sp-padding-sm > div > div.margin-bottom");
     buttons.querySelectorAll("button").forEach((button) => {
