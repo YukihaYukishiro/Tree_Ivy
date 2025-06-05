@@ -15,9 +15,9 @@
         "*://portal.iwasaki.ac.jp/lms/"
       ],
       "js": [
-        "overrider/coreJS/util.js",
-        "overrider/coreJS/attendancebar.js",
-        "overrider/apicall/iportalapi.js",
+        "overrider/core/js/util.js",
+        "overrider/core/js/attendancebar.js",
+        "overrider/core/js/iportalapi.js",
         "overrider/main.js"
       ],
       "run_at": "document_end",
@@ -28,15 +28,23 @@
         "*://portal.iwasaki.ac.jp/lms/"
       ],
       "css": [
-        "overrider/coreCSS/attendancebar.css",
-        "overrider/coreCSS/schedule_layout.css"
+        "overrider/core/css/attendancebar.css",
+        "overrider/core/css/schedule_layout.css"
       ],
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "*://portal.iwasaki.ac.jp/lms/profile/"
+      ],
+      "js": [
+        "overrider/core/js/util.js",
+        "overrider/settings.js"
+      ],
+      "run_at": "document_end",
       "all_frames": true
     }
   ],
-  "action": {
-    "default_popup": "settings/popup.html"
-  },
   "icons": {
     "16": "images/16x16.png",
     "48": "images/48x48.png",
