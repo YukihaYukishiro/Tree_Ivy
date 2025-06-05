@@ -69,10 +69,12 @@
     z-index: 1000;
     font-size: 0.8em;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    pointer-events: none;
 }
 .ivy-main-bar:hover ~ .ivy-main-bar-info {
     opacity: 1;
 }
 .ivy-death-bar:hover ~ .ivy-death-bar-info {
+    
     opacity: 1;
 }

@@ -26,3 +26,17 @@ function waitForElement(selector, timeout = 10000) {
     }
   });
 }
+
+
+function get_config() {
+  return new Promise((resolve, reject) => {
+    chrome.storage.sync.get(null, (items) => {
+      if (chrome.runtime.lastError) {
+        console.error("設定の取得に失敗しました:", chrome.runtime.lastError);
+        reject(chrome.runtime.lastError);
+      } else {
+        resolve(items);
+      }
+    });
+  });
+}
