@@ -150,7 +150,8 @@
             width: 28px;
             height: 28px;
         }
-        .btn{
+
+        .btn {
             background-color: #e2c2ff;
             color: #5a3580;
             border: none;
@@ -158,4 +159,49 @@
             padding: 6px 10px;
             cursor: pointer;
             font-size: 14px;
+        }
+
+        
+        .option-title {
+            position: relative;
+            cursor: help;
+        }
+
+        /* ツールチップの中身 */
+        .option-title::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 125%;
+            left: 0;
+            white-space: nowrap;
+            background-color: #5a3580;
+            color: #fff;
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s;
+            transform: translateY(5px);
+            z-index: 10;
+        }
+
+        /* ツールチップの矢印 */
+        .option-title::before {
+            content: '';
+            position: absolute;
+            bottom: 115%;
+            left: 10px;
+            border-width: 6px;
+            border-style: solid;
+            border-color: #5a3580 transparent transparent transparent;
+            opacity: 0;
+            transition: opacity 0.2s;
+            pointer-events: none;
+        }
+
+        /* ホバー時に表示 */
+        .option-title:hover::after,
+        .option-title:hover::before {
+            opacity: 1;
         }

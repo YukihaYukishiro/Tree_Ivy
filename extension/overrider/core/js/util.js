@@ -45,15 +45,7 @@ function get_config() {
 
 
 function show_tutorial(element, body_html, left_offset = 0, timeout = 5000) {
-  function hide_tutorial(resolve) {
-    document.querySelectorAll('.tutorial-filter, .tutorial-box, .tutorial-highlight').forEach(el => el.remove());
-    document.querySelectorAll('.tutorial-target').forEach(el => el.classList.remove('tutorial-target'));
-    if (resolve) {
-      resolve(true);
-    }
-  }
-  // 前のチュートリアルがあれば消す
-  hide_tutorial();
+
 
   return new Promise((resolve) => {
 
@@ -91,7 +83,13 @@ function show_tutorial(element, body_html, left_offset = 0, timeout = 5000) {
     <button class="tutorial-close">✖</button>
   `;
     header.querySelector('.tutorial-close').addEventListener('click', () => {
-      hide_tutorial(resolve);
+      clearTimeout(out);
+      clearInterval(timerInterval);
+      highlight.remove();
+      filter.remove();
+      tutorial.remove();
+      element.classList.remove('tutorial-target');
+      resolve();
     });
     tutorial.appendChild(header);
 
@@ -118,9 +116,13 @@ function show_tutorial(element, body_html, left_offset = 0, timeout = 5000) {
     }, 50);
 
     // タイムアウトで終了
-    setTimeout(() => {
+    const out = setTimeout(() => {
       clearInterval(timerInterval);
-      hide_tutorial(resolve);
+      highlight.remove();
+      filter.remove();
+      tutorial.remove();
+      element.classList.remove('tutorial-target');
+      resolve();
     }, timeout);
   });
 }
