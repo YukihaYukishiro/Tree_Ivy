@@ -1,5 +1,3 @@
-console.log("Overrider main loaded");
-
 window.addEventListener("load", async () => {
     console.log("Overrider main loaded");
 
@@ -8,7 +6,8 @@ window.addEventListener("load", async () => {
     intialize_schedule(stats, config);
     add_settings_link();
     apply_splitView();
-
+    run_tutorials();
+    
     buttons = await waitForElement("div.v2-container > div > div.main.sp-margin-bottom-md > div > div.panel.panel-default.sp-margin-bottom-none.sp-border-bottom-none.sp-border-top-none > div.table-responsive.sp-margin-bottom-none.sp-padding-sm > div > div.margin-bottom");
     buttons.querySelectorAll("button").forEach((button) => {
         button.addEventListener("click", async () => {
@@ -31,7 +30,7 @@ window.addEventListener("load", async () => {
             await intialize_schedule(stats, config);
         });
     });
-    
+
 });
 
 
@@ -39,7 +38,7 @@ window.addEventListener("load", async () => {
 async function intialize_schedule(stats, config) {
 
     apply_attendance_bar(stats)
-    
+
     if (config.simpleAttendanceView) {
         apply_simpleAttendanceView();
     }

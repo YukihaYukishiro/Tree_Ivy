@@ -17,7 +17,11 @@ chrome.runtime.onInstalled.addListener((details) => {
     // simpleAttendanceView	true
     // if any of these are undefined, set them to true
     chrome.storage.sync.get(null, (config) => {
-        config.urlPatterns = ["/lms/class/\\d+/"]
+
+
+        if (config.urlPatterns === undefined) {
+            config.urlPatterns = ["/lms/class/\\d+/"];
+        }
         if (config.attend_calendar === undefined) {
             config.attend_calendar = true;
         }

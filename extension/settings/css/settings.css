@@ -150,3 +150,12 @@
             width: 28px;
             height: 28px;
         }
+        .btn{
+            background-color: #e2c2ff;
+            color: #5a3580;
+            border: none;
+            border-radius: 6px;
+            padding: 6px 10px;
+            cursor: pointer;
+            font-size: 14px;
+        }

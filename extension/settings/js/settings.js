@@ -32,6 +32,14 @@ window.onload = async () => {
         });
     });
     setupSuboptionList("add-url-pattern", "list-url-pattern");
+
+    document.getElementById("reset-tutorial").addEventListener("click", () => {
+        const tutorial_progress = [];
+        chrome.storage.sync.set({ tutorial_progress: tutorial_progress }, () => {
+            console.log("チュートリアルの進行状況をリセットしました");
+            alert("チュートリアルの進行状況をリセットしました。ページをリロードしてください。");
+        });
+    });
 }
 
 
