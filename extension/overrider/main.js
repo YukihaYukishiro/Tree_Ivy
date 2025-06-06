@@ -1,13 +1,20 @@
 window.addEventListener("load", async () => {
     console.log("Overrider main loaded");
-
+    add_settings_link();
+    
     const stats = await get_subject_status();
     const config = await get_config();
     intialize_schedule(stats, config);
-    add_settings_link();
-    apply_splitView();
     run_tutorials();
+
     
+    apply_splitView();
+    loadAndShowNotifications();
+
+
+
+
+
     buttons = await waitForElement("div.v2-container > div > div.main.sp-margin-bottom-md > div > div.panel.panel-default.sp-margin-bottom-none.sp-border-bottom-none.sp-border-top-none > div.table-responsive.sp-margin-bottom-none.sp-padding-sm > div > div.margin-bottom");
     buttons.querySelectorAll("button").forEach((button) => {
         button.addEventListener("click", async () => {

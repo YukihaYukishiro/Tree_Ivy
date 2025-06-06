@@ -1,21 +1,34 @@
 async function run_tutorials() {
-
-    await settings_button_tutorial();
-    await ivy_bar_tutorial();
-
-}
-
-
-async function settings_button_tutorial() {
     // 今までに完了したチュートリアルのIDを取得
     const result = await chrome.storage.sync.get('tutorial_progress');
     const tutorial_progress = result['tutorial_progress'] || [];
     if (!tutorial_progress.includes(1)) {
+        // チュートリアルが未完了の場合は、チュートリアルを実行
+        await settings_button_tutorial();
+        // チュートリアルの完了を記録
         tutorial_progress.push(1);
         chrome.storage.sync.set({ tutorial_progress: tutorial_progress });
     } else {
         return; // チュートリアルが完了している場合は何もしない
     }
+    if (!tutorial_progress.includes(2)) {
+        // チュートリアルが未完了の場合は、チュートリアルを実行
+        await ivy_bar_tutorial();
+        // チュートリアルの完了を記録
+        tutorial_progress.push(2);
+        chrome.storage.sync.set({ tutorial_progress: tutorial_progress });
+    } else {
+        return; // チュートリアルが完了している場合は何もしない
+    }
+
+    // 通知のチュートリアルを後で追加
+
+
+
+}
+
+
+async function settings_button_tutorial() {
     //チュートリアル処理
     const tutorialElement = await waitForElement("#header-menu > ul.nav.navbar-nav.navbar-right.gnav.cf > li:nth-child(5) > a");
     if (tutorialElement) {
@@ -37,15 +50,6 @@ async function settings_button_tutorial() {
 
 }
 async function ivy_bar_tutorial() {
-    // 今までに完了したチュートリアルのIDを取得
-    const result = await chrome.storage.sync.get('tutorial_progress');
-    const tutorial_progress = result['tutorial_progress'] || [];
-    if (!tutorial_progress.includes(2)) {
-        tutorial_progress.push(2);
-        await chrome.storage.sync.set({ tutorial_progress: tutorial_progress });
-    } else {
-        return; // チュートリアルが完了している場合は何もしない
-    }
     const tutorialElement = await waitForElement("div.div-class-name > section > div.ivy-bar");
     if (tutorialElement) {
         const body_html = `

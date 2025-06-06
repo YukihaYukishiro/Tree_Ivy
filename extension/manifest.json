@@ -23,7 +23,7 @@
         "overrider/core/js/simpleAttendanceView.js",
         "overrider/core/js/compactSchedule.js",
         "overrider/core/js/splitView.js",
-        "overrider/core/js/enable_betternotification.js",
+        "overrider/core/js/better_iportal_notification.js",
         "overrider/main.js"
       ],
       "run_at": "document_end",
@@ -37,6 +37,7 @@
         "overrider/core/css/attendancebar.css",
         "overrider/core/css/schedule_layout.css",
         "overrider/core/css/tutorial.css",
+        "overrider/core/css/notification.css",
         "overrider/core/css/splitview.css"
       ],
       "all_frames": true
