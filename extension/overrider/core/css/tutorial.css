@@ -19,7 +19,7 @@
   border: 2px dashed #c3a9ff;
 }
 .tutorial-target{
-    z-index: 2003;
+    z-index: 2003 !important; /* 強制的に最前面に */
 }
 
 .tutorial-box {

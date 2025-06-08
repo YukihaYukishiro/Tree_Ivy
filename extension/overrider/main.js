@@ -1,15 +1,22 @@
 window.addEventListener("load", async () => {
     console.log("Overrider main loaded");
     add_settings_link();
-    
     const stats = await get_subject_status();
     const config = await get_config();
+
+
     intialize_schedule(stats, config);
     run_tutorials();
 
-    
-    apply_splitView();
-    loadAndShowNotifications();
+    if  (config.enable_splitview) {
+        apply_splitView();
+    }
+    if (config.enable_betternotification) {
+        loadAndShowIportalNotifications();
+    }
+    if (config.attend_calendar) {
+        apply_autoAttendanceCheck();
+    }
 
 
 

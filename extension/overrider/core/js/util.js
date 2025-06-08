@@ -27,6 +27,33 @@ function waitForElement(selector, timeout = 10000) {
   });
 }
 
+function waitForElements(selector, timeout = 10000) {
+  return new Promise((resolve, reject) => {
+    const elements = document.querySelectorAll(selector);
+    if (elements.length > 0) {
+      return resolve(elements);
+    }
+    const observer = new MutationObserver(() => {
+      const els = document.querySelectorAll(selector);
+      if (els.length > 0) {
+        observer.disconnect(); 
+        resolve(els);
+      }
+    });
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true
+    });
+    if (timeout > 0) {
+      setTimeout(() => {  
+        observer.disconnect();
+        reject(new Error(`要素「${selector}」が${timeout}ms以内に見つからなかったよ〜💦`));
+      }, timeout);
+    }
+  });
+}
+
+
 
 function get_config() {
   return new Promise((resolve, reject) => {
@@ -43,89 +70,6 @@ function get_config() {
 
 
 
-
-function show_tutorial(element, body_html, left_offset = 0, timeout = 5000) {
-
-
-  return new Promise((resolve) => {
-
-    element.classList.add('tutorial-target');
-
-    const rect = element.getBoundingClientRect();
-
-    // フィルター作成
-    const filter = document.createElement('div');
-    filter.className = 'tutorial-filter';
-    document.body.appendChild(filter);
-
-    // ハイライト作成
-    const highlight = document.createElement('div');
-    highlight.className = 'tutorial-highlight';
-    const { top, left, height, width } = element.getBoundingClientRect()
-    highlight.style.top = `${top - 5}px`
-    highlight.style.left = `${left - left_offset}px`
-    highlight.style.height = `${height + 10}px`
-    highlight.style.width = `${width + 10}px`
-    document.body.appendChild(highlight);
-
-    // チュートリアルボックス作成
-    const tutorial = document.createElement('div');
-    tutorial.className = 'tutorial-box';
-
-    // ヘッダー作成
-    const header = document.createElement('div');
-    header.className = 'tutorial-header';
-    header.innerHTML = `
-    <span>↑ </span>
-      <div class="tutorial-timer-bar-container">
-        <div class="tutorial-timer-bar"></div>
-      </div>
-    <button class="tutorial-close">✖</button>
-  `;
-    header.querySelector('.tutorial-close').addEventListener('click', () => {
-      clearTimeout(out);
-      clearInterval(timerInterval);
-      highlight.remove();
-      filter.remove();
-      tutorial.remove();
-      element.classList.remove('tutorial-target');
-      resolve();
-    });
-    tutorial.appendChild(header);
-
-    // 本文追加
-    const body = document.createElement('div');
-    body.className = 'tutorial-body';
-    body.innerHTML = body_html;
-    tutorial.appendChild(body);
-
-    // 表示位置をelementの下に配置
-    tutorial.style.top = `${rect.bottom + window.scrollY + 10}px`;
-    tutorial.style.left = `${rect.left + window.scrollX}px`;
-
-    document.body.appendChild(tutorial);
-
-
-    // ゲージ更新ロジック
-    const bar = header.querySelector('.tutorial-timer-bar');
-    let startTime = Date.now();
-    const timerInterval = setInterval(() => {
-      const elapsed = Date.now() - startTime;
-      const percent = Math.max(0, 100 - (elapsed / timeout) * 100);
-      bar.style.width = `${percent}%`;
-    }, 50);
-
-    // タイムアウトで終了
-    const out = setTimeout(() => {
-      clearInterval(timerInterval);
-      highlight.remove();
-      filter.remove();
-      tutorial.remove();
-      element.classList.remove('tutorial-target');
-      resolve();
-    }, timeout);
-  });
-}
 
 
 
@@ -176,7 +120,7 @@ function showNotification({ title, content, duration, onRead,onClose }) {
   body.className = "notification-body";
   if (typeof content === "string") {
     const paragraph = document.createElement("p");
-    paragraph.textContent = content;
+    paragraph.innerHTML = content;
     body.appendChild(paragraph);
   } else if (content instanceof HTMLElement) {
     body.appendChild(content);

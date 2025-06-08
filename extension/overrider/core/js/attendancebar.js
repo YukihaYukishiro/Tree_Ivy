@@ -85,9 +85,13 @@ function apply_attendance_bar(attendanceData) {
                 const classId = a.getAttribute('href').split("/")[3];
                 const subject = attendanceData.find(s => s.class_id === classId);
                 if (subject) {
+                    const ivy_section = document.createElement("div");
+                    ivy_section.className = "ivy-section";
+                    ivy_section.setAttribute("data-class-id", classId);
                     const ivyBar = const_bar(subject);
                     if (ivyBar) {
-                        section.appendChild(ivyBar);
+                        ivy_section.appendChild(ivyBar);
+                        section.appendChild(ivy_section);
                         // console.log("Attendance bar added for subject:", subject.class_name);
                     } else {
                         console.warn("Failed to create attendance bar for subject:", subject.class_name);

@@ -1,5 +1,6 @@
-async function loadAndShowNotifications() {
+async function loadAndShowIportalNotifications() {
     const notification_count = await get_notificationcount();
+    // const notification_count = 1; // デバッグ用に強制的に1件に設定
     if (notification_count > 0) {
         const notifications = await fetch('https://portal.iwasaki.ac.jp/portal/api/portalApi.php?type=infolistJ')
             .then(response => {
@@ -9,6 +10,8 @@ async function loadAndShowNotifications() {
                 return response.json();
             });
         let records = notifications.records || [];
+        // records[0].viewDateTime = null; // 最初のレコードのviewDateTimeをnullに設定
+        
         records = records.filter(record => record.viewDateTime === null)
         // infoCode で昇順(0最古)にソート
         records.sort((a, b) => {
