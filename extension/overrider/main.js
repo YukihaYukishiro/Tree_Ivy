@@ -15,6 +15,7 @@ window.addEventListener("load", async () => {
         loadAndShowIportalNotifications();
     }
     if (config.attend_calendar) {
+        // これ未完成ね
         apply_autoAttendanceCheck();
     }
 
