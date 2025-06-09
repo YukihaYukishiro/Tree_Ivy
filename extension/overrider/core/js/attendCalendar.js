@@ -1,47 +1,115 @@
-async function apply_autoAttendanceCheck() {
-
-
-}
-
-async function get_today() {
-	const schedule_div = await waitForElement("div.table-responsive.other-class.other-class-student-view");
-	const dates = schedule_div.querySelectorAll(".top-timetable-table > tbody > tr > td");
-	const today = new Date();
-	// yyyy-mm-dd
-	const today_text = today.toISOString().split('T')[0];
-	let today_index = -1;
-	for (let i = 0; i < dates.length; i++) {
-		const date_a = dates[i].querySelector("a");
-		// if href includes today_text
-		if (date_a && date_a.href.includes(today_text)) {
-			today_index = i;
-			break;
-		}
-	}
-	if (today_index === -1) {
-		throw new Error("今日の日付が見つかりませんでした");
-	}
-	today_index = 0
-	let today_subjects = [];
-	let time_table = await waitForElements("#overrided-schedule > tbody > tr");
-	time_table.forEach((tr) => {
-		const td = tr.querySelectorAll("td");
-		if (td[today_index].querySelector(".ivy-section")) {
-			today_subjects.push(td[today_index].querySelector(".ivy-section").getAttribute("data-class-id"));
-		}
+async function attendanceCheck(class_id) {
+	const response = await fetch("https://portal.iwasaki.ac.jp/lms/", {
+		"headers": {
+			"accept": "*/*",
+			"accept-language": "ja,en-US;q=0.9,en;q=0.8",
+			"content-type": "application/x-www-form-urlencoded; charset=UTF-8",
+			"priority": "u=1, i",
+			"sec-ch-ua": "\"Google Chrome\";v=\"137\", \"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+			"sec-ch-ua-mobile": "?0",
+			"sec-ch-ua-platform": "\"Windows\"",
+			"sec-fetch-dest": "empty",
+			"sec-fetch-mode": "cors",
+			"sec-fetch-site": "same-origin",
+			"x-requested-with": "XMLHttpRequest"
+		},
+		"referrer": `https://portal.iwasaki.ac.jp/lms/class/${class_id}`,
+		"referrerPolicy": "strict-origin-when-cross-origin",
+		"body": `class_id=${class_id}&is_ajax=1&action=glexa_modal_entry_form`,
+		"method": "POST",
+		"mode": "cors",
+		"credentials": "include"
 	});
-	return today_subjects;
+	if (!response.ok) {
+		throw new Error(`Network response was not ok: ${response.statusText}`);
+	}
+	const data = await response.json();
+	if (data.error) {
+		throw new Error(`Error from server: ${data.error}`);
+	}
+	return data;
+}
+
+function get_entry_form(class_id) {
+	return new Promise((resolve, reject) => {
+		attendanceCheck(class_id)
+			.then(data => {
+				if (data.is_accepted === 2) {
+					showNotification({
+						title: "出席確認無し",
+						content: `該当の授業は有効な出席確認がありませんでした。`,
+						duration: 5000
+					});
+					reject(new Error("出席確認無し"));
+				} else {
+					const glexa_modal_entry_form = fetch(`https://portal.iwasaki.ac.jp/lms/?class_id=${class_id}&action=glexa_modal_entry_form&_=${Date.now()}`);
+					glexa_modal_entry_form
+						.then(response => {
+							if (!response.ok) {
+								throw new Error(`Network response was not ok: ${response.statusText}`);
+							}
+							return response.text();
+						})
+						.then(html => {
+							const parser = new DOMParser();
+							const doc = parser.parseFromString(html, 'text/html');
+							if (doc) {
+								resolve(doc);
+							} else {
+								reject(new Error("Entry form not found"));
+							}
+						})
+						.catch(error => {
+							reject(error);
+						});
+				}
+			})
+			.catch(error => {
+				reject(error);
+			});
+	});
 }
 
 
 
-// フォーム送信関数
-// glexa.ajaxForm({
-// 	form: '#form-entry',
-// 	method: 'get',
-// 	onSuccess: function() {
-// 		glexa.closeRemoteModal();
-// 		glexa.alert('出席を受け付けました');
-// 		isClassEntryOpened = false;
-// 	}
-// });
+fetch("https://portal.iwasaki.ac.jp/lms/?class_id=8568&action=glexa_modal_entry_form&_=1749440645326", {
+	"headers": {
+		"accept": "*/*",
+		"accept-language": "ja,en-US;q=0.9,en;q=0.8",
+		"priority": "u=1, i",
+		"sec-ch-ua": "\"Google Chrome\";v=\"137\", \"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+		"sec-ch-ua-mobile": "?0",
+		"sec-ch-ua-platform": "\"Windows\"",
+		"sec-fetch-dest": "empty",
+		"sec-fetch-mode": "cors",
+		"sec-fetch-site": "same-origin",
+		"x-requested-with": "XMLHttpRequest"
+	},
+	"referrer": "https://portal.iwasaki.ac.jp/lms/class/8568",
+	"referrerPolicy": "strict-origin-when-cross-origin",
+	"body": null,
+	"method": "GET",
+	"mode": "cors",
+	"credentials": "include"
+});
+
+fetch("https://portal.iwasaki.ac.jp/lms/?action=glexa_modal_entry_form_accept&class_id=8568&directory_id=0&entry_id=43577&uniqid=40f027d60cf26fad11488d21b4bae0c0354742a72aeeebeabeaff1049e62f120&code=aws8409&_=1749440645327", {
+	"headers": {
+		"accept": "*/*",
+		"accept-language": "ja,en-US;q=0.9,en;q=0.8",
+		"priority": "u=1, i",
+		"sec-ch-ua": "\"Google Chrome\";v=\"137\", \"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+		"sec-ch-ua-mobile": "?0",
+		"sec-ch-ua-platform": "\"Windows\"",
+		"sec-fetch-dest": "empty",
+		"sec-fetch-mode": "cors",
+		"sec-fetch-site": "same-origin",
+		"x-requested-with": "XMLHttpRequest"
+	},
+	"referrer": "https://portal.iwasaki.ac.jp/lms/class/8568",
+	"referrerPolicy": "strict-origin-when-cross-origin",
+	"body": null,
+	"method": "GET",
+	"mode": "cors",
+	"credentials": "include"
+});

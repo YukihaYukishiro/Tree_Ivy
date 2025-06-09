@@ -4,12 +4,25 @@
   "version": "2.0.0",
   "description": "スタログ用出欠管理拡張システム",
   "permissions": [
-    "storage"
+    "storage",
+    "contextMenus"
   ],
   "background": {
     "service_worker": "update_handler/serviceWorker.js"
   },
   "content_scripts": [
+    {
+      "matches": [
+        "*://portal.iwasaki.ac.jp/lms/*",
+        "*://portal.iwasaki.ac.jp/portal/lmsinc/sMyPage.php"
+      ],
+      "js": [
+        "overrider/core/js/util.js",
+        "overrider/core/js/addlink.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true
+    },
     {
       "matches": [
         "*://portal.iwasaki.ac.jp/lms/"
@@ -19,7 +32,6 @@
         "overrider/core/js/tutorials.js",
         "overrider/core/js/attendancebar.js",
         "overrider/core/js/iportalapi.js",
-        "overrider/core/js/addlink.js",
         "overrider/core/js/simpleAttendanceView.js",
         "overrider/core/js/compactSchedule.js",
         "overrider/core/js/splitView.js",
@@ -27,7 +39,7 @@
         "overrider/core/js/attendCalendar.js",
         "overrider/main.js"
       ],
-      "run_at": "document_end",
+      "run_at": "document_start",
       "all_frames": true
     },
     {

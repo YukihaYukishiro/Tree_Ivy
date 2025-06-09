@@ -1,3 +1,8 @@
+window.addEventListener("load", function() {
+    console.log("Overrider addlink loaded");
+    add_settings_link();
+});
+
 async function add_settings_link(){
     const nav_bar = await waitForElement("#header-menu > ul.nav.navbar-nav.navbar-right.gnav.cf")
     if (!nav_bar) {
