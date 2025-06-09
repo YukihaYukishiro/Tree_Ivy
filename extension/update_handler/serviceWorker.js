@@ -3,7 +3,7 @@ chrome.runtime.onInstalled.addListener(async (details) => {
 
     if (details.reason == "install") {
         chrome.tabs.create({
-            url: "chrome-extension://" + chrome.runtime.id + "/update_handler/newuser.html"
+            url: "chrome-extension://" + chrome.runtime.id + "/update_handler/welcome.html"
         });
     }
     if (details.reason == "update" && details.previousVersion !== chrome.runtime.getManifest().version) {

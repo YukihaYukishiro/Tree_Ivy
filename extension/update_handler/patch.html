@@ -1,40 +1,89 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <title>パッチノートv1.3</title>
-        <link rel="stylesheet" type="text/css" href="patch.css">
-    </head>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>パッチノート</title>
+    <style>
+        body {
+            font-family: "Segoe UI", sans-serif;
+            background-color: #fffafc;
+            color: #333;
+            margin: 0;
+            padding: 30px;
+        }
 
+        .container {
+            max-width: 700px;
+            margin: auto;
+            background: #fdf6ff;
+            border-radius: 16px;
+            box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+        }
 
-    <body>
-        <div class="container">
+        h1 {
+            font-size: 26px;
+            color: #955ac9;
+            margin-bottom: 30px;
+        }
 
-            <h1>パッチノート</h1>
-            <h2>バージョン 1.3</h2>
-            <p>このバージョンでは、以下の変更が行われました:</p>
+        .patch {
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e0caff;
+        }
+
+        .patch h2 {
+            font-size: 20px;
+            color: #7a5fbf;
+            margin-bottom: 10px;
+        }
+
+        .patch ul {
+            margin-left: 20px;
+            font-size: 15px;
+            line-height: 1.8;
+        }
+
+        .patch time {
+            font-size: 13px;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>パッチノート</h1>
+
+        <div class="patch">
+            <h2>これまでのユーザーの皆様へ</h2>
             <ul>
-                <li>iportalのスプリットビュー対応</li>
-                キャリアカフェとスタログに戻るリンクがどういうわけか遷移しない問題を確認しています<br>
-                どうもhttpsとhttpが混在してるとiframeが読み込みを拒否するらしいです<br>
-                少なくとも出てきてるエラーはそういってる、解消方法はわかんにゃい<br>
-                とりあえず、キャリアカフェとスタログのリンクは新しいタブで開くようにしました
-                <li>スプリットビューのページ用の戻る、閉じるボタン追加</li>
-                <li>スプリットビューでダイジェストのエラーから科目ページに戻るボタンを押すと強制遷移する問題の修正</li>
+                <li>これまでのTree_Ivyをご利用いただき、誠にありがとうございます。</li>
+                <li>これまでのTree_Ivyは、2025年6月9日をもってサポートを終了いたします。</li>
+                <li>新しいTree_Ivyは、Tree_Ivy Replantedとしてこのアップデートが適用された瞬間からご利用いただけます。</li>
+                <li>これまでのコンフィグとの互換性はありませんが自動的に再構築されるようになっているのでそのままお使いください。</li>
+                <li>旧コンフィグが残っていても害はありませんが気になる場合は拡張機能ストレージのローカルデータを削除してください。</li>
             </ul>
-            <h2>公式discordについて</h2>
-            <p>使い方がわからない機能の質問や意見、バグ報告とアプデ告知などに</p>
-            <p>chrome右上のパズルアイコンの拡張機能一覧からTreeIvyをクリックし、右上にあるアイコンから参加できます</p>
-            <p>または<a href="https://discord.gg/KXFbwAFaA7" target="_blank">こちら</a></p>
-           
-            <h3>メニューのアクセス方法</h3>
-            <p>画像のパズルアイコンの一覧からTree Ivyを選択</p>
-            <img src="../images/menu.png" width="30%" height="30%">
-            
-
-            <h2>作者の独り言</h2>
-            <p>イースターエッグ一個混ぜてみたよ。探してみてね</p>
-            
         </div>
-    </body>
+
+
+        <div class="patch">
+            <h2>v2.0.0</h2>
+            <time>2025年6月9日</time>
+            <ul>
+                <li>アイコンを変更しました</li>
+                <li>機能を全面的に見直し、UIを刷新しました。</li>
+                <li>新しい設定画面を追加し、より直感的な操作が可能になりました。</li>
+                <li>これまでの設定画面は無くなります。</li>
+                <li>パフォーマンスを大幅に向上させ、動作が軽快になりました。</li>
+                <li>バグ修正と安定性の向上を行いました。</li>
+                <li>新しい機能としてIportalの通知がプレビューされるとともに自動的に既読扱いになるようにしました。</li>
+                <li>一部機能についてチュートリアルが実行されるようになりました。</li>
+                <li>新しくなったTree_Ivy2をお楽しみください。</li>
+            </ul>
+        </div>
+
+
+    </div>
+</body>
 </html>
