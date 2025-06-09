@@ -21,7 +21,7 @@ function waitForElement(selector, timeout = 10000) {
     if (timeout > 0) {
       setTimeout(() => {
         observer.disconnect();
-        reject(`要素「${selector}」が${timeout}ms以内に見つかりませんでした`);
+        resolve(`要素「${selector}」が${timeout}ms以内に見つかりませんでした`);
       }, timeout);
     }
   });
@@ -47,7 +47,7 @@ function waitForElements(selector, timeout = 10000) {
     if (timeout > 0) {
       setTimeout(() => {  
         observer.disconnect();
-        reject(`要素「${selector}」が${timeout}ms以内に見つからなかったよ〜💦`);
+        resolve(`要素「${selector}」が${timeout}ms以内に見つからなかったよ〜💦`);
       }, timeout);
     }
   });
