@@ -15,18 +15,6 @@ window.addEventListener("load", async () => {
     if (config.enable_betternotification) {
         loadAndShowIportalNotifications();
     }
-    if (config.attend_calendar) {
-
-        // これ未完成ね
-        chrome.runtime.sendMessage({
-            action: 'enableAttendanceCheck'
-        });
-
-    } else {
-        chrome.runtime.sendMessage({
-            action: 'disableAttendanceCheck'
-        });
-    }
 
 
 
@@ -56,33 +44,7 @@ window.addEventListener("load", async () => {
     });
 
 });
-chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
-    const config = await get_config();
-    switch (message.action) {
-        case 'checkAttendance':
-            if (!config.attend_calendar) {
-                console.warn("Attendance check is disabled in the config.");
-                sendResponse({ status: "disabled" });
-                return;
-            } else {
-                const class_id = message.class_id;
-                if (isNaN(class_id)) {
-                    console.error('Invalid class_id:', class_id);
-                    sendResponse({ status: "error", message: "Invalid class_id" });
-                    return;
-                }
-                const entry_form = await get_entry_form(class_id);
-                console.log("Entry form received:", entry_form);
- 
 
-
-                sendResponse({ status: "success", class_id: class_id });
-            }
-            break;
-        default:
-            console.warn("Unknown action received:", message.action);
-    }
-});
 
 
 

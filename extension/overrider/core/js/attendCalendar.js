@@ -30,44 +30,68 @@ async function attendanceCheck(class_id) {
 	return data;
 }
 
-function get_entry_form(class_id) {
-	return new Promise((resolve, reject) => {
-		attendanceCheck(class_id)
-			.then(data => {
-				if (data.is_accepted === 2) {
-					showNotification({
-						title: "出席確認無し",
-						content: `該当の授業は有効な出席確認がありませんでした。`,
-						duration: 5000
+function entry_form(class_id) {
+	attendanceCheck(class_id)
+		.then(async res => {
+			console.log("Attendance check response:", res);
+			if (res.data.is_accepted === 0) {
+				showNotification({
+					title: "出席確認無し",
+					content: `該当の授業は有効な出席確認がありませんでした。`,
+					duration: 5000
+				});
+				reject("出席確認無し");
+			} else {
+				const glexa_modal_entry_form = fetch(`https://portal.iwasaki.ac.jp/lms/?class_id=${class_id}&action=glexa_modal_entry_form&_=${Date.now()}`, {
+					"headers": {
+						"accept": "*/*",
+						"accept-language": "ja,en-US;q=0.9,en;q=0.8",
+						"priority": "u=1, i",
+						"sec-ch-ua": "\"Google Chrome\";v=\"137\", \"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+						"sec-ch-ua-mobile": "?0",
+						"sec-ch-ua-platform": "\"Windows\"",
+						"sec-fetch-dest": "empty",
+						"sec-fetch-mode": "cors",
+						"sec-fetch-site": "same-origin",
+						"x-requested-with": "XMLHttpRequest"
+					},
+					"referrer": `https://portal.iwasaki.ac.jp/lms/class/${class_id}`,
+					"referrerPolicy": "strict-origin-when-cross-origin",
+					"body": null,
+					"method": "GET",
+					"mode": "cors",
+					"credentials": "include"
+				});
+				// wait 1 second before fetching the entry form
+				await new Promise(resolve => setTimeout(resolve, 1000)) // wait for 1 second 
+				glexa_modal_entry_form
+					.then(response => {
+						if (!response.ok) {
+							throw new Error(`Network response was not ok: ${response.statusText}`);
+						}
+						return response.text();
+					})
+					.then(html => {
+						const parser = new DOMParser();
+						const doc = parser.parseFromString(html, 'text/html');
+						console.log("Parsed document:", doc);
+						if (doc) {
+							const entryForm = document.createElement('div');
+							entryForm.appendChild(doc.querySelector('#form-entry'));
+							console.log("Entry form element:", entryForm);
+							showNotification({
+								title: "出席確認",
+								content: entryForm,
+								duration: 5000
+							});
+						} else {
+						}
 					});
-					reject(new Error("出席確認無し"));
-				} else {
-					const glexa_modal_entry_form = fetch(`https://portal.iwasaki.ac.jp/lms/?class_id=${class_id}&action=glexa_modal_entry_form&_=${Date.now()}`);
-					glexa_modal_entry_form
-						.then(response => {
-							if (!response.ok) {
-								throw new Error(`Network response was not ok: ${response.statusText}`);
-							}
-							return response.text();
-						})
-						.then(html => {
-							const parser = new DOMParser();
-							const doc = parser.parseFromString(html, 'text/html');
-							if (doc) {
-								resolve(doc);
-							} else {
-								reject(new Error("Entry form not found"));
-							}
-						})
-						.catch(error => {
-							reject(error);
-						});
-				}
-			})
-			.catch(error => {
-				reject(error);
-			});
-	});
+			}
+		})
+		.catch(error => {
+			reject(error);
+		});
 }
 
 

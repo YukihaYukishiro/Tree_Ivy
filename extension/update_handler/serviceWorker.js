@@ -1,16 +1,5 @@
 // onInstalled event listener
 chrome.runtime.onInstalled.addListener(async (details) => {
-    const config = await chrome.storage.sync.get(null);
-    if (config.attend_calendar) {
-        chrome.contextMenus.create({
-            title: "この科目の出席を確認",
-            contexts: ["link"],
-            id: "checkAttendance",
-            documentUrlPatterns: ["*://portal.iwasaki.ac.jp/lms/"],
-            targetUrlPatterns: ["*://portal.iwasaki.ac.jp/lms/class/*/*"]
-        });
-    }
-
 
     if (details.reason == "install") {
         chrome.tabs.create({
@@ -34,9 +23,6 @@ chrome.runtime.onInstalled.addListener(async (details) => {
         if (config.urlPatterns === undefined) {
             config.urlPatterns = ["/lms/class/\\d+/"];
         }
-        if (config.attend_calendar === undefined) {
-            config.attend_calendar = true;
-        }
         if (config.compactSchedule === undefined) {
             config.compactSchedule = true;
         }
@@ -58,51 +44,5 @@ chrome.runtime.onInstalled.addListener(async (details) => {
 
 });
 
-chrome.contextMenus.onClicked.addListener((info, tab) => {
-    switch (info.menuItemId) {
-        case 'checkAttendance':
-            // Handle the check attendance action
-            let class_id = info.linkUrl.split('/')[5];
-            class_id = parseInt(class_id, 10); // Convert class_id to an integer
-            if (isNaN(class_id)) {
-                console.error('Invalid class_id:', info.linkUrl);
-                return;
-            }
-            const response = chrome.tabs.sendMessage(tab.id, {
-                action: 'checkAttendance',
-                class_id: class_id
-            });
-            response.then((result) => {
-                // console.log('Attendance check response:', result);
-            }).catch((error) => {
-                console.error('Error checking attendance:', error);
-            });
-            break;
-        default:
 
-    }
-});
 
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-    switch (message.action) {
-        case 'enableAttendanceCheck':
-            // Enable the attendance check context menu item
-            chrome.contextMenus.update("checkAttendance", {
-                visible: true
-            });
-            sendResponse({ status: "enabled" });
-            break;
-    
-        case 'disableAttendanceCheck':
-            // Disable the attendance check context menu item
-            chrome.contextMenus.update("checkAttendance", {
-                visible: false
-            });
-            sendResponse({ status: "disabled" });
-            break;
-        default:
-            console.warn("Unknown action:", message.action);
-            sendResponse({ status: "unknown_action" });
-            break;
-    }
-});
