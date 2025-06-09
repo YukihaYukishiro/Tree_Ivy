@@ -4,8 +4,7 @@
   "version": "2.0.0",
   "description": "スタログ用出欠管理拡張システム",
   "permissions": [
-    "storage",
-    "contextMenus"
+    "storage"
   ],
   "background": {
     "service_worker": "update_handler/serviceWorker.js"
