@@ -36,7 +36,6 @@
         "overrider/core/js/compactSchedule.js",
         "overrider/core/js/splitView.js",
         "overrider/core/js/better_iportal_notification.js",
-        "overrider/core/js/attendCalendar.js",
         "overrider/main.js"
       ],
       "run_at": "document_start",
