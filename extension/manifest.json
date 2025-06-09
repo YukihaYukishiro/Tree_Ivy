@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Tree_Ivy Replanted",
-  "version": "1.3.1",
+  "version": "2.0.0",
   "description": "スタログ用出欠管理拡張システム",
   "permissions": [
     "storage",
@@ -82,8 +82,8 @@
   ],
   "options_page": "settings/settings.html",
   "icons": {
-    "16": "images/16x16.png",
-    "48": "images/48x48.png",
-    "128": "images/128x128.png"
+    "16": "images/app_icon16.png",
+    "48": "images/app_icon48.png",
+    "128": "images/app_icon128.png"
   }
 }
