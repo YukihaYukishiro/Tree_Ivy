@@ -8,6 +8,7 @@ async function add_settings_link(){
     const link = document.createElement("a");
     link.href = chrome.runtime.getURL("settings/settings.html");
     link.textContent = "Tree Ivy 設定";
+    link.target = "_blank"; // 新しいタブで開く
     settings_link.appendChild(link);
     nav_bar.appendChild(settings_link);
 }
