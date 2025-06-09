@@ -4,10 +4,10 @@ window.addEventListener("load", async () => {
 
     const stats = await get_subject_status();
     const config = await get_config();
-
-
     intialize_schedule(stats, config);
-    run_tutorials();
+
+
+    await run_tutorials();
 
     if (config.enable_splitview) {
         apply_splitView();

@@ -32,19 +32,30 @@ async function run_tutorials() {
         chrome.storage.sync.set({ tutorial_progress: tutorial_progress });
     }
     if (is_first_tutorial) {
+        let flag = false;
         showNotification({
             title: "チュートリアル完了",
             content: `チュートリアルはこれで完了です！<br>
         設定からいつでも再度チュートリアルを実行できます<br>
         より良いスタログ体験をお楽しみください！`,
-            duration: 5000
+            duration: 5000,
+            onClose: () => {
+                flag = true;
+            }
+        });
+        // チュートリアルが完了するまで待機
+        await new Promise((resolve) => {
+            const interval = setInterval(() => {
+                if (flag) {
+                    clearInterval(interval);
+                    resolve();
+                }
+            }, 100);
         });
     }
 }
 
 function show_tutorial(element, body_html, left_offset = 0, timeout = 5000) {
-
-
   return new Promise((resolve) => {
 
     element.classList.add('tutorial-target');
@@ -142,7 +153,9 @@ async function settings_button_tutorial() {
         <div class="tutorial-title" >
         <h3>拡張機能の設定</h3>
         <p>ここから拡張機能の設定を変更できます</p>
-        <p>設定を変更した後は、ページをリロードしてください</p>
+        <p>デフォルトではほとんどの設定が有効になっています</p>
+        <p>要らない場合は任意で停止させてください</p>
+        <p>設定を変更した後は、このページをリロードしてください</p>
         </div>`;
         await show_tutorial(tutorialElement, body_html, left_offset = 20, timeout = 5000);
     }
