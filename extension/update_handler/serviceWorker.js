@@ -20,6 +20,9 @@ chrome.runtime.onInstalled.addListener(async (details) => {
     chrome.storage.sync.get(null, (config) => {
 
 
+        if(config.useChart === undefined) {
+            config.useChart = false;
+        }
         if (config.urlPatterns === undefined) {
             config.urlPatterns = ["/lms/class/\\d+/"];
         }
