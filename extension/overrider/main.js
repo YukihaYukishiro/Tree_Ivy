@@ -10,7 +10,11 @@ window.addEventListener("load", async () => {
     await run_tutorials();
 
     if (config.enable_splitview) {
-        apply_splitView();
+        // ロードされたのがiframe内である場合実行しない
+        if (window.self === window.top) {
+            apply_splitView();
+        }
+        // apply_splitView();
     }
     if (config.enable_betternotification) {
         loadAndShowIportalNotifications();
@@ -50,7 +54,12 @@ window.addEventListener("load", async () => {
 
 async function intialize_schedule(stats, config) {
 
-    apply_attendance_bar(stats)
+    if (config.useChart) {
+        apply_attendance_chart(stats);
+    }else {
+        apply_attendance_bar(stats);
+    }
+
 
     if (config.simpleAttendanceView) {
         apply_simpleAttendanceView();
