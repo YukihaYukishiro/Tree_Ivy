@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>設定画面</title>
+    <script src="js/settings.js" defer></script>
+    <link rel="stylesheet" href="css/settings.css">
+</head>
+
+<body>
+
+    <div id="settings-container">
+        <div id="header">
+            <span id="popup-title">Tree-Ivy</span>
+            <a id="Discord_icon" href="https://discord.gg/KXFbwAFaA7" target="_blank">
+                <img src="../images/discord_icon_130958.webp" alt="Discord">
+            </a>
+        </div>
+
+        <div id="settings-body">
+
+            <h2 class="category-title">時間割</h2>
+            <div class="description">時間割の表示設定</div>
+            <div class="option">
+                <span class="option-title" data-tooltip="出席マークの代わりにコマの背景色で出欠を表現する">スタイリッシュな出欠状況表示</span>
+                <label class="switch">
+                    <input type="checkbox" id="simpleAttendanceView">
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <div class="option">
+                <span class="option-title" data-tooltip="コマ内のレイアウトを見やすくする（当社比）">コンパクトな時間割</span>
+                <label class="switch">
+                    <input type="checkbox" id="compactSchedule">
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <h2 class="category-title">その他の機能</h2>
+            <div class="description">その他の機能の設定</div>
+
+            <div class="option">
+                <span class="option-title" data-tooltip="カレンダー画面にいるときにIportalの更新をわかりやすく表示する">より洗練されたiポータル更新通知</span>
+                <label class="switch">
+                    <input type="checkbox" id="enable_betternotification">
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <div class="option">
+                <span class="option-title" data-tooltip="指定したページを画面遷移なしで分割したエリアに表示する">スプリットビュー</span>
+                <label class="switch">
+                    <input type="checkbox" id="enable_splitview">
+                    <span class="slider"></span>
+                </label>
+                <div class="suboptions">
+                    <h3 class="suboption-title">スプリットビューのリンク設定</h3>
+                    <div class="description">リンクのパターンを追加・削除できます</div>
+                    <div id="list-url-pattern" class="suboption-list"></div>
+                    <button id="add-url-pattern" class="add-btn">＋ パターンを追加</button>
+                </div>
+            </div>
+            <div class="option">
+                <span class="option-title" data-tooltip="マイページから課題ページに移動する際別のタブで開きます">マイページで課題を別タブで開く</span>
+                <label class="switch">
+                    <input type="checkbox" id="mypage_newtab">
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </div>
+        <h2 class="category-title">その他の機能</h2>
+        <div class="description">その他の機能の設定</div>
+        <div class="option">
+            <span class="option-title" data-tooltip="チュートリアルを再度表示します">チュートリアルのリセット</span>
+            <button id="reset-tutorial" class="btn reset-btn">リセット</button>
+        </div>
+
+    </div>
+
+</body>
+
+</html>

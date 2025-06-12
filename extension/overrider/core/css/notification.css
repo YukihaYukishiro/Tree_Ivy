@@ -1,0 +1,89 @@
+.notification-box {
+  position: fixed;
+  top: 20px;
+  right: -420px; /* 初期は右外 */
+  width: 400px;
+  background: #fdf6ff;
+  border: 2px solid #e0caff;
+  border-radius: 16px;
+  padding: 16px;
+  z-index: 3000;
+  box-shadow: 0 4px 16px rgba(100, 80, 120, 0.2);
+  font-family: "Segoe UI", sans-serif;
+  color: #333;
+  opacity: 0;
+  transition: right 0.8s ease, opacity 0.8s ease;
+}
+
+.notification-box.show {
+  right: 20px;
+  opacity: 1;
+}
+
+.notification-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #7a5fbf;
+  font-weight: bold;
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+.notification-read-button {
+  border: none;
+  border-radius: 6px;
+  padding: 4px 8px;
+  cursor: pointer;
+  font-size: 13px;
+  color: #4a2e7c;
+  transition: background-color 0.3s ease;
+}
+
+.notification-read-button:hover {
+  background: #e0caff;
+}
+
+.notification-timer-bar-container {
+  flex: 1;
+  height: 6px;
+  background-color: #ecd9ff;
+  border-radius: 4px;
+  margin: 0 10px;
+  overflow: hidden;
+  position: relative;
+}
+
+.notification-timer-bar {
+  height: 100%;
+  background-color: #b980ff;
+  width: 100%;
+  transition: width 1s linear;
+}
+
+.notification-body {
+  font-size: 14px;
+  color: #555;
+  background-color: #f4f1fa;
+  padding: 10px;
+  border-radius: 10px;
+  line-height: 1.5;
+  max-height: 30em;
+  overflow: hidden;
+  position: relative;
+}
+.notification-body > p {
+   margin: 0;
+    padding: 0;
+    color: #333;
+    font: bold 14px "Segoe UI", sans-serif;
+}
+
+/* .notification-body::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  height: 1.5em;
+  width: 100%;
+} */

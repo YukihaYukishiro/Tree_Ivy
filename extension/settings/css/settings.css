@@ -1,0 +1,207 @@
+        body {
+            font-family: "Segoe UI", sans-serif;
+            background-color: #fffafc;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+
+        #settings-container {
+            max-width: 600px;
+            margin: auto;
+            background: #fdf6ff;
+            border-radius: 16px;
+            box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+        }
+
+        h2.category-title {
+            font-size: 20px;
+            margin-top: 30px;
+            border-bottom: 2px solid #e0caff;
+            padding-bottom: 8px;
+            color: #7a5fbf;
+        }
+
+        .description {
+            font-size: 14px;
+            color: #777;
+            margin-bottom: 12px;
+        }
+
+        .option {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 10px;
+            background-color: #f4f1fa;
+        }
+
+        .option-title {
+            font-size: 16px;
+        }
+
+        /* サブオプション基本 */
+        .suboptions {
+            display: none;
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #f4f1fa;
+            border-radius: 10px;
+        }
+
+        /* チェック時に親に .active が付くと表示される */
+        .option.active .suboptions {
+            display: block;
+        }
+
+        /* サブオプションの中身 */
+        .suboption-list .link-item {
+            display: flex;
+            align-items: center;
+            margin: 6px 0;
+        }
+
+
+
+
+        .link-item input {
+            flex: 1;
+            padding: 6px 10px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            background-color: #fff;
+        }
+
+        .link-item button {
+            margin-left: 10px;
+            background-color: #e2c2ff;
+            color: #5a3580;
+            border: none;
+            border-radius: 6px;
+            padding: 6px 10px;
+            cursor: pointer;
+        }
+
+
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 26px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: 0.4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: 0.4s;
+            border-radius: 50%;
+        }
+
+        .switch input:checked+.slider {
+            background-color: #d9a5f0;
+        }
+
+        .switch input:checked+.slider:before {
+            transform: translateX(24px);
+        }
+
+        #header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        #popup-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #955ac9;
+        }
+
+        #Discord_icon img {
+            width: 28px;
+            height: 28px;
+        }
+
+        .btn {
+            background-color: #e2c2ff;
+            color: #5a3580;
+            border: none;
+            border-radius: 6px;
+            padding: 6px 10px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        
+        .option-title {
+            position: relative;
+            cursor: help;
+        }
+
+        /* ツールチップの中身 */
+        .option-title::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 125%;
+            left: 0;
+            white-space: nowrap;
+            background-color: #5a3580;
+            color: #fff;
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s;
+            transform: translateY(5px);
+            z-index: 10;
+        }
+
+        /* ツールチップの矢印 */
+        .option-title::before {
+            content: '';
+            position: absolute;
+            bottom: 115%;
+            left: 10px;
+            border-width: 6px;
+            border-style: solid;
+            border-color: #5a3580 transparent transparent transparent;
+            opacity: 0;
+            transition: opacity 0.2s;
+            pointer-events: none;
+        }
+
+        /* ホバー時に表示 */
+        .option-title:hover::after,
+        .option-title:hover::before {
+            opacity: 1;
+        }

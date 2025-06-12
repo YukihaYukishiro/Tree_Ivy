@@ -1,27 +1,43 @@
 {
   "manifest_version": 3,
-  "name": "Tree_Ivy",
-  "version": "1.3",
+  "name": "Tree_Ivy Replanted",
+  "version": "2.0.0",
   "description": "スタログ用出欠管理拡張システム",
   "permissions": [
     "storage"
   ],
-  "background" : {
-    "service_worker" : "backgrounds/serviceWorker.js"
+  "background": {
+    "service_worker": "update_handler/serviceWorker.js"
   },
   "content_scripts": [
+    {
+      "matches": [
+        "*://portal.iwasaki.ac.jp/lms/*",
+        "*://portal.iwasaki.ac.jp/portal/lmsinc/sMyPage.php"
+      ],
+      "js": [
+        "overrider/core/js/util.js",
+        "overrider/core/js/addlink.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true
+    },
     {
       "matches": [
         "*://portal.iwasaki.ac.jp/lms/"
       ],
       "js": [
-        "backgrounds/schedule.js",
-        "backgrounds/attendFromTop.js",
-        "backgrounds/schedule/cellLayout.js",
-        "backgrounds/autologin.js",
-        "backgrounds/splitview.js"
+        "overrider/core/js/util.js",
+        "overrider/core/js/tutorials.js",
+        "overrider/core/js/attendancebar.js",
+        "overrider/core/js/iportalapi.js",
+        "overrider/core/js/simpleAttendanceView.js",
+        "overrider/core/js/compactSchedule.js",
+        "overrider/core/js/splitView.js",
+        "overrider/core/js/better_iportal_notification.js",
+        "overrider/main.js"
       ],
-      "run_at": "document_end",
+      "run_at": "document_start",
       "all_frames": true
     },
     {
@@ -29,30 +45,44 @@
         "*://portal.iwasaki.ac.jp/lms/"
       ],
       "css": [
-        "css/style.css"
-      ]
+        "overrider/core/css/attendancebar.css",
+        "overrider/core/css/schedule_layout.css",
+        "overrider/core/css/tutorial.css",
+        "overrider/core/css/notification.css",
+        "overrider/core/css/splitview.css"
+      ],
+      "all_frames": true
     },
     {
-      "matches":[
+      "matches": [
         "*://portal.iwasaki.ac.jp/portal/lmsinc/sMyPage.php"
       ],
-      "js":[
-        "backgrounds/mypage/sMyPage.js"
-      ]
+      "js": [
+        "overrider/core/js/util.js",
+        "overrider/mypage.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": true
     }
   ],
   "web_accessible_resources": [
     {
-      "resources": [ "html/dialog.html" ,"images/attend.jpg"],
-      "matches": [ "*://portal.iwasaki.ac.jp/*" ]
+      "resources": [
+        "settings/settings.html",
+        "settings/js/settings.js",
+        "settings/css/settings.css",
+        "images/discord_icon_130958.webp",
+        "images/ivy_bar_hover.gif"
+      ],
+      "matches": [
+        "*://portal.iwasaki.ac.jp/*"
+      ]
     }
   ],
-  "action": {
-    "default_popup": "html/popup.html"
-  },
+  "options_page": "settings/settings.html",
   "icons": {
-    "16": "images/16x16.png",
-    "48": "images/48x48.png",
-    "128": "images/128x128.png"
+    "16": "images/app_icon16.png",
+    "48": "images/app_icon48.png",
+    "128": "images/app_icon128.png"
   }
 }

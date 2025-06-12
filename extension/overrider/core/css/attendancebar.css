@@ -1,0 +1,80 @@
+.ivy-actual-bar {
+    display: flex;
+    height: 15px;
+}
+
+.ivy-bar-unit {
+    height: 100%;
+}
+
+.ivy-bar-unit:first-child {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.ivy-bar-unit:last-child {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.ivy-death-bar {
+    margin-top: 5px;
+    gap: 1px;
+}
+
+.ivy-death-unit {
+    height: 100%;
+    flex: 1;
+    background-color: rgb(238, 251, 255);
+    border-radius: 5px;
+}
+
+.ivy-death-unit-dead {
+    background-color: #ffcccc;
+    opacity: 1;
+}
+
+.ivy-attended {
+    background-color: #ccccff;
+    /* background-color: #3dbcff; */
+}
+
+.ivy-public-absence {
+    background-color: #ccffcc;
+    /* background-color: #9ee07b; */
+}
+
+.ivy-absence {
+    background-color: #ffcccc;
+    /* background-color: #f18676; */
+}
+
+.ivy-empty {
+    background-color: rgb(238, 251, 255);
+
+}
+
+.ivy-bar-info {
+    position: absolute;
+    top: -200%;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    z-index: 1000;
+    font-size: 0.8em;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    pointer-events: none;
+}
+.ivy-main-bar:hover ~ .ivy-main-bar-info {
+    opacity: 1;
+}
+.ivy-death-bar:hover ~ .ivy-death-bar-info {
+    
+    opacity: 1;
+}

@@ -1,0 +1,47 @@
+{
+  "manifest_version": 3,
+  "name": "Tree_Ivy 2",
+  "version": "2.0.0",
+  "description": "スタログ用出欠管理拡張システム",
+  "permissions": [
+    "storage"
+  ],
+  "background" : {
+    "service_worker" : "update_handler/serviceWorker.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://portal.iwasaki.ac.jp/lms/"
+      ],
+      "js": [
+        "overrider/main.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "*://portal.iwasaki.ac.jp/lms/"
+      ],
+      "css": [
+        "css/style.css"
+      ],
+      "all_frames": true
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [ "html/dialog.html" ,"images/attend.jpg"],
+      "matches": [ "*://portal.iwasaki.ac.jp/*" ]
+    }
+  ],
+  "action": {
+    "default_popup": "settings/popup.html"
+  },
+  "icons": {
+    "16": "images/16x16.png",
+    "48": "images/48x48.png",
+    "128": "images/128x128.png"
+  }
+}

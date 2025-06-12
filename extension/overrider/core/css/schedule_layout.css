@@ -1,0 +1,37 @@
+.div-class-name,
+.div-class-name > section{
+    height: 100%;
+}
+.div-class-name > section{
+    display: flex;
+    flex-direction: column;
+}
+.ivy-section {
+    margin: 0;
+    margin-top: auto;
+    text-align: center;
+    position: relative;
+    padding: 5px;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+.ivy-bar{
+    position: relative;
+}
+
+
+.attendance-hidden {
+    content: "";
+    position: absolute;
+    color: transparent;
+    transform: translate(-0.7em, 0);
+    pointer-events: none;
+    height: 100%;
+    top: 0;
+    width: 0.4em;
+    user-select: none;
+}
+#viewport{
+    display: none !important;
+}

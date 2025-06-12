@@ -1,0 +1,95 @@
+<script src="extension/overrider/apicall/iportalapi.js"></script>
+<script>
+    const subjects = {
+        "8557": {
+            "class_name": "就職準備",
+            "max_periods": 30,
+            "attendance": 4,
+            "absence": 4,
+            "public_absence": 8
+        },
+
+        "8600": {
+            "class_name": "レスポンシブデザイン",
+            "max_periods": 45,
+            "attendance": 15,
+            "absence": 3,
+            "public_absence": 3
+        },
+        "8604": {
+            "class_name": "マルウェア解析とフォレンジック",
+            "max_periods": 30,
+            "attendance": 12,
+            "absence": 0,
+            "public_absence": 2
+        }
+    }
+document.addEventListener("DOMContentLoaded", function () {
+    const ivyBar = document.querySelector(".ivy-bar");
+    const subject = subjects["8600"]; // 表示する科目
+    const total = subject.max_periods;
+
+    if (ivyBar) {
+        const actual_bar = document.createElement("div");
+        actual_bar.className = "actual-bar";
+        ivyBar.appendChild(actual_bar);
+
+        const { attendance, public_absence, absence } = subject;
+        const used = attendance + public_absence + absence;
+        const empty = total - used;
+
+        for (let i = 0; i < total; i++) {
+            const unit = document.createElement("div");
+            unit.classList.add("bar-unit");
+
+            if (i < attendance) {
+                unit.classList.add("attended");
+            } else if (i < attendance + public_absence) {
+                unit.classList.add("public-absence");
+            } else if (i < attendance + public_absence + empty) {
+                unit.classList.add("empty");
+            } else {
+                unit.classList.add("absence");
+            }
+
+            actual_bar.appendChild(unit);
+        }
+    }
+});
+
+
+</script>
+<style>
+    .actual-bar {
+    display: flex;
+    height: 20px;
+    gap: 1px;
+}
+
+.bar-unit {
+    flex: 1;
+    height: 100%;
+}
+
+.attended {
+    background-color: green;
+}
+
+.public-absence {
+    background-color: yellow;
+}
+
+.absence {
+    background-color: red;
+}
+
+.empty {
+    background-color: lightgray;
+}
+
+</style>
+<div class="ivy-container">
+    <div class="ivy-bar">
+
+    </div>
+</div>
