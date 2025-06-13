@@ -17,7 +17,8 @@
       ],
       "js": [
         "overrider/core/js/util.js",
-        "overrider/core/js/addlink.js"
+        "overrider/core/js/addlink.js",
+        "overrider/core/js/shutUpMail.js"
       ],
       "run_at": "document_start",
       "all_frames": true
