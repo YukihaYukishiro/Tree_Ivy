@@ -161,7 +161,7 @@
             font-size: 14px;
         }
 
-        
+
         .option-title {
             position: relative;
             cursor: help;
@@ -204,4 +204,45 @@
         .option-title:hover::after,
         .option-title:hover::before {
             opacity: 1;
+        }
+
+
+        
+
+        .advanced-settings {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px dashed #d4b0ff;
+        }
+
+        .toggle-advanced-btn {
+            background-color: #c8a8f3;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 8px 12px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .toggle-advanced-btn:hover {
+            background-color: #b68ce6;
+        }
+
+        .advanced-content {
+            display: none;
+            margin-top: 15px;
+        }
+
+        .advanced-settings.open .advanced-content {
+            display: block;
+        }
+
+        .advanced-settings.open .toggle-advanced-btn::before {
+            content: '▼ ';
+        }
+
+        .toggle-advanced-btn::before {
+            content: '▶ ';
         }

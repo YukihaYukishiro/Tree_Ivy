@@ -36,7 +36,10 @@ async function open_splitView(url) {
 
     // 既存の分割ビューを削除
     const existingSplitView = document.getElementById("split-view-container");
+    let modifiedWidth;
     if (existingSplitView) {
+        // 横幅の指定があれば記録
+        modifiedWidth = existingSplitView.style.width;
         existingSplitView.remove();
         v2_container.classList.remove("shrink-left");
     }
@@ -45,6 +48,43 @@ async function open_splitView(url) {
     const splitView_container = document.createElement("div");
     splitView_container.id = "split-view-container";
     splitView_container.classList.add("split-view-container");
+
+    // リサイズハンドルを追加
+    const resizeHandle = document.createElement("div");
+    resizeHandle.classList.add("split-view-resize-handle");
+    splitView_container.appendChild(resizeHandle);
+
+    let isResizing = false;
+
+    resizeHandle.addEventListener("mousedown", (e) => {
+        isResizing = true;
+        splitView_container.style.pointerEvents = "none"; // リサイズ中は他の要素のクリックを無効化
+        document.body.style.cursor = "ew-resize";
+        e.preventDefault();
+    });
+
+    document.addEventListener("mousemove", (e) => {
+        if (!isResizing) return;
+
+        const newWidth = window.innerWidth - e.clientX;
+        const minWidth = 300;
+        const maxWidth = window.innerWidth - 200;
+
+        if (newWidth > minWidth && newWidth < maxWidth) {
+            const splitPercent = (newWidth / window.innerWidth) * 100;
+            const v2Percent = 100 - splitPercent;
+            splitView_container.style.width = `${splitPercent}%`;
+            document.querySelector(".v2-container").style.width = `${v2Percent}%`;
+        }
+    });
+
+    document.addEventListener("mouseup", () => {
+        if (isResizing) {
+            isResizing = false;
+            splitView_container.style.pointerEvents = "auto"; // リサイズ終了後は他の要素のクリックを有効化
+            document.body.style.cursor = "";
+        }
+    });
 
 
 
@@ -76,7 +116,10 @@ async function open_splitView(url) {
     closeBtn.textContent = "✖";
     closeBtn.onclick = () => {
         splitView_container.remove();
+        // v2_containerのクラスを元に戻す
         v2_container.classList.remove("shrink-left");
+        // v2_containerの幅を元に戻す
+        v2_container.removeAttribute("style");
     };
 
     const reloadBtn = document.createElement("button");
@@ -214,8 +257,13 @@ async function open_splitView(url) {
     splitView_container.appendChild(header);
     splitView_container.appendChild(iframe);
     body.appendChild(splitView_container);
-
+    
     // 左を縮める
     v2_container.classList.add("shrink-left");
+    if (modifiedWidth) {
+        // 既存の分割ビューの横幅を復元
+        splitView_container.style.width = modifiedWidth;
+        v2_container.style.width = `calc(100% - ${modifiedWidth})`;
+    }
 }
 

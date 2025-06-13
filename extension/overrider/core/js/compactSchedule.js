@@ -1,12 +1,24 @@
 async function apply_compactSchedule() {
     // wait for the timetable to load
     const tbody = await waitForElement("#div-top-timetable2 > table > tbody");
-
+    const style = document.createElement('style');
+    style.textContent = `
+    .top-timetable-table-td {
+        height: 35px;
+    }
+    `;
+    // append the style to top of tbody
+    tbody.prepend(style);
     const parents = document.querySelectorAll('.div-class-name');
     parents.forEach(function (parent) {
         // parent.querySelectorAll('br').forEach(function (br) {
         //     br.remove(); // remove all <br> elements
         // });
+        parent.querySelectorAll('a.blue').forEach(function (link) {
+            // add max-height: 1lh; to style
+            link.style.maxHeight = '1.2em'; // 1lh is approximately 1.2em
+            has_classname = true;
+        });
         parent.querySelectorAll('div').forEach(function (div) {
             // get div which starts with '教室：'
             if (div.textContent.startsWith('教室：')) {
