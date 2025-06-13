@@ -5,12 +5,22 @@
     width: 45%;
     height: 100%;
     background: #fffdfc;
-    z-index: 900;
     box-shadow: -4px 0 10px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
     transition: transform 0.3s ease-in-out;
     border-left: 2px solid #f3c4fb;
+}
+/* 左端のドラッグ用バー */
+.split-view-resize-handle {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 5px;
+    height: 100%;
+    cursor: ew-resize;
+    background-color: transparent;
+    z-index: 901;
 }
 
 /* ヘッダー：横並び＆パステル色 */

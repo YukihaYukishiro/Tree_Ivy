@@ -26,7 +26,14 @@
     height: 100%;
     flex: 1;
     background-color: rgb(238, 251, 255);
-    border-radius: 5px;
+}
+.ivy-death-unit:first-child {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+.ivy-death-unit:last-child {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
 }
 
 .ivy-death-unit-dead {

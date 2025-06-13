@@ -40,6 +40,12 @@ window.onload = async () => {
             alert("チュートリアルの進行状況をリセットしました。ページをリロードしてください。");
         });
     });
+    const toggleBtn = document.querySelector(".toggle-advanced-btn");
+    const advancedContainer = document.querySelector(".advanced-settings");
+
+    toggleBtn.addEventListener("click", () => {
+        advancedContainer.classList.toggle("open");
+    });
 }
 
 

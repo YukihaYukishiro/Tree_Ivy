@@ -60,12 +60,15 @@ async function intialize_schedule(stats, config) {
         apply_attendance_bar(stats);
     }
 
-
     if (config.simpleAttendanceView) {
         apply_simpleAttendanceView();
     }
     if (config.compactSchedule) {
         apply_compactSchedule();
+    }
+
+    if (config.enable_experimental_mode) {
+        calendar_attendance();
     }
 
     const schedule_div = await waitForElement("#div-top-timetable2 > table");
