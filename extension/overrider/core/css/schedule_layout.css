@@ -32,3 +32,13 @@
 #viewport{
     display: none !important;
 }
+
+
+.absence-request-button{
+    margin: 0 10px ;
+    background-color: rgba(204, 255, 204, 0.5);
+    border: none;
+    padding: 1px 5px;
+    border-radius: 5px;
+    cursor: pointer;
+}

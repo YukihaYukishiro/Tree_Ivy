@@ -69,6 +69,7 @@ async function intialize_schedule(stats, config) {
 
     if (config.enable_experimental_mode) {
         calendar_attendance();
+        apply_absenceRequest();
     }
 
     const schedule_div = await waitForElement("#div-top-timetable2 > table");

@@ -23,7 +23,7 @@ async function apply_splitView() {
 
 
 
-async function open_splitView(url) {
+async function open_splitView(url, absenceRequest = false) {
     console.log(`Matched pattern for link: ${url}`);
 
     const body = document.body;
@@ -257,13 +257,48 @@ async function open_splitView(url) {
     splitView_container.appendChild(header);
     splitView_container.appendChild(iframe);
     body.appendChild(splitView_container);
-    
+
     // 左を縮める
     v2_container.classList.add("shrink-left");
     if (modifiedWidth) {
         // 既存の分割ビューの横幅を復元
         splitView_container.style.width = modifiedWidth;
         v2_container.style.width = `calc(100% - ${modifiedWidth})`;
+    }
+    if (absenceRequest) {
+        // 分割ビューの横幅を585pxに設定
+        splitView_container.style.width = "585px";
+        v2_container.style.width = `calc(100% - 585px)`;
+        const style = document.createElement("style");
+        style.textContent = `
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+iframe.split-view-iframe {
+    visibility: visible;
+  }
+  iframe.split-view-iframe {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+}
+        `;
+
+        const exportButton = document.createElement("button");
+        exportButton.textContent = "エクスポート";
+        exportButton.className = "export-button";
+        buttons.prepend(exportButton);
+        title.textContent = "公欠申請書";
+        urlDisplay.textContent = "各項目をクリックで編集:時間割クリックで表示切替";
+        // to do: エクスポートボタンの処理を追加
+        exportButton.addEventListener("click", () => {
+            document.head.appendChild(style);
+            print();
+            document.head.removeChild(style);
+        });
     }
 }
 
