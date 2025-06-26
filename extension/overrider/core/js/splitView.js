@@ -25,7 +25,6 @@ async function apply_splitView() {
 
 async function open_splitView(url, absenceRequest = false) {
     console.log(`Matched pattern for link: ${url}`);
-
     const body = document.body;
     const v2_container = document.querySelector("body > div.v2-container");
 
@@ -131,7 +130,7 @@ async function open_splitView(url, absenceRequest = false) {
     const goToBtn = document.createElement("button");
     goToBtn.textContent = "↗";
     goToBtn.onclick = () => {
-        window.location.href = iframe.src;
+        window.location.href = iframe.contentWindow.location.href;
     };
 
     buttons.appendChild(reloadBtn);
@@ -151,7 +150,7 @@ async function open_splitView(url, absenceRequest = false) {
     // iframeの読み込み完了時に、中のリンクをすべて書き換える
     iframe.addEventListener("load", () => {
         const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-
+        
         // nav1 と nav2 を削除
         const nav1 = iframeDoc.querySelector(".nav1");
         const nav2 = iframeDoc.querySelector(".nav2");
