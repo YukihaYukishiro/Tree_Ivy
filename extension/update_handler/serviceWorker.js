@@ -52,3 +52,12 @@ chrome.runtime.onInstalled.addListener(async (details) => {
 
 
 
+
+
+// test function 
+function R07A5_test() {
+    chrome.tabs.create({
+        url:"chrome-extension://" + chrome.runtime.id + "/assets/R07A5/R07A5.html"
+    });
+    console.log("test function called");
+}
