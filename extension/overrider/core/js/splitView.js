@@ -131,7 +131,7 @@ async function open_splitView(url, absenceRequest = false) {
     const goToBtn = document.createElement("button");
     goToBtn.textContent = "↗";
     goToBtn.onclick = () => {
-        window.location.href = url;
+        window.location.href = iframe.src;
     };
 
     buttons.appendChild(reloadBtn);
