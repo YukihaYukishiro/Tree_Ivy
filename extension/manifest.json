@@ -21,7 +21,11 @@
         "overrider/core/js/shutUpMail.js"
       ],
       "run_at": "document_start",
-      "all_frames": true
+      "all_frames": true,
+      "css": [
+        "overrider/core/css/addlink.css"
+      ]
+        
     },
     {
       "matches": [

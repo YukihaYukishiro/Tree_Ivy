@@ -1,0 +1,10 @@
+#ivy-settings-item a {
+    background-color: #fdf6ff;
+    color: #7a5fbf !important;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+#ivy-settings-item a:hover {
+    background-color: #e6d9ff !important;
+    color: #5a3580 !important;
+}
