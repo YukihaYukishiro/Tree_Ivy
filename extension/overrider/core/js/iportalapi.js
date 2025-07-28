@@ -19,7 +19,7 @@ function read_data_from_my_subject_status(html_body) {
     const subjectStatus = [];
     const parser = new DOMParser();
     const doc = parser.parseFromString(html_body, 'text/html');
-    const trs = doc.querySelectorAll('tbody tr');
+    const trs = doc.querySelectorAll('table:nth-child(1) > tbody > tr');
     trs.forEach(tr => {
         const tds = tr.querySelectorAll('td');
         if (tds.length > 2) {

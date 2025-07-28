@@ -1,5 +1,9 @@
 
 window.addEventListener("load", async () => {
+    if( document.querySelector("#form-report") ) {
+        return;
+    }
+
     console.log("Overrider main loaded");
 
     const stats = await get_subject_status();
@@ -71,6 +75,7 @@ async function intialize_schedule(stats, config) {
         calendar_attendance();
         apply_absenceRequest();
     }
+
 
     const schedule_div = await waitForElement("#div-top-timetable2 > table");
     // set id
