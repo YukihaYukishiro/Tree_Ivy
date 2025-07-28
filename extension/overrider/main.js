@@ -75,7 +75,6 @@ async function intialize_schedule(stats, config) {
         calendar_attendance();
         apply_absenceRequest();
     }
-    highlight_hovered_elements();
 
 
     const schedule_div = await waitForElement("#div-top-timetable2 > table");
