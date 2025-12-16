@@ -1,6 +1,6 @@
 
 window.addEventListener("load", async () => {
-    if( document.querySelector("#form-report") ) {
+    if (document.querySelector("#form-report")) {
         return;
     }
 
@@ -29,27 +29,67 @@ window.addEventListener("load", async () => {
 
 
     buttons = await waitForElement("div.v2-container > div > div.main.sp-margin-bottom-md > div > div.panel.panel-default.sp-margin-bottom-none.sp-border-bottom-none.sp-border-top-none > div.table-responsive.sp-margin-bottom-none.sp-padding-sm > div > div.margin-bottom");
+    let isRunning = false;
+
+    async function waitForTimetableUpdate() {
+        const target = document.getElementById("div-top-timetable2");
+        if (!target) return;
+
+        return new Promise((resolve) => {
+            const observer = new MutationObserver(() => {
+                observer.disconnect();
+                resolve();
+            });
+
+            observer.observe(target, {
+                childList: true,
+                subtree: true
+            });
+        });
+    }
+
     buttons.querySelectorAll("button").forEach((button) => {
         button.addEventListener("click", async () => {
-            // Wait until overrided-shedule is gone
-            const waiting = await new Promise((resolve) => {
-                const observer = new MutationObserver((mutations) => {
-                    mutations.forEach((mutation) => {
-                        if (mutation.removedNodes.length > 0) {
-                            mutation.removedNodes.forEach((node) => {
-                                if (node.id === "overrided-schedule") {
-                                    observer.disconnect();
-                                    resolve();
-                                }
-                            });
-                        }
-                    });
-                });
-                observer.observe(document.body, { childList: true, subtree: true });
-            });
-            await intialize_schedule(stats, config);
+            if (isRunning) return; // 連打防止
+            isRunning = true;
+
+            try {
+                await waitForTimetableUpdate();
+                await intialize_schedule(stats, config);
+            } finally {
+                isRunning = false;
+            }
         });
     });
+
+
+    const script = document.createElement("script");
+    script.textContent = `
+(function () {
+    console.log("[hook] injected into page world");
+
+    const originalOpen = XMLHttpRequest.prototype.open;
+    XMLHttpRequest.prototype.open = function (method, url) {
+        console.log("[hook][xhr][open]", method, url);
+        return originalOpen.apply(this, arguments);
+    };
+
+    const originalSend = XMLHttpRequest.prototype.send;
+    XMLHttpRequest.prototype.send = function (body) {
+        this.addEventListener("loadend", () => {
+            console.log("[hook][xhr][response]", this.responseURL, this.status);
+            if (this.responseURL.includes("/lms/")) {
+                window.dispatchEvent(new CustomEvent("timetable-updated"));
+            }
+        });
+        return originalSend.apply(this, arguments);
+    };
+})();
+`;
+    (document.head || document.documentElement).appendChild(script);
+    script.remove();
+
+
 
 });
 
@@ -60,7 +100,7 @@ async function intialize_schedule(stats, config) {
 
     if (config.useChart) {
         apply_attendance_chart(stats);
-    }else {
+    } else {
         apply_attendance_bar(stats);
     }
 

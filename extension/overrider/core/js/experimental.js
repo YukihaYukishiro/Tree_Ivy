@@ -29,8 +29,31 @@ async function calendar_attendance() {
             button.style.backgroundColor = "#b2f0e6"; // Reset to original color on mouse out
             button.style.color = "#777"; // Reset text color on mouse out
         });
-        
+        button.addEventListener("click", async () => {
+            console.log(`Attendance button clicked for class ID: ${classId}`);
+            const input = await waitForElement("#form-entry input[name='code']", 5000);
+            console.log(input);
+            if (input && !input.getAttribute("flag")) {
+                input.setAttribute("flag", "1");
+                input.focus();
+
+                input.addEventListener("keydown", function (e) {
+                    if (e.key === "Enter") {
+                        e.preventDefault();
+                        const button = document.querySelector(".button-send-entry");
+                        if (button) {
+                            button.click();
+                        }
+                    }
+                });
+            }
+        });
+
         // addto top of ivy section
         ivy_section.insertBefore(button, ivy_section.firstChild);
     });
+
+
 }
+
+
