@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Tree_Ivy Replanted - indev",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "description": "スタログ用出欠管理拡張システム",
   "permissions": [
     "storage"
@@ -41,7 +41,6 @@
         "overrider/core/js/splitView.js",
         "overrider/core/js/better_iportal_notification.js",
         "overrider/core/js/experimental.js",
-        "overrider/core/js/absenceRequest.js",
         "overrider/main.js"
       ],
       "run_at": "document_start",
@@ -80,7 +79,8 @@
         "settings/js/settings.js",
         "settings/css/settings.css",
         "images/discord_icon_130958.webp",
-        "images/ivy_bar_hover.gif"
+        "images/ivy_bar_hover.gif",
+        "overrider/external/network_hook.js"
       ],
       "matches": [
         "*://portal.iwasaki.ac.jp/*"

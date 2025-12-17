@@ -24,70 +24,23 @@ window.addEventListener("load", async () => {
         loadAndShowIportalNotifications();
     }
 
-
-
-
-
-    buttons = await waitForElement("div.v2-container > div > div.main.sp-margin-bottom-md > div > div.panel.panel-default.sp-margin-bottom-none.sp-border-bottom-none.sp-border-top-none > div.table-responsive.sp-margin-bottom-none.sp-padding-sm > div > div.margin-bottom");
-    let isRunning = false;
-
-    async function waitForTimetableUpdate() {
-        const target = document.getElementById("div-top-timetable2");
-        if (!target) return;
-
-        return new Promise((resolve) => {
-            const observer = new MutationObserver(() => {
-                observer.disconnect();
-                resolve();
-            });
-
-            observer.observe(target, {
-                childList: true,
-                subtree: true
-            });
-        });
-    }
-
-    buttons.querySelectorAll("button").forEach((button) => {
-        button.addEventListener("click", async () => {
-            if (isRunning) return; // 連打防止
-            isRunning = true;
-
-            try {
-                await waitForTimetableUpdate();
-                await intialize_schedule(stats, config);
-            } finally {
-                isRunning = false;
-            }
-        });
-    });
-
-
+    // add comment <!-- network hook injected --> to head
+    const comment = document.createComment("network hook. injected by TreeIvy extension");
+    document.head.appendChild(comment);
     const script = document.createElement("script");
-    script.textContent = `
-(function () {
-    console.log("[hook] injected into page world");
-
-    const originalOpen = XMLHttpRequest.prototype.open;
-    XMLHttpRequest.prototype.open = function (method, url) {
-        console.log("[hook][xhr][open]", method, url);
-        return originalOpen.apply(this, arguments);
-    };
-
-    const originalSend = XMLHttpRequest.prototype.send;
-    XMLHttpRequest.prototype.send = function (body) {
-        this.addEventListener("loadend", () => {
-            console.log("[hook][xhr][response]", this.responseURL, this.status);
-            if (this.responseURL.includes("/lms/")) {
-                window.dispatchEvent(new CustomEvent("timetable-updated"));
-            }
-        });
-        return originalSend.apply(this, arguments);
-    };
-})();
-`;
+    script.src = chrome.runtime.getURL("overrider/external/network_hook.js");
     (document.head || document.documentElement).appendChild(script);
-    script.remove();
+
+
+
+    window.addEventListener("network-detected", async (event) => {
+        if (document.querySelector(".ivy-section"))
+            return; // already initialized
+        if (event.detail.url.includes("getScheduleCalendar.php")) {
+            console.log("LMS schedule update detected, re-initializing schedule");
+            await intialize_schedule(stats, config);
+        }
+    });
 
 
 
@@ -97,7 +50,6 @@ window.addEventListener("load", async () => {
 
 
 async function intialize_schedule(stats, config) {
-
     if (config.useChart) {
         apply_attendance_chart(stats);
     } else {
@@ -113,7 +65,6 @@ async function intialize_schedule(stats, config) {
 
     if (config.enable_experimental_mode) {
         calendar_attendance();
-        apply_absenceRequest();
     }
 
 
