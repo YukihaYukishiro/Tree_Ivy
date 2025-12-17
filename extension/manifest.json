@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "Tree_Ivy Replanted - indev",
+  "name": "Tree_Ivy Replanted",
   "version": "2.0.5",
   "description": "スタログ用出欠管理拡張システム",
   "permissions": [
@@ -74,7 +74,6 @@
   "web_accessible_resources": [
     {
       "resources": [
-        "assets/R07A5/R07A5.html",
         "settings/settings.html",
         "settings/js/settings.js",
         "settings/css/settings.css",
