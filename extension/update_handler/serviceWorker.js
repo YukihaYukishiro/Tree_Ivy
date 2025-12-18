@@ -41,6 +41,9 @@ chrome.runtime.onInstalled.addListener(async (details) => {
         if (config.enable_betternotification === undefined) {
             config.enable_betternotification = true;
         }
+        if (config.calendarAttendance === undefined) {
+            config.calendarAttendance = false;
+        }
         if (config.enable_experimental_mode === undefined) {
             config.enable_experimental_mode = false;
         }

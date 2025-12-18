@@ -40,6 +40,7 @@
         "overrider/core/js/compactSchedule.js",
         "overrider/core/js/splitView.js",
         "overrider/core/js/better_iportal_notification.js",
+        "overrider/core/js/calendar_attend.js",
         "overrider/core/js/experimental.js",
         "overrider/main.js"
       ],

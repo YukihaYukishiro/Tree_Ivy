@@ -67,7 +67,7 @@ async function intialize_schedule(stats, config) {
         apply_compactSchedule();
     }
 
-    if (config.enable_experimental_mode) {
+    if (config.calendarAttendance) {
         calendar_attendance();
     }
 
