@@ -33,15 +33,19 @@
         const payload = init.body || null;
 
         return originalFetch(input, init).then((response) => {
-            window.dispatchEvent(new CustomEvent("network-detected", {
-                detail: {
-                    url: response.url,
-                    method,
-                    status: response.status,
-                    payload,
-                    response
-                }
-            }));
+            const clone = response.clone();
+            clone.text().then(text => {
+                window.dispatchEvent(new CustomEvent("network-detected", {
+                    detail: {
+                        url: response.url,
+                        method,
+                        status: response.status,
+                        payload,
+                        responseText: text
+                    }
+                }));
+            });
+
             return response;
         });
     };

@@ -34,11 +34,7 @@ window.addEventListener("load", async () => {
 
 
     window.addEventListener("network-detected", async (event) => {
-        // if (event.detail.url.includes("portal.iwasaki.ac.jp/lms/?action=glexa_modal_entry_form_accept")) {
-        //     console.log("LMS entry form accepted, reloading page");
-        //     console.log(event.detail);
-        //     return;
-        // }
+
         if (event.detail.url.includes("getScheduleCalendar.php")) {
             if (document.querySelector(".ivy-section"))
                 return; // already initialized
