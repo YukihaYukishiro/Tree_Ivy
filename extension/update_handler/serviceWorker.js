@@ -44,9 +44,8 @@ chrome.runtime.onInstalled.addListener(async (details) => {
         if (config.calendarAttendance === undefined) {
             config.calendarAttendance = false;
         }
-        if (config.enable_experimental_mode === undefined) {
-            config.enable_experimental_mode = false;
-        }
+        // disable experimental mode on update
+         config.enable_experimental_mode = false;
         chrome.storage.sync.set(config);
     });
 
