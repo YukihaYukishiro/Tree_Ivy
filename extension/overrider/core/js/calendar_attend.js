@@ -1,6 +1,8 @@
 async function calendar_attendance() {
     const ivy_sections = await waitForElements(".ivy-section");
     ivy_sections.forEach((ivy_section) => {
+        if (ivy_section.querySelector(".ivy-attendance-button")) 
+            return; // Skip if button already exists
         const classId = ivy_section.getAttribute("data-class-id");
         if (!classId) {
             console.warn("Class ID not found in ivy section:", ivy_section);

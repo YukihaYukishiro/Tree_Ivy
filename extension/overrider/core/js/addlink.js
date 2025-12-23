@@ -1,6 +1,12 @@
 window.addEventListener("load", function () {
     console.log("Overrider addlink loaded");
     add_settings_link();
+    // add comment <!-- network hook injected --> to head
+    const comment = document.createComment("network hook. injected by TreeIvy extension");
+    document.head.appendChild(comment);
+    const script = document.createElement("script");
+    script.src = chrome.runtime.getURL("overrider/external/network_hook.js");
+    (document.head || document.documentElement).appendChild(script);
 });
 
 async function add_settings_link_old() {
@@ -18,7 +24,7 @@ async function add_settings_link_old() {
     nav_bar.appendChild(settings_link);
 }
 
-async function add_settings_link(){
+async function add_settings_link() {
     const nav_bar = await waitForElement("#header-menu > ul.nav.navbar-nav.navbar-right.gnav.cf")
     if (!nav_bar) {
         console.error("ナビゲーションバーが見つかりませんでした。");

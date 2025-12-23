@@ -151,6 +151,12 @@
             height: 28px;
         }
 
+        #homepage_link {
+            font-size: 14px;
+            color: #955ac9;
+            margin-right: 12px;
+        }
+
         .btn {
             background-color: #e2c2ff;
             color: #5a3580;
@@ -207,7 +213,7 @@
         }
 
 
-        
+
 
         .advanced-settings {
             margin-top: 40px;
