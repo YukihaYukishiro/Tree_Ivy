@@ -41,9 +41,11 @@ chrome.runtime.onInstalled.addListener(async (details) => {
         if (config.enable_betternotification === undefined) {
             config.enable_betternotification = true;
         }
-        if (config.enable_experimental_mode === undefined) {
-            config.enable_experimental_mode = false;
+        if (config.calendarAttendance === undefined) {
+            config.calendarAttendance = false;
         }
+        // disable experimental mode on update
+         config.enable_experimental_mode = false;
         chrome.storage.sync.set(config);
     });
 
@@ -53,11 +55,3 @@ chrome.runtime.onInstalled.addListener(async (details) => {
 
 
 
-
-// test function 
-function R07A5_test() {
-    chrome.tabs.create({
-        url:"chrome-extension://" + chrome.runtime.id + "/assets/R07A5/R07A5.html"
-    });
-    console.log("test function called");
-}

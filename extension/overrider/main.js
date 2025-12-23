@@ -1,6 +1,6 @@
 
 window.addEventListener("load", async () => {
-    if( document.querySelector("#form-report") ) {
+    if (document.querySelector("#form-report")) {
         return;
     }
 
@@ -24,32 +24,29 @@ window.addEventListener("load", async () => {
         loadAndShowIportalNotifications();
     }
 
+    // add comment <!-- network hook injected --> to head
+    const comment = document.createComment("network hook. injected by TreeIvy extension");
+    document.head.appendChild(comment);
+    const script = document.createElement("script");
+    script.src = chrome.runtime.getURL("overrider/external/network_hook.js");
+    (document.head || document.documentElement).appendChild(script);
 
 
 
+    window.addEventListener("network-detected", async (event) => {
 
-    buttons = await waitForElement("div.v2-container > div > div.main.sp-margin-bottom-md > div > div.panel.panel-default.sp-margin-bottom-none.sp-border-bottom-none.sp-border-top-none > div.table-responsive.sp-margin-bottom-none.sp-padding-sm > div > div.margin-bottom");
-    buttons.querySelectorAll("button").forEach((button) => {
-        button.addEventListener("click", async () => {
-            // Wait until overrided-shedule is gone
-            const waiting = await new Promise((resolve) => {
-                const observer = new MutationObserver((mutations) => {
-                    mutations.forEach((mutation) => {
-                        if (mutation.removedNodes.length > 0) {
-                            mutation.removedNodes.forEach((node) => {
-                                if (node.id === "overrided-schedule") {
-                                    observer.disconnect();
-                                    resolve();
-                                }
-                            });
-                        }
-                    });
-                });
-                observer.observe(document.body, { childList: true, subtree: true });
-            });
+        if (event.detail.url.includes("getScheduleCalendar.php")) {
+            if (document.querySelector(".ivy-section"))
+                return; // already initialized
+            console.log("LMS schedule update detected, re-initializing schedule");
             await intialize_schedule(stats, config);
-        });
+            return;
+        }
+
+
     });
+
+
 
 });
 
@@ -57,10 +54,9 @@ window.addEventListener("load", async () => {
 
 
 async function intialize_schedule(stats, config) {
-
     if (config.useChart) {
         apply_attendance_chart(stats);
-    }else {
+    } else {
         apply_attendance_bar(stats);
     }
 
@@ -71,9 +67,8 @@ async function intialize_schedule(stats, config) {
         apply_compactSchedule();
     }
 
-    if (config.enable_experimental_mode) {
+    if (config.calendarAttendance) {
         calendar_attendance();
-        apply_absenceRequest();
     }
 
 
