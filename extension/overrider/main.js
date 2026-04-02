@@ -11,13 +11,13 @@ window.addEventListener("load", async () => {
     intialize_schedule(stats, config);
 
 
-    await run_tutorials();
+    run_tutorials();
 
     if (config.enable_splitview) {
         // ロードされたのがiframe内である場合実行しない #form-reportが画面内に存在する場合も実行しない
         if (window.self === window.top && !document.querySelector("#form-report")) {
             apply_splitView();
-        }
+                }
         // apply_splitView();
     }
     if (config.enable_betternotification) {
