@@ -24,13 +24,6 @@ window.addEventListener("load", async () => {
         loadAndShowIportalNotifications();
     }
 
-    // add comment <!-- network hook injected --> to head
-    const comment = document.createComment("network hook. injected by TreeIvy extension");
-    document.head.appendChild(comment);
-    const script = document.createElement("script");
-    script.src = chrome.runtime.getURL("overrider/external/network_hook.js");
-    (document.head || document.documentElement).appendChild(script);
-
 
 
     window.addEventListener("network-detected", async (event) => {
